@@ -359,7 +359,7 @@ h6,
 /* ========== breadcrumb ============ */
 .title-wrapper .breadcrumb-wrapper,
 .title-wrapper .title {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 @media (max-width: 767px) {
   .title-wrapper .breadcrumb-wrapper,
@@ -3667,8 +3667,8 @@ h6,
 }
 .sidebar-nav-wrapper .navbar-logo {
   padding: 0 25px;
-  margin-bottom: 30px;
-  margin-top: 11px;
+  margin-bottom: 15px;
+  margin-top: 10px;
 }
 .sidebar-nav-wrapper .sidebar-nav .divider {
   padding: 5px 25px;
@@ -3722,7 +3722,7 @@ h6,
   transform: rotate(0deg);
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children ul {
-  padding: 10px 24px 40px 57px;
+  padding: 10px 24px 20px 57px;
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children ul li {
   margin-bottom: 12px;
@@ -4704,7 +4704,7 @@ h6,
 }
 
 .pt-30 {
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 .pt-35 {

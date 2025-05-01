@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Form Tambah Kecamatan', 'menu' => 'kecamatan'])
+@extends('layouts.app', ['title' => 'Form Edit Layanan', 'menu' => 'layanan'])
 @section('content')
     <section class="tab-components">
         <div class="container-fluid">
@@ -7,7 +7,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>Form Tambah Kecamatan</h2>
+                            <h2>Form Edit Layanan</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -18,9 +18,9 @@
                                     <li class="breadcrumb-item">
                                         <a href="{{ route('dashboard') }}">Dashboard</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a>Kecamatan</a></li>
+                                    <li class="breadcrumb-item"><a>Layanan</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Tambah
+                                        Edit
                                     </li>
                                 </ol>
                             </nav>
@@ -47,15 +47,37 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('kecamatan.store') }}" method="POST">
+                            <form action="{{ route('layanan.update', $data->idLayanan) }}" method="POST">
                                 @csrf
+                                @method('PUT')
+
                                 <div class="mb-3">
-                                    <label for="namaKec" class="form-label">Nama Kecamatan</label>
-                                    <input type="text" name="namaKec" class="form-control" id="namaKec"
-                                        value="{{ old('namaKec') }}" required>
+                                    <label>Nama Layanan</label>
+                                    <input type="text" name="namaLayanan" class="form-control"
+                                        value="{{ old('namaLayanan', $data->namaLayanan) }}" required>
                                 </div>
-                                <a href="{{ route('kecamatan.index') }}" class="btn btn-secondary">Kembali</a>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+
+                                <div class="mb-3">
+                                    <label>Jenis</label>
+                                    <select name="jenis" class="form-select" required>
+                                        <option value="dafduk" {{ old('jenis', $data->jenis) == 'dafduk' ? 'selected' : '' }}>
+                                            Dafduk</option>
+                                        <option value="capil" {{ old('jenis', $data->jenis) == 'capil' ? 'selected' : '' }}>
+                                            Capil</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Akses Verifikasi</label>
+                                    <select name="aksesVer" class="form-select" required>
+                                        <option value="dinasDafduk" {{ old('aksesVer', $data->aksesVer) == 'dinasDafduk' ? 'selected' : '' }}>Dinas Dafduk</option>
+                                        <option value="dinasCapil" {{ old('aksesVer', $data->aksesVer) == 'dinasCapil' ? 'selected' : '' }}>Dinas Capil</option>
+                                        <option value="kecamatan" {{ old('aksesVer', $data->aksesVer) == 'kecamatan' ? 'selected' : '' }}>Kecamatan</option>
+                                    </select>
+                                </div>
+
+                                <a href="{{ route('layanan.index') }}" class="btn btn-secondary">Kembali</a>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </form>
                         </div>
                     </div>

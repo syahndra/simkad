@@ -13,26 +13,25 @@
                 </a>
             </li>
 
-            <li class="nav-item @if ($menu == 'Layanan') active @endif">
-                {{-- <a href="{{ route('layanan.index') }}"> --}}
-                <a href="#">
+            <li class="nav-item @if ($menu == 'layanan') active @endif">
+                <a href="{{ route('layanan.index') }}"> 
                     <i class="lni lni-laptop-phone icon"></i>
                     <span class="text">Daftar Layanan</span>
                 </a>
             </li>
 
             <li class="nav-item nav-item-has-children">
-                <a href="#0" class="@if ($menu != 'kecamatan') collapsed @endif" data-bs-toggle="collapse" data-bs-target="#ddmenu_kategoriwilayah"
+                <a href="#0" class="@if ($menu != 'wilayah') collapsed @endif" data-bs-toggle="collapse" data-bs-target="#ddmenu_kategoriwilayah"
                     aria-controls="ddmenu_kategoriwilayah" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="lni lni-map icon"></i>
                     <span class="text">Kategori Wilayah</span>
                 </a>
-                <ul id="ddmenu_kategoriwilayah" class="@if ($menu != 'kecamatan') collapse @endif dropdown-nav">
+                <ul id="ddmenu_kategoriwilayah" class="@if ($menu != 'wilayah') collapse @endif dropdown-nav">
                     <li>
-                        <a href="{{ route('kecamatan.index') }}" class="@if ($menu == 'kecamatan' ) active @endif"> Kecamatan </a>
+                        <a href="{{ route('kecamatan.index') }}" class="@if ($title == 'Daftar Kecamatan' ) active @endif"> Kecamatan </a>
                     </li>
                     <li>
-                        <a href="desa.html"> Desa </a>
+                        <a href="{{ route('desa.index') }}" class="@if ($title == 'Daftar Desa' OR $title == 'Form Tambah Desa' OR $title == 'Form Edit Desa') active @endif"> Desa </a>
                     </li>
                 </ul>
             </li>

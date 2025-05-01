@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="assets/css/quill/bubble.css" />
+    <link rel="stylesheet" href="assets/css/quill/snow.css" />
+    <link rel="stylesheet" href="assets/css/morris.css" />
+    <link rel="stylesheet" href="assets/css/datatable.css" />
 </head>
 
 <body>
@@ -57,6 +62,15 @@
     <script src="{{ asset('assets/js/world-merc.js') }}"></script>
     <script src="{{ asset('assets/js/polyfill.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="{{ asset('assets/js/quill.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datatable.js') }}"></script>
+    <script src="{{ asset('assets/js/Sortable.min.js') }}"></script>
+    <script>
+        const dataTable = new simpleDatatables.DataTable("#table", {
+            searchable: true,
+        });
+    </script>
 
     <script>
         // ======== jvectormap activation

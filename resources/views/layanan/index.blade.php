@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Daftar Kecamatan', 'menu' => 'wilayah'])
+@extends('layouts.app', ['title' => 'Daftar Layanan', 'menu' => 'layanan'])
 @section('content')
     <!-- ========== table components start ========== -->
     <section class="table-components">
@@ -8,7 +8,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>Daftar Kecamatan</h2>
+                            <h2>Daftar layanan</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -19,9 +19,9 @@
                                     <li class="breadcrumb-item">
                                         <a href="{{ route('dashboard') }}">Dashboard</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a>Kategori Wilayah</a></li>
+                                    <li class="breadcrumb-item"><a>Layanan</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Daftar Kecamatan
+                                        Daftar Layanan
                                     </li>
                                 </ol>
                             </nav>
@@ -38,11 +38,6 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-style mb-30">
-                            {{-- <h6 class="mb-10">Tabel Kecamatan</h6> --}}
-                            {{-- <p class="text-sm mb-20">
-                                For basic styling—light padding and only horizontal
-                                dividers—use the class table.
-                            </p> --}}
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('success') }}
@@ -50,29 +45,32 @@
                                 </div>
                             @endif
 
-                            <a href="{{ route('kecamatan.create') }}" class="btn btn-success mb-3">Tambah +</a>
+                            <a href="{{ route('layanan.create') }}" class="btn btn-success mb-3">Tambah +</a>
                             <div class="table-responsive">
                                 <table id="table" class="table">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Nama Kecamatan</th>
+                                            <th>Nama Layanan</th>
+                                            <th>Jenis</th>
+                                            <th>Akses Verifikasi</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($kecamatan as $item)
+                                        @foreach($layanan as $item)
                                             <tr>
-                                                <td>{{ $item->idKec }}</td>
-                                                <td>{{ $item->namaKec }}</td>
+                                                <td>{{ $item->idLayanan }}</td>
+                                                <td>{{ $item->namaLayanan }}</td>
+                                                <td>{{ ucfirst($item->jenis) }}</td>
+                                                <td>{{ str_replace('_', ' ', ucfirst($item->aksesVer)) }}</td>
                                                 <td>
                                                     <div class="action">
-                                                        <a href="{{ route('kecamatan.edit', $item->idKec) }}"
-                                                            class="text-warning">
+                                                        <a href="{{ route('layanan.edit', $item->idLayanan) }}" class="text-warning">
                                                             <i class="lni lni lni-pencil"></i>
                                                         </a>
-                                                        <form action="{{ route('kecamatan.destroy', $item->idKec) }}"
-                                                            method="POST" style="display:inline;">
+                                                        <form action="{{ route('layanan.destroy', $item->idLayanan) }}" method="POST"
+                                                            style="display:inline;">
                                                             @csrf @method('DELETE')
                                                             <button onclick="return confirm('Yakin hapus?')"
                                                                 class="text-danger"><i class="lni lni-trash-can"></i></button>
@@ -81,10 +79,8 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-                                        <!-- end table row -->
                                     </tbody>
                                 </table>
-                                <!-- end table -->
                             </div>
                         </div>
                         <!-- end card -->

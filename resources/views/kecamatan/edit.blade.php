@@ -41,14 +41,14 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('kecamatan.update', $kecamatan->id_kecamatan) }}" method="POST">
+                            <form action="{{ route('kecamatan.update', $kecamatan->idKec) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="mb-3">
-                                    <label for="nama_kecamatan" class="form-label">Nama Kecamatan</label>
-                                    <input type="text" name="nama_kecamatan" class="form-control" id="nama_kecamatan"
-                                        value="{{ old('nama_kecamatan', $kecamatan->nama_kecamatan) }}" required>
+                                    <label for="namaKec" class="form-label">Nama Kecamatan</label>
+                                    <input type="text" name="namaKec" class="form-control" id="namaKec"
+                                        value="{{ old('namaKec', $kecamatan->namaKec) }}" required>
                                 </div>
 
                                 <a href="{{ route('kecamatan.index') }}" class="btn btn-secondary">Kembali</a>

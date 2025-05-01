@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Form Tambah Kecamatan', 'menu' => 'kecamatan'])
+@extends('layouts.app', ['title' => 'Form Tambah Layanan', 'menu' => 'layanan'])
 @section('content')
     <section class="tab-components">
         <div class="container-fluid">
@@ -7,7 +7,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>Form Tambah Kecamatan</h2>
+                            <h2>Form Tambah Layanan</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -18,7 +18,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="{{ route('dashboard') }}">Dashboard</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a>Kecamatan</a></li>
+                                    <li class="breadcrumb-item"><a>Layanan</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         Tambah
                                     </li>
@@ -47,14 +47,38 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('kecamatan.store') }}" method="POST">
+                            <form action="{{ route('layanan.store') }}" method="POST">
                                 @csrf
+
                                 <div class="mb-3">
-                                    <label for="namaKec" class="form-label">Nama Kecamatan</label>
-                                    <input type="text" name="namaKec" class="form-control" id="namaKec"
-                                        value="{{ old('namaKec') }}" required>
+                                    <label>Nama Layanan</label>
+                                    <input type="text" name="namaLayanan" class="form-control"
+                                        value="{{ old('namaLayanan') }}" required>
                                 </div>
-                                <a href="{{ route('kecamatan.index') }}" class="btn btn-secondary">Kembali</a>
+
+                                <div class="mb-3">
+                                    <label>Jenis</label>
+                                    <select name="jenis" class="form-select" required>
+                                        <option value="" disabled selected>Pilih Jenis</option>
+                                        <option value="dafduk" {{ old('jenis') == 'dafduk' ? 'selected' : '' }}>Dafduk
+                                        </option>
+                                        <option value="capil" {{ old('jenis') == 'capil' ? 'selected' : '' }}>Capil</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Akses Verifikasi</label>
+                                    <select name="aksesVer" class="form-select" required>
+                                        <option value="" disabled selected>Pilih Akses</option>
+                                        <option value="dinasDafduk" {{ old('aksesVer') == 'dinasDafduk' ? 'selected' : '' }}>Dinas Dafduk</option>
+                                        <option value="dinasCapil" {{ old('aksesVer') == 'dinasCapil' ? 'selected' : '' }}>
+                                            Dinas Capil</option>
+                                        <option value="kecamatan" {{ old('aksesVer') == 'kecamatan' ? 'selected' : '' }}>
+                                            Kecamatan</option>
+                                    </select>
+                                </div>
+
+                                <a href="{{ route('layanan.index') }}" class="btn btn-secondary">Kembali</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </form>
                         </div>

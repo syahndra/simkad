@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Form Tambah Kecamatan', 'menu' => 'kecamatan'])
+@extends('layouts.app', ['title' => 'Form Edit Desa', 'menu' => 'wilayah'])
 @section('content')
     <section class="tab-components">
         <div class="container-fluid">
@@ -7,7 +7,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>Form Tambah Kecamatan</h2>
+                            <h2>Form Edit Desa</h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -18,9 +18,9 @@
                                     <li class="breadcrumb-item">
                                         <a href="{{ route('dashboard') }}">Dashboard</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a>Kecamatan</a></li>
+                                    <li class="breadcrumb-item"><a>Desa</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Tambah
+                                        Edit
                                     </li>
                                 </ol>
                             </nav>
@@ -47,15 +47,31 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('kecamatan.store') }}" method="POST">
+                            <form action="{{ route('desa.update', $desa->idDesa) }}" method="POST">
                                 @csrf
+                                @method('PUT')
+
                                 <div class="mb-3">
-                                    <label for="namaKec" class="form-label">Nama Kecamatan</label>
-                                    <input type="text" name="namaKec" class="form-control" id="namaKec"
-                                        value="{{ old('namaKec') }}" required>
+                                    <label for="namaDesa" class="form-label">Nama Desa</label>
+                                    <input type="text" name="namaDesa" class="form-control" id="namaDesa"
+                                        value="{{ old('namaDesa', $desa->namaDesa) }}" required>
                                 </div>
-                                <a href="{{ route('kecamatan.index') }}" class="btn btn-secondary">Kembali</a>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+
+                                <div class="mb-3">
+                                    <label for="idKec" class="form-label">Pilih Kecamatan</label>
+                                    <select name="idKec" class="form-select" required>
+                                        <option value="">-- Pilih Kecamatan --</option>
+                                        @foreach ($kecamatan->sortBy('idKec') as $item)
+                                            <option value="{{ $item->idKec }}"
+                                                {{ $desa->idKec == $item->idKec ? 'selected' : '' }}>
+                                                {{ $item->idKec }}. {{ $item->namaKec }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <a href="{{ route('desa.index') }}" class="btn btn-secondary">Kembali</a>
+                                <button type="submit" class="btn btn-primary">Perbarui</button>
                             </form>
                         </div>
                     </div>

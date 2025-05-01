@@ -21,11 +21,11 @@ class KecamatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kecamatan' => 'required|string|max:100'
+            'namaKec' => 'required|string|max:100'
         ]);
 
         Kecamatan::create([
-            'nama_kecamatan' => $request->nama_kecamatan
+            'namaKec' => $request->namaKec
         ]);
 
         return redirect()->route('kecamatan.index')->with('success', 'Kecamatan berhasil ditambahkan.');
@@ -39,11 +39,11 @@ class KecamatanController extends Controller
     public function update(Request $request, Kecamatan $kecamatan)
     {
         $request->validate([
-            'nama_kecamatan' => 'required|string|max:100'
+            'namaKec' => 'required|string|max:100'
         ]);
 
         $kecamatan->update([
-            'nama_kecamatan' => $request->nama_kecamatan
+            'namaKec' => $request->namaKec
         ]);
 
         return redirect()->route('kecamatan.index')->with('success', 'Kecamatan berhasil diupdate.');
