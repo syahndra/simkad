@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
     protected $primaryKey = 'idUser';
     protected $fillable = [
         'nama',
@@ -20,6 +21,10 @@ class User extends Authenticatable
         'roleUser',
         'status'
     ];
+    public function operatorDinas()
+    {
+        return $this->hasOne(OperatorDinas::class, 'idUser', 'idUser');
+    }
 
     // protected $hidden = [
     //     'password',

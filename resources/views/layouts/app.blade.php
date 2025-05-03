@@ -66,6 +66,7 @@
     <script src="{{ asset('assets/js/quill.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable.js') }}"></script>
     <script src="{{ asset('assets/js/Sortable.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const dataTable = new simpleDatatables.DataTable("#table", {
             searchable: true,
@@ -74,12 +75,26 @@
 
     <script>
         // ======== jvectormap activation
-        var markers = [
-            { name: "Egypt", coords: [26.8206, 30.8025] },
-            { name: "Russia", coords: [61.524, 105.3188] },
-            { name: "Canada", coords: [56.1304, -106.3468] },
-            { name: "Greenland", coords: [71.7069, -42.6043] },
-            { name: "Brazil", coords: [-14.235, -51.9253] },
+        var markers = [{
+                name: "Egypt",
+                coords: [26.8206, 30.8025]
+            },
+            {
+                name: "Russia",
+                coords: [61.524, 105.3188]
+            },
+            {
+                name: "Canada",
+                coords: [56.1304, -106.3468]
+            },
+            {
+                name: "Greenland",
+                coords: [71.7069, -42.6043]
+            },
+            {
+                name: "Brazil",
+                coords: [-14.235, -51.9253]
+            },
         ];
 
         var jvm = new jsVectorMap({
@@ -109,8 +124,12 @@
             }),
             markers: markers,
             markerStyle: {
-                initial: { fill: "#4A6CF7" },
-                selected: { fill: "#ff5050" },
+                initial: {
+                    fill: "#4A6CF7"
+                },
+                selected: {
+                    fill: "#ff5050"
+                },
             },
             markerLabelStyle: {
                 initial: {
@@ -120,7 +139,7 @@
             },
         });
         // ====== calendar activation
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             var calendarMiniEl = document.getElementById("calendar-mini");
             var calendarMini = new FullCalendar.Calendar(calendarMiniEl, {
                 initialView: "dayGridMonth",
@@ -150,31 +169,29 @@
                     "Nov",
                     "Dec",
                 ],
-                datasets: [
-                    {
-                        label: "",
-                        backgroundColor: "transparent",
-                        borderColor: "#365CF5",
-                        data: [
-                            600, 800, 750, 880, 940, 880, 900, 770, 920, 890, 976, 1100,
-                        ],
-                        pointBackgroundColor: "transparent",
-                        pointHoverBackgroundColor: "#365CF5",
-                        pointBorderColor: "transparent",
-                        pointHoverBorderColor: "#fff",
-                        pointHoverBorderWidth: 5,
-                        borderWidth: 5,
-                        pointRadius: 8,
-                        pointHoverRadius: 8,
-                        cubicInterpolationMode: "monotone", // Add this line for curved line
-                    },
-                ],
+                datasets: [{
+                    label: "",
+                    backgroundColor: "transparent",
+                    borderColor: "#365CF5",
+                    data: [
+                        600, 800, 750, 880, 940, 880, 900, 770, 920, 890, 976, 1100,
+                    ],
+                    pointBackgroundColor: "transparent",
+                    pointHoverBackgroundColor: "#365CF5",
+                    pointBorderColor: "transparent",
+                    pointHoverBorderColor: "#fff",
+                    pointHoverBorderWidth: 5,
+                    borderWidth: 5,
+                    pointRadius: 8,
+                    pointHoverRadius: 8,
+                    cubicInterpolationMode: "monotone", // Add this line for curved line
+                }, ],
             },
             options: {
                 plugins: {
                     tooltip: {
                         callbacks: {
-                            labelColor: function (context) {
+                            labelColor: function(context) {
                                 return {
                                     backgroundColor: "#ffffff",
                                     color: "#171717",
@@ -266,27 +283,25 @@
                     "Nov",
                     "Dec",
                 ],
-                datasets: [
-                    {
-                        label: "",
-                        backgroundColor: "#365CF5",
-                        borderRadius: 30,
-                        barThickness: 6,
-                        maxBarThickness: 8,
-                        data: [
-                            600, 700, 1000, 700, 650, 800, 690, 740, 720, 1120, 876, 900,
-                        ],
-                    },
-                ],
+                datasets: [{
+                    label: "",
+                    backgroundColor: "#365CF5",
+                    borderRadius: 30,
+                    barThickness: 6,
+                    maxBarThickness: 8,
+                    data: [
+                        600, 700, 1000, 700, 650, 800, 690, 740, 720, 1120, 876, 900,
+                    ],
+                }, ],
             },
             options: {
                 plugins: {
                     tooltip: {
                         callbacks: {
-                            titleColor: function (context) {
+                            titleColor: function(context) {
                                 return "#8F92A1";
                             },
-                            label: function (context) {
+                            label: function(context) {
                                 let label = context.dataset.label || "";
 
                                 if (label) {
@@ -389,8 +404,7 @@
                     "Nov",
                     "Dec",
                 ],
-                datasets: [
-                    {
+                datasets: [{
                         label: "Revenue",
                         backgroundColor: "transparent",
                         borderColor: "#365CF5",
@@ -520,8 +534,7 @@
             type: "bar",
             data: {
                 labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-                datasets: [
-                    {
+                datasets: [{
                         label: "",
                         backgroundColor: "#365CF5",
                         borderColor: "transparent",
@@ -607,6 +620,7 @@
         });
         // =========== chart four end
     </script>
+    @yield(section: 'scripts')
 </body>
 
 </html>
