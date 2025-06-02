@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\AjuanDafduk;
 use App\Models\OperatorDesa;
+use App\Models\OperatorKec;
 use App\Models\Layanan;
 use App\Models\Desa;
 use App\Models\Kecamatan;
@@ -14,7 +15,29 @@ class AjuanDafdukController extends Controller
 {
     public function index()
     {
-        $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->get();
+        $user = Auth::user();
+
+        if ($user->roleUser === 'operatorDesa') {
+            $opdes = OperatorDesa::where('idUser', $user->idUser)->first();
+            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')
+                ->whereHas('operatorDesa', function ($query) use ($opdes) {
+                    $query->where('idDesa', $opdes->idDesa);
+                })
+                ->get();
+
+        } elseif ($user->roleUser === 'operatorKecamatan') {
+            $opkec = OperatorKec::where('idUser', $user->idUser)->first();
+            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')
+                ->whereHas('operatorDesa.desa', function ($query) use ($opkec) {
+                    $query->where('idKec', $opkec->idKec);
+                })
+                ->get();
+
+        } else {
+            // Role lain, ambil semua
+            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->get();
+        }
+
         return view('ajuanDafduk.index', compact('ajuan'));
     }
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\OperatorDinasController;
 use App\Http\Controllers\OperatorKecController;
 use App\Http\Controllers\OperatorDesaController;
 use App\Http\Controllers\AjuanDafdukController;
+use App\Http\Controllers\AjuanCapilController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -32,4 +33,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('operatorDesa', OperatorDesaController::class);
     Route::get('/getDesa-by-kecamatan/{idKec}', [OperatorDesaController::class, 'getDesaByKecamatan'])->name('getDesaByKecamatan');
     Route::resource('ajuanDafduk', AjuanDafdukController::class);
+    Route::resource('ajuanCapil', AjuanCapilController::class);
 });

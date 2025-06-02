@@ -13,7 +13,12 @@ class Layanan extends Model
     protected $fillable = ['namaLayanan', 'jenis', 'aksesVer'];
 
     public function ajuanDafduk()
-{
-    return $this->hasMany(AjuanDafduk::class, 'idLayanan');
-}
+    {
+        return $this->hasMany(AjuanDafduk::class, 'idLayanan');
+    }
+
+    public function ajuanCapil()
+    {
+        return $this->hasMany(AjuanCapil::class, 'idLayanan');
+    }
 }

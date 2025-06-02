@@ -79,8 +79,8 @@
                     <span class="text">Pengajuan Dafduk</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="pengajuan-pencatatan.html">
+            <li class="nav-item @if ($menu == 'ajuanCapil' OR $menu == 'ajuanCapil' OR $menu == 'ajuanCapil') active @endif">
+                <a href="{{ route('ajuanCapil.index') }}">
                     <i class="lni lni-certificate icon"></i>
                     <span class="text">Pengajuan Capil</span>
                 </a>

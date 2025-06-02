@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2025 at 06:45 AM
+-- Generation Time: Jun 02, 2025 at 10:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `simkad`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ajuancapil`
+--
+
+CREATE TABLE `ajuancapil` (
+  `idCapil` int(10) UNSIGNED NOT NULL,
+  `idOpdes` int(10) UNSIGNED NOT NULL,
+  `idLayanan` int(10) UNSIGNED NOT NULL,
+  `noKK` varchar(20) NOT NULL,
+  `nik` varchar(20) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `noAkta` varchar(50) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `statAjuan` enum('belum diproses','ditolak','disetujui','revisi') NOT NULL DEFAULT 'belum diproses',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ajuancapil`
+--
+
+INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `statAjuan`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'belum diproses', '2025-06-01 23:41:45', '2025-06-02 07:59:30');
 
 -- --------------------------------------------------------
 
@@ -45,7 +72,7 @@ CREATE TABLE `ajuandafduk` (
 --
 
 INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(2, 2, 1, '3329010102120001', '3329014505840005', 'RUHWI', 'coba', 'belum diproses', '2025-06-01 20:51:55', '2025-06-01 21:04:42');
+(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'belum diproses', '2025-06-02 01:14:33', '2025-06-02 01:14:33');
 
 -- --------------------------------------------------------
 
@@ -251,8 +278,8 @@ INSERT INTO `users` (`idUser`, `nama`, `username`, `email`, `password`, `roleUse
 (1, 'M. Syahndra Ramadhan', 'syahndra', 'mohammadsyahndra@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'superadmin', 'aktif', NULL, NULL),
 (4, 'Farohis', 'farohis', 'farohis@gmail.com', '$2y$12$De/KIsm.oIuBWfxHqnFSkO0UEhhPhf2zsjtgv5WN.25SEiiN2Y7mm', 'admin', 'aktif', '2025-05-01 08:31:05', '2025-05-01 08:31:18'),
 (5, 'Edi', 'edi', 'edi@gmail.com', '$2y$12$faINwKjpht4NmmPH.YB2P.fbdlQfegLPwXEyC0Ua/HgkKlzMSa4By', 'operatorKecamatan', 'aktif', '2025-05-01 18:33:10', '2025-05-01 18:37:38'),
-(6, 'Wildan', 'wildan', 'wildan@gmail.com', '$2y$12$4OJy03RIfSJKf3c5J1i2EelXYwEq6.p7JjYduMm6CjypqEDVrcGz.', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-05-01 18:43:09'),
-(7, 'Jimmy', 'jimmy', 'jimmy@gmail.com', '$2y$12$ccsW4AJFpDfvAWTcnwOVOOTkbGSFY7L1U7UQi4Fq/MSHcRkQv7oiW', 'operatorDinas', 'aktif', '2025-05-01 18:52:20', '2025-05-01 18:52:20'),
+(6, 'Wildan', 'wildan', 'wildan@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-05-01 18:43:09'),
+(7, 'Jimmy', 'jimmy', 'jimmy@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorDinas', 'aktif', '2025-05-01 18:52:20', '2025-05-01 18:52:20'),
 (9, 'Siyung', 'siyung', 'siyunggg_ganteng@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorDesa', 'aktif', '2025-05-03 02:36:07', '2025-05-05 18:26:45'),
 (10, 'Toni Setiawan', 'toni', 'toni_setiawan@gmail.com', '$2y$12$ji6PkhLjDpv35uS.DPDK2eK8.D9prYH7lFY5c1MxlCnoXFkhtUZm6', 'admin', 'aktif', '2025-05-05 18:25:59', '2025-05-05 18:25:59'),
 (11, 'Endah Tri W', 'endahhh', 'endah@gmail.com', '$2y$12$tBmjyhpZE0GUQ72T9Y3MTu.HFkX5z7HXoU8VO/pPULUiTNpSIX5I2', 'operatorDesa', 'aktif', '2025-05-05 18:31:15', '2025-05-05 18:31:15');
@@ -260,6 +287,14 @@ INSERT INTO `users` (`idUser`, `nama`, `username`, `email`, `password`, `roleUse
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `ajuancapil`
+--
+ALTER TABLE `ajuancapil`
+  ADD PRIMARY KEY (`idCapil`),
+  ADD KEY `fk_ajuanCapil_idOpdes` (`idOpdes`),
+  ADD KEY `fk_ajuanCapil_idLayanan` (`idLayanan`);
 
 --
 -- Indexes for table `ajuandafduk`
@@ -336,10 +371,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `ajuancapil`
+--
+ALTER TABLE `ajuancapil`
+  MODIFY `idCapil` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `ajuandafduk`
 --
 ALTER TABLE `ajuandafduk`
-  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `desa`
@@ -392,6 +433,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `ajuancapil`
+--
+ALTER TABLE `ajuancapil`
+  ADD CONSTRAINT `fk_ajuanCapil_idLayanan` FOREIGN KEY (`idLayanan`) REFERENCES `layanan` (`idLayanan`),
+  ADD CONSTRAINT `fk_ajuanCapil_idOpdes` FOREIGN KEY (`idOpdes`) REFERENCES `operatordesa` (`idOpdes`);
 
 --
 -- Constraints for table `ajuandafduk`

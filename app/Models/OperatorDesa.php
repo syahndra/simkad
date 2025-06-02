@@ -36,7 +36,12 @@ class OperatorDesa extends Model
     }
 
     public function ajuanDafduk()
-{
-    return $this->hasMany(AjuanDafduk::class, 'idOpdes');
-}
+    {
+        return $this->hasMany(AjuanDafduk::class, 'idOpdes');
+    }
+
+    public function ajuanCapil()
+    {
+        return $this->hasMany(AjuanCapil::class, 'idOpdes');
+    }
 }
