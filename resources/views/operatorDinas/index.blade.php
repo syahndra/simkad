@@ -65,17 +65,25 @@
                                 <tbody>
                                     @foreach($data as $item)
                                     <tr>
-                                        <td>{{ $item->user->nama }}</td>
-                                        <td>{{ $item->user->email }}</td>
-                                        <td>{{ $item->user->username }}</td>
-                                        <td>{{ ucfirst($item->bidang) }}</td>
+                                        <td>{{ $item->nama }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->username }}</td>
+                                        <td>
+                                            @if ($item->roleUser === 'opDinCapil')
+                                            Capil
+                                            @elseif ($item->roleUser === 'opDinDafduk')
+                                            Dafduk
+                                            @else
+                                            {{ ucfirst($item->roleUser) }}
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="action">
-                                                <a href="{{ route('operatorDinas.edit', $item->idOpdin) }}"
+                                                <a href="{{ route('operatorDinas.edit', $item->idUser) }}"
                                                     class="text-warning">
                                                     <i class="lni lni lni-pencil"></i>
                                                 </a>
-                                                <form action="{{ route('operatorDinas.destroy', $item->idOpdin) }}"
+                                                <form action="{{ route('operatorDinas.destroy', $item->idUser) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf @method('DELETE')
                                                     <button onclick="return confirm('Yakin hapus?')"

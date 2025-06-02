@@ -1,6 +1,6 @@
 <aside class="sidebar-nav-wrapper">
     <div class="navbar-logo">
-        <a href="index.html">
+        <a href="{{ route('dashboard') }}">
             <img src="{{ asset('assets/images/logo/simkad.svg') }}" alt="logo" />
         </a>
     </div>

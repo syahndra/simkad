@@ -47,26 +47,26 @@
                             </ul>
                         </div>
                         @endif
-                        <form action="{{ route('operatorDinas.update', $opdinas->idOpdin) }}" method="POST">
+                        <form action="{{ route('operatorDinas.update', $opdinas->idUser) }}" method="POST">
                             @csrf
                             @method('PUT')
 
                             <div class="mb-3">
                                 <label>Nama</label>
                                 <input type="text" name="nama" class="form-control"
-                                    value="{{ $opdinas->user->nama }}" required>
+                                    value="{{ $opdinas->nama }}" required>
                             </div>
 
                             <div class="mb-3">
                                 <label>Username</label>
                                 <input type="text" name="username" class="form-control"
-                                    value="{{ $opdinas->user->username }}" required>
+                                    value="{{ $opdinas->username }}" required>
                             </div>
 
                             <div class="mb-3">
                                 <label>Email</label>
                                 <input type="email" name="email" class="form-control"
-                                    value="{{ $opdinas->user->email }}" required>
+                                    value="{{ $opdinas->email }}" required>
                             </div>
 
                             <div class="mb-3">
@@ -82,10 +82,10 @@
 
                             <div class="mb-3">
                                 <label>Bidang</label>
-                                <select name="bidang" class="form-control" required>
-                                    <option value="dafduk" {{ $opdinas->bidang == 'dafduk' ? 'selected' : '' }}>
+                                <select name="roleUser" class="form-control" required>
+                                    <option value="opDinDafduk" {{ $opdinas->roleUser == 'opDinDafduk' ? 'selected' : '' }}>
                                         Dafduk</option>
-                                    <option value="capil" {{ $opdinas->bidang == 'capil' ? 'selected' : '' }}>Capil
+                                    <option value="opDinCapil" {{ $opdinas->roleUser == 'opDinCapil' ? 'selected' : '' }}>Capil
                                     </option>
                                 </select>
                             </div>

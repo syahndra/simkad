@@ -75,10 +75,10 @@
                             </div>
                             <div class="mb-3">
                                 <label>Bidang</label>
-                                <select name="bidang" class="form-control" required>
+                                <select name="roleUser" class="form-control" required>
                                     <option disabled selected>-- Pilih Bidang --</option>
-                                    <option value="dafduk">Dafduk</option>
-                                    <option value="capil">Capil</option>
+                                    <option value="opDinDafduk">Dafduk</option>
+                                    <option value="opDinCapil">Capil</option>
                                 </select>
                             </div>
 
