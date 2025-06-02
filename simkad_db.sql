@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2025 at 10:15 AM
+-- Generation Time: Jun 03, 2025 at 01:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -204,25 +204,6 @@ INSERT INTO `operatordesa` (`idOpdes`, `idUser`, `idDesa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `operatordinas`
---
-
-CREATE TABLE `operatordinas` (
-  `idOpdin` int(20) UNSIGNED NOT NULL,
-  `idUser` int(20) UNSIGNED NOT NULL,
-  `bidang` enum('dafduk','capil') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `operatordinas`
---
-
-INSERT INTO `operatordinas` (`idOpdin`, `idUser`, `bidang`) VALUES
-(2, 7, 'capil');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `operatorkec`
 --
 
@@ -264,7 +245,7 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `roleUser` enum('superadmin','admin','operatorDinas','operatorKecamatan','operatorDesa','') NOT NULL,
+  `roleUser` enum('superadmin','admin','opDinCapil','opDinDafduk','operatorKecamatan','operatorDesa','') NOT NULL,
   `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -279,7 +260,7 @@ INSERT INTO `users` (`idUser`, `nama`, `username`, `email`, `password`, `roleUse
 (4, 'Farohis', 'farohis', 'farohis@gmail.com', '$2y$12$De/KIsm.oIuBWfxHqnFSkO0UEhhPhf2zsjtgv5WN.25SEiiN2Y7mm', 'admin', 'aktif', '2025-05-01 08:31:05', '2025-05-01 08:31:18'),
 (5, 'Edi', 'edi', 'edi@gmail.com', '$2y$12$faINwKjpht4NmmPH.YB2P.fbdlQfegLPwXEyC0Ua/HgkKlzMSa4By', 'operatorKecamatan', 'aktif', '2025-05-01 18:33:10', '2025-05-01 18:37:38'),
 (6, 'Wildan', 'wildan', 'wildan@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-05-01 18:43:09'),
-(7, 'Jimmy', 'jimmy', 'jimmy@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorDinas', 'aktif', '2025-05-01 18:52:20', '2025-05-01 18:52:20'),
+(7, 'Jimmy', 'jimmy', 'jimmy@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'opDinCapil', 'aktif', '2025-05-01 18:52:20', '2025-05-01 18:52:20'),
 (9, 'Siyung', 'siyung', 'siyunggg_ganteng@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorDesa', 'aktif', '2025-05-03 02:36:07', '2025-05-05 18:26:45'),
 (10, 'Toni Setiawan', 'toni', 'toni_setiawan@gmail.com', '$2y$12$ji6PkhLjDpv35uS.DPDK2eK8.D9prYH7lFY5c1MxlCnoXFkhtUZm6', 'admin', 'aktif', '2025-05-05 18:25:59', '2025-05-05 18:25:59'),
 (11, 'Endah Tri W', 'endahhh', 'endah@gmail.com', '$2y$12$tBmjyhpZE0GUQ72T9Y3MTu.HFkX5z7HXoU8VO/pPULUiTNpSIX5I2', 'operatorDesa', 'aktif', '2025-05-05 18:31:15', '2025-05-05 18:31:15');
@@ -336,13 +317,6 @@ ALTER TABLE `operatordesa`
   ADD PRIMARY KEY (`idOpdes`),
   ADD KEY `idUser` (`idUser`),
   ADD KEY `idDesa` (`idDesa`);
-
---
--- Indexes for table `operatordinas`
---
-ALTER TABLE `operatordinas`
-  ADD PRIMARY KEY (`idOpdin`),
-  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indexes for table `operatorkec`
@@ -413,12 +387,6 @@ ALTER TABLE `operatordesa`
   MODIFY `idOpdes` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `operatordinas`
---
-ALTER TABLE `operatordinas`
-  MODIFY `idOpdin` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `operatorkec`
 --
 ALTER TABLE `operatorkec`
@@ -428,7 +396,7 @@ ALTER TABLE `operatorkec`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idUser` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -460,12 +428,6 @@ ALTER TABLE `desa`
 ALTER TABLE `operatordesa`
   ADD CONSTRAINT `operatordesa_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON DELETE CASCADE,
   ADD CONSTRAINT `operatordesa_ibfk_2` FOREIGN KEY (`idDesa`) REFERENCES `desa` (`idDesa`) ON DELETE CASCADE;
-
---
--- Constraints for table `operatordinas`
---
-ALTER TABLE `operatordinas`
-  ADD CONSTRAINT `operatordinas_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `operatorkec`
