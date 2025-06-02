@@ -73,8 +73,8 @@
             <span class="divider">
                 <hr />
             </span>
-            <li class="nav-item">
-                <a href="pengajuan-pendaftaran.html">
+            <li class="nav-item @if ($menu == 'ajuanDafduk' OR $menu == 'ajuanDafduk' OR $menu == 'ajuanDafduk') active @endif">
+                <a href="{{ route('ajuanDafduk.index') }}">
                     <i class="lni lni-postcard icon"></i>
                     <span class="text">Pengajuan Dafduk</span>
                 </a>

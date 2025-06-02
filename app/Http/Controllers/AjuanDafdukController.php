@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\AjuanDafduk;
+use App\Models\OperatorDesa;
+use App\Models\Layanan;
+use App\Models\Desa;
+use App\Models\Kecamatan;
+
+class AjuanDafdukController extends Controller
+{
+    public function index()
+    {
+        $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->get();
+        return view('ajuanDafduk.index', compact('ajuan'));
+    }
+
+    public function create()
+    {
+        // Ambil layanan hanya yang jenis = dafduk
+        $layanan = Layanan::where('jenis', 'dafduk')->get();
+
+        // Ambil hanya operator desa
+        // $operatorDesa = OperatorDesa::with('user', 'desa.kecamatan')->get();
+        $operatorDesa = OperatorDesa::with('desa.kecamatan', 'user')
+            ->where('idUser', Auth::id())
+            ->firstOrFail();
+
+        return view('ajuanDafduk.create', compact('layanan', 'operatorDesa'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'idOpdes' => 'required|exists:operatordesa,idOpdes',
+            'idLayanan' => 'required|exists:layanan,idLayanan',
+            'noKK' => 'required',
+            'nik' => 'required',
+            'nama' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+            'statAjuan' => 'required|in:belum diproses,ditolak,disetujui,revisi',
+        ]);
+
+        AjuanDafduk::create($request->all());
+
+        return redirect()->route('ajuanDafduk.index')->with('success', 'Ajuan berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $ajuan = AjuanDafduk::findOrFail($id);
+        $layanan = Layanan::where('jenis', 'dafduk')->get();
+        $operatorDesa = OperatorDesa::with('desa.kecamatan', 'user')
+            ->where('idUser', Auth::id())
+            ->firstOrFail();
+
+        return view('ajuanDafduk.edit', compact('ajuan', 'layanan', 'operatorDesa'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $ajuan = AjuanDafduk::findOrFail($id);
+
+        $request->validate([
+            'idLayanan' => 'required|exists:layanan,idLayanan',
+            'noKK' => 'required',
+            'nik' => 'required',
+            'nama' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        $ajuan->update($request->all());
+
+        return redirect()->route('ajuanDafduk.index')->with('success', 'Ajuan berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        AjuanDafduk::findOrFail($id)->delete();
+        return redirect()->route('ajuanDafduk.index')->with('success', 'Ajuan berhasil dihapus.');
+    }
+}

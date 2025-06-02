@@ -34,4 +34,9 @@ class OperatorDesa extends Model
     {
         return $this->desa->kecamatan ?? null;
     }
+
+    public function ajuanDafduk()
+{
+    return $this->hasMany(AjuanDafduk::class, 'idOpdes');
+}
 }

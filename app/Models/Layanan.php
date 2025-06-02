@@ -11,4 +11,9 @@ class Layanan extends Model
     public $timestamps = false;
 
     protected $fillable = ['namaLayanan', 'jenis', 'aksesVer'];
+
+    public function ajuanDafduk()
+{
+    return $this->hasMany(AjuanDafduk::class, 'idLayanan');
+}
 }
