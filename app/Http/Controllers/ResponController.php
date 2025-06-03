@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\AjuanCapil;
 use App\Models\AjuanDafduk;
 use App\Models\Respon;
+use App\Models\Layanan;
+use App\Models\OperatorDesa;
 use Illuminate\Support\Facades\Auth;
 
 class ResponController extends Controller
@@ -16,16 +18,32 @@ class ResponController extends Controller
 
         if ($jenis === 'capil') {
             $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan')->findOrFail($id);
+            $layanan = Layanan::where('jenis', 'capil')->get();
+            $operatorDesa = OperatorDesa::with('desa.kecamatan', 'user')
+                ->where('idOpdes', $ajuan->idOpdes)
+                ->firstOrFail();
         } elseif ($jenis === 'dafduk') {
             $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan')->findOrFail($id);
         } else {
             abort(404, 'Jenis ajuan tidak dikenali');
         }
 
-        return view('respon.create', compact('ajuan', 'jenis'));
+        return view('respon.create',  compact('ajuan', 'jenis', 'layanan', 'operatorDesa'));
     }
     public function store(Request $request)
     {
+
+        $statAjuan = $request->statAjuan;
+
+        if ($request->jenis === 'capil') {
+            $ajuan = AjuanCapil::findOrFail($request->idAjuan);
+            $ajuan->statAjuan = $request->statAjuan;
+            $ajuan->save();
+        } elseif ($request->jenis === 'dafduk') {
+        } else {
+            abort(404, 'Permintaan tidak dikenali');
+        }
+
         $request->validate([
             'jenis'    => 'required|in:capil,dafduk',
             'idAjuan'  => 'required|integer',

@@ -47,18 +47,54 @@
                                     </ul>
                                 </div>
                             @endif
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5>Detail Ajuan</h5>
-                                    <ul>
-                                        <li><strong>Nama Pengaju:</strong> {{ $ajuan->user->nama ?? '-' }}</li>
-                                        <li><strong>Jenis Layanan:</strong> {{ $ajuan->layanan->namaLayanan ?? '-' }}</li>
-                                        <li><strong>Desa:</strong> {{ $ajuan->operatorDesa->desa->namaDesa ?? '-' }}</li>
-                                        <li><strong>Kecamatan:</strong>
-                                            {{ $ajuan->operatorDesa->desa->kecamatan->namaKecamatan ?? '-' }}</li>
-                                        {{-- Tambahkan field lain jika perlu --}}
-                                    </ul>
-                                </div>
+                            <div class="mb-3">
+                                <label>Operator Desa</label>
+                                <input type="hidden" name="idOpdes" value="{{ $operatorDesa->idOpdes }}">
+                                <input type="text" class="form-control"
+                                    value="{{ $operatorDesa->user->nama }} - {{ $operatorDesa->desa->namaDesa }} ({{ $operatorDesa->desa->kecamatan->namaKec }})"
+                                    disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Layanan</label>
+                                <select name="idLayanan" class="form-control" disabled>
+                                    <option value="">-- Pilih Layanan --</option>
+                                    @foreach ($layanan as $l)
+                                        <option value="{{ $l->idLayanan }}"
+                                            {{ $l->idLayanan == $ajuan->idLayanan ? 'selected' : '' }}>
+                                            {{ $l->namaLayanan }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>No KK</label>
+                                <input type="text" name="noKK" class="form-control" value="{{ $ajuan->noKK }}"
+                                    disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>NIK</label>
+                                <input type="text" name="nik" class="form-control" value="{{ $ajuan->nik }}"
+                                    disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>No Akta</label>
+                                <input type="text" name="noAkta" class="form-control" value="{{ $ajuan->noAkta }}"
+                                    disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Nama</label>
+                                <input type="text" name="nama" class="form-control" value="{{ $ajuan->nama }}"
+                                    disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Keterangan</label>
+                                <textarea name="keterangan" class="form-control" disabled>{{ $ajuan->keterangan }}</textarea>
                             </div>
 
                             {{-- Form Respon --}}
@@ -68,9 +104,23 @@
                                 <input type="hidden" name="idAjuan" value="{{ $ajuan->getKey() }}">
                                 <input type="hidden" name="jenis" value="{{ $jenis }}">
 
+                                <div class="mb-3">
+                                    <label>Tindak Lanjut</label>
+                                    <select name="statAjuan" class="form-control" required>
+                                        <option disabled selected>-- Pilih Tindak Lanjut --</option>
+                                            <option value="disetujui"
+                                                {{ $ajuan->keterangan == 'disetujui' ? 'selected' : '' }}>
+                                                Disetujui
+                                            </option>
+                                            <option value="ditolak"
+                                                {{ $ajuan->keterangan == 'ditolak' ? 'selected' : '' }}>
+                                                Ditolak
+                                            </option>
+                                    </select>
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="respon">Tulis Respon</label>
-                                    <textarea name="respon" id="respon" rows="4" class="form-control" required>{{ old('respon') }}</textarea>
+                                    <textarea name="respon" id="respon" rows="4" class="form-control">{{ old('respon') }}</textarea>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Kirim Respon</button>
