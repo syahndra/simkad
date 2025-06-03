@@ -11,6 +11,7 @@ use App\Http\Controllers\OperatorKecController;
 use App\Http\Controllers\OperatorDesaController;
 use App\Http\Controllers\AjuanDafdukController;
 use App\Http\Controllers\AjuanCapilController;
+use App\Http\Controllers\ResponController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -47,5 +48,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['checkRole:operatorDesa,opDinCapil'])->group(function () {
         Route::resource('ajuanCapil', AjuanCapilController::class);
+    });
+    Route::middleware(['checkRole:opDinCapil,opDinDafduk'])->group(function () {
+        Route::get('/respon/{jenis}/{id}/create', [ResponController::class, 'create'])->name('respon.create');
+        Route::post('/respon', [ResponController::class, 'store'])->name('respon.store');
     });
 });

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2025 at 01:50 AM
+-- Generation Time: Jun 03, 2025 at 03:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -236,6 +236,22 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `respon`
+--
+
+CREATE TABLE `respon` (
+  `idRespon` int(10) UNSIGNED NOT NULL,
+  `idUser` int(10) UNSIGNED NOT NULL,
+  `idAjuan` int(10) UNSIGNED NOT NULL,
+  `jenis` enum('capil','dafduk') NOT NULL,
+  `respon` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -333,6 +349,13 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `respon`
+--
+ALTER TABLE `respon`
+  ADD PRIMARY KEY (`idRespon`),
+  ADD KEY `fk_respon_user` (`idUser`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -393,6 +416,12 @@ ALTER TABLE `operatorkec`
   MODIFY `idOpkec` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `respon`
+--
+ALTER TABLE `respon`
+  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -435,6 +464,12 @@ ALTER TABLE `operatordesa`
 ALTER TABLE `operatorkec`
   ADD CONSTRAINT `operatorkec_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON DELETE CASCADE,
   ADD CONSTRAINT `operatorkec_ibfk_2` FOREIGN KEY (`idKec`) REFERENCES `kecamatan` (`idKec`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `respon`
+--
+ALTER TABLE `respon`
+  ADD CONSTRAINT `fk_respon_user` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

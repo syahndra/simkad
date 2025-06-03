@@ -46,7 +46,8 @@
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('success') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
                                 </div>
                             @endif
 
@@ -69,10 +70,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($ajuan as $a)
+                                        @foreach ($ajuan as $a)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($a->layanan->created_at)->format('d-m-Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($a->layanan->created_at)->format('d-m-Y') }}
+                                                </td>
                                                 <td>{{ $a->layanan->namaLayanan }}</td>
                                                 <td>{{ $a->nama }}</td>
                                                 <td>{{ $a->nik }}</td>
@@ -84,16 +86,23 @@
                                                 <td>{{ ucfirst($a->statAjuan) }}</td>
                                                 <td>
                                                     <div class="action">
-                                                        <a href="{{ route('ajuanCapil.edit', $a->idCapil) }}"
-                                                            class="text-warning">
-                                                            <i class="lni lni lni-pencil"></i>
-                                                        </a>
-                                                        <form action="{{ route('ajuanCapil.destroy', $a->idCapil) }}"
-                                                            method="POST" style="display:inline;">
-                                                            @csrf @method('DELETE')
-                                                            <button onclick="return confirm('Yakin hapus?')"
-                                                                class="text-danger"><i class="lni lni-trash-can"></i></button>
-                                                        </form>
+                                                        @if (Auth::user()->roleUser === 'operatorDesa')
+                                                            <a href="{{ route('ajuanCapil.edit', $a->idCapil) }}"
+                                                                class="text-warning">
+                                                                <i class="lni lni lni-pencil"></i>
+                                                            </a>
+                                                            <form action="{{ route('ajuanCapil.destroy', $a->idCapil) }}"
+                                                                method="POST" style="display:inline;">
+                                                                @csrf @method('DELETE')
+                                                                <button onclick="return confirm('Yakin hapus?')"
+                                                                    class="text-danger"><i
+                                                                        class="lni lni-trash-can"></i></button>
+                                                            </form>
+                                                        @elseif (Auth::user()->roleUser === 'opDinCapil')
+                                                            <a href="{{ route('respon.create', ['jenis' => 'capil', 'id' => $a->idCapil]) }}" class="btn btn-sm btn-primary">
+                                                                Beri Respon
+                                                            </a>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
