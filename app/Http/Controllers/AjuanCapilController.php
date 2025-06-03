@@ -17,13 +17,13 @@ class AjuanCapilController extends Controller
         if (Auth::user()->roleUser === 'operatorDesa') {
             $opdes = OperatorDesa::where('idUser', Auth::user()->idUser)->first();
 
-            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan')
+            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan','respon')
                 ->whereHas('operatorDesa', function ($query) use ($opdes) {
                     $query->where('idDesa', $opdes->idDesa);
                 })
                 ->get();
         } else {
-            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan')->get();
+            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan','respon')->get();
         }
 
         return view('ajuanCapil.index', compact('ajuan'));

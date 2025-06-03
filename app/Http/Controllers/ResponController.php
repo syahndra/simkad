@@ -60,4 +60,51 @@ class ResponController extends Controller
         return redirect()->route('ajuan' . ucfirst($request->jenis) . '.index')
             ->with('success', 'Respon berhasil dikirim.');
     }
+
+    public function edit($jenis, $id)
+    {
+        $respon = Respon::where('idAjuan', $id)->firstOrFail();
+
+        if ($jenis === 'capil') {
+            $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan')->findOrFail($respon->idAjuan);
+            $operatorDesa = OperatorDesa::with('user', 'desa.kecamatan')->where('idOpdes', $ajuan->idOpdes)->first();
+            $layanan = Layanan::where('jenis', 'capil')->get();
+        } elseif ($jenis === 'dafduk') {
+            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan')->findOrFail($respon->idAjuan);
+            $operatorDesa = OperatorDesa::with('user', 'desa.kecamatan')->where('idOpdes', $ajuan->idOpdes)->first();
+            $layanan = []; // Jika tidak ada layanan khusus dafduk
+        } else {
+            abort(404, 'Jenis respon tidak dikenali');
+        }
+
+        return view('respon.edit', compact('respon', 'ajuan', 'operatorDesa', 'layanan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'statAjuan' => 'required|in:disetujui,ditolak',
+            'respon' => 'required|string',
+        ]);
+
+        $respon = Respon::findOrFail($id);
+        $respon->update([
+            'respon' => $request->respon,
+        ]);
+
+        // Update status ajuan
+        if ($respon->jenis === 'capil') {
+            $ajuan = AjuanCapil::findOrFail($respon->idAjuan);
+        } elseif ($respon->jenis === 'dafduk') {
+            $ajuan = AjuanDafduk::findOrFail($respon->idAjuan);
+        } else {
+            abort(404, 'Jenis respon tidak dikenali');
+        }
+
+        $ajuan->statAjuan = $request->statAjuan;
+        $ajuan->save();
+
+        return redirect()->route('ajuan' . ucfirst($respon->jenis) . '.index')
+    ->with('success', 'Respon berhasil diperbarui.');
+    }
 }

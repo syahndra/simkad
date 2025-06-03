@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2025 at 03:42 AM
+-- Generation Time: Jun 04, 2025 at 01:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,7 @@ CREATE TABLE `ajuancapil` (
 --
 
 INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'belum diproses', '2025-06-01 23:41:45', '2025-06-02 07:59:30');
+(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'disetujui', '2025-06-01 23:41:45', '2025-06-03 16:29:11');
 
 -- --------------------------------------------------------
 
@@ -244,10 +244,17 @@ CREATE TABLE `respon` (
   `idUser` int(10) UNSIGNED NOT NULL,
   `idAjuan` int(10) UNSIGNED NOT NULL,
   `jenis` enum('capil','dafduk') NOT NULL,
-  `respon` text NOT NULL,
+  `respon` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `respon`
+--
+
+INSERT INTO `respon` (`idRespon`, `idUser`, `idAjuan`, `jenis`, `respon`, `created_at`, `updated_at`) VALUES
+(2, 7, 1, 'capil', 'sudah benar', '2025-06-03 07:54:21', '2025-06-03 16:29:11');
 
 -- --------------------------------------------------------
 
@@ -419,7 +426,7 @@ ALTER TABLE `operatorkec`
 -- AUTO_INCREMENT for table `respon`
 --
 ALTER TABLE `respon`
-  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

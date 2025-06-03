@@ -13,7 +13,15 @@ class AjuanCapil extends Model
     protected $primaryKey = 'idCapil';
 
     protected $fillable = [
-        'idOpdes', 'idLayanan', 'tanggalAjuan', 'noAkta', 'noKK', 'nik', 'nama', 'keterangan', 'statAjuan'
+        'idOpdes',
+        'idLayanan',
+        'tanggalAjuan',
+        'noAkta',
+        'noKK',
+        'nik',
+        'nama',
+        'keterangan',
+        'statAjuan'
     ];
 
     public function layanan()
@@ -24,5 +32,10 @@ class AjuanCapil extends Model
     public function operatorDesa()
     {
         return $this->belongsTo(OperatorDesa::class, 'idOpdes');
+    }
+
+    public function respon()
+    {
+        return $this->hasOne(Respon::class, 'idAjuan')->where('jenis', 'capil');
     }
 }

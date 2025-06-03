@@ -52,5 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['checkRole:opDinCapil,opDinDafduk'])->group(function () {
         Route::get('/respon/{jenis}/{id}/create', [ResponController::class, 'create'])->name('respon.create');
         Route::post('/respon', [ResponController::class, 'store'])->name('respon.store');
+        Route::get('/respon/{jenis}/{id}/edit', [ResponController::class, 'edit'])->name('respon.edit');
+        Route::put('/respon/{id}', [ResponController::class, 'update'])->name('respon.update');
     });
 });
