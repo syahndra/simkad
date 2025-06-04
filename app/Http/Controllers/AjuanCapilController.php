@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AjuanCapil;
 use App\Models\Layanan;
 use App\Models\OperatorDesa;
+use App\Models\Respon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,13 +18,13 @@ class AjuanCapilController extends Controller
         if (Auth::user()->roleUser === 'operatorDesa') {
             $opdes = OperatorDesa::where('idUser', Auth::user()->idUser)->first();
 
-            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan','respon')
+            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan', 'respon')
                 ->whereHas('operatorDesa', function ($query) use ($opdes) {
                     $query->where('idDesa', $opdes->idDesa);
                 })
                 ->get();
         } else {
-            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan','respon')->get();
+            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan', 'respon')->get();
         }
 
         return view('ajuanCapil.index', compact('ajuan'));
@@ -90,4 +91,31 @@ class AjuanCapilController extends Controller
         AjuanCapil::findOrFail($id)->delete();
         return redirect()->route('ajuanCapil.index')->with('success', 'Ajuan berhasil dihapus.');
     }
+
+    // public function revisi($id)
+    // {
+    //     $respon = Respon::where('idAjuan', $id)->firstOrFail();
+    //     $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan')->findOrFail($respon->idAjuan);
+
+    //     return view('ajuanCapil.revisi', compact('respon', 'ajuan'));
+    // }
+
+    // public function revisiProses(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'statAjuan' => 'required',
+    //     ]);
+
+    //     $respon = Respon::findOrFail($id);
+    //     $respon->update([
+    //         'respon' => $request->respon,
+    //     ]);
+
+    //     $ajuan = AjuanCapil::findOrFail($respon->idAjuan);
+    //     $ajuan->statAjuan = $request->statAjuan;
+    //     $ajuan->save();
+
+    //     return redirect()->route('ajuan' . ucfirst($respon->jenis) . '.index')
+    //         ->with('success', 'Pengajuan berhasil diajukan ulang.');
+    // }
 }

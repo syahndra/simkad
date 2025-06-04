@@ -79,7 +79,7 @@
             @endif
 
             {{-- Untuk operatorDesa, operatorKecamatan, opDinDafduk --}}
-            @if (in_array($role, ['operatorDesa', 'operatorKecamatan', 'verifDafduk']))
+            @if (in_array($role, ['operatorDesa', 'operatorKecamatan', 'opDinDafduk']))
             <li class="nav-item @if ($menu == 'ajuanDafduk') active @endif">
                 <a href="{{ route('ajuanDafduk.index') }}">
                     <i class="lni lni-postcard icon"></i>

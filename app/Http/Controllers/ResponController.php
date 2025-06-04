@@ -17,18 +17,14 @@ class ResponController extends Controller
         $ajuan = null;
 
         if ($jenis === 'capil') {
-            $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan')->findOrFail($id);
-            $layanan = Layanan::where('jenis', 'capil')->get();
-            $operatorDesa = OperatorDesa::with('desa.kecamatan', 'user')
-                ->where('idOpdes', $ajuan->idOpdes)
-                ->firstOrFail();
+            $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan')->findOrFail($id);
         } elseif ($jenis === 'dafduk') {
-            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan')->findOrFail($id);
+            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->findOrFail($id);
         } else {
             abort(404, 'Jenis ajuan tidak dikenali');
         }
 
-        return view('respon.create',  compact('ajuan', 'jenis', 'layanan', 'operatorDesa'));
+        return view('respon.create',  compact('ajuan', 'jenis'));
     }
     public function store(Request $request)
     {
@@ -40,14 +36,16 @@ class ResponController extends Controller
             $ajuan->statAjuan = $request->statAjuan;
             $ajuan->save();
         } elseif ($request->jenis === 'dafduk') {
+            $ajuan = AjuanDafduk::findOrFail($request->idAjuan);
+            $ajuan->statAjuan = $request->statAjuan;
+            $ajuan->save();
         } else {
             abort(404, 'Permintaan tidak dikenali');
         }
 
         $request->validate([
             'jenis'    => 'required|in:capil,dafduk',
-            'idAjuan'  => 'required|integer',
-            'respon'   => 'required|string',
+            'idAjuan'  => 'required|integer'
         ]);
 
         Respon::create([
@@ -67,24 +65,19 @@ class ResponController extends Controller
 
         if ($jenis === 'capil') {
             $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan')->findOrFail($respon->idAjuan);
-            $operatorDesa = OperatorDesa::with('user', 'desa.kecamatan')->where('idOpdes', $ajuan->idOpdes)->first();
-            $layanan = Layanan::where('jenis', 'capil')->get();
         } elseif ($jenis === 'dafduk') {
             $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan')->findOrFail($respon->idAjuan);
-            $operatorDesa = OperatorDesa::with('user', 'desa.kecamatan')->where('idOpdes', $ajuan->idOpdes)->first();
-            $layanan = []; // Jika tidak ada layanan khusus dafduk
         } else {
             abort(404, 'Jenis respon tidak dikenali');
         }
 
-        return view('respon.edit', compact('respon', 'ajuan', 'operatorDesa', 'layanan'));
+        return view('respon.edit', compact('respon', 'ajuan'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'statAjuan' => 'required|in:disetujui,ditolak',
-            'respon' => 'required|string',
+            'statAjuan' => 'required'
         ]);
 
         $respon = Respon::findOrFail($id);
@@ -105,6 +98,6 @@ class ResponController extends Controller
         $ajuan->save();
 
         return redirect()->route('ajuan' . ucfirst($respon->jenis) . '.index')
-    ->with('success', 'Respon berhasil diperbarui.');
+            ->with('success', 'Respon berhasil diperbarui.');
     }
 }

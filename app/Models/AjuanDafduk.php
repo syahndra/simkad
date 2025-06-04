@@ -25,4 +25,9 @@ class AjuanDafduk extends Model
     {
         return $this->belongsTo(OperatorDesa::class, 'idOpdes');
     }
+
+    public function respon()
+    {
+        return $this->hasOne(Respon::class, 'idAjuan')->where('jenis', 'dafduk');
+    }
 }

@@ -49,23 +49,16 @@
                             @endif
                             <div class="mb-3">
                                 <label>Operator Desa</label>
-                                <input type="hidden" name="idOpdes" value="{{ $operatorDesa->idOpdes }}">
+                                <input type="hidden" name="idOpdes" value="{{ $ajuan->operatorDesa->idOpdes }}">
                                 <input type="text" class="form-control"
-                                    value="{{ $operatorDesa->user->nama }} - {{ $operatorDesa->desa->namaDesa }} ({{ $operatorDesa->desa->kecamatan->namaKec }})"
+                                    value="{{ $ajuan->operatorDesa->user->nama }} - {{ $ajuan->operatorDesa->desa->namaDesa }} ({{ $ajuan->operatorDesa->desa->kecamatan->namaKec }})"
                                     disabled>
                             </div>
 
                             <div class="mb-3">
                                 <label>Layanan</label>
-                                <select name="idLayanan" class="form-control" disabled>
-                                    <option value="">-- Pilih Layanan --</option>
-                                    @foreach ($layanan as $l)
-                                        <option value="{{ $l->idLayanan }}"
-                                            {{ $l->idLayanan == $ajuan->idLayanan ? 'selected' : '' }}>
-                                            {{ $l->namaLayanan }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <input type="text" name="layanan" class="form-control"
+                                    value="{{ $ajuan->layanan->namaLayanan }}" disabled>
                             </div>
 
                             <div class="mb-3">
@@ -80,11 +73,13 @@
                                     disabled>
                             </div>
 
-                            <div class="mb-3">
-                                <label>No Akta</label>
-                                <input type="text" name="noAkta" class="form-control" value="{{ $ajuan->noAkta }}"
-                                    disabled>
-                            </div>
+                            @if ($jenis === 'capil')
+                                <div class="mb-3">
+                                    <label>No Akta</label>
+                                    <input type="text" name="noAkta" class="form-control" value="{{ $ajuan->noAkta }}"
+                                        disabled>
+                                </div>
+                            @endif
 
                             <div class="mb-3">
                                 <label>Nama</label>
@@ -108,14 +103,13 @@
                                     <label>Tindak Lanjut</label>
                                     <select name="statAjuan" class="form-control" required>
                                         <option disabled selected>-- Pilih Tindak Lanjut --</option>
-                                            <option value="disetujui"
-                                                {{ $ajuan->keterangan == 'disetujui' ? 'selected' : '' }}>
-                                                Disetujui
-                                            </option>
-                                            <option value="ditolak"
-                                                {{ $ajuan->keterangan == 'ditolak' ? 'selected' : '' }}>
-                                                Ditolak
-                                            </option>
+                                        <option value="disetujui"
+                                            {{ $ajuan->keterangan == 'disetujui' ? 'selected' : '' }}>
+                                            Disetujui
+                                        </option>
+                                        <option value="ditolak" {{ $ajuan->keterangan == 'ditolak' ? 'selected' : '' }}>
+                                            Ditolak
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group mb-3">

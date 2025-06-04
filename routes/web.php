@@ -12,6 +12,7 @@ use App\Http\Controllers\OperatorDesaController;
 use App\Http\Controllers\AjuanDafdukController;
 use App\Http\Controllers\AjuanCapilController;
 use App\Http\Controllers\ResponController;
+use App\Models\AjuanCapil;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -49,10 +50,14 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['checkRole:operatorDesa,opDinCapil'])->group(function () {
         Route::resource('ajuanCapil', AjuanCapilController::class);
     });
-    Route::middleware(['checkRole:opDinCapil,opDinDafduk'])->group(function () {
+    Route::middleware(['checkRole:operatorDesa,opDinCapil,opDinDafduk,operatorKecamatan'])->group(function () {
         Route::get('/respon/{jenis}/{id}/create', [ResponController::class, 'create'])->name('respon.create');
         Route::post('/respon', [ResponController::class, 'store'])->name('respon.store');
         Route::get('/respon/{jenis}/{id}/edit', [ResponController::class, 'edit'])->name('respon.edit');
         Route::put('/respon/{id}', [ResponController::class, 'update'])->name('respon.update');
+    });
+    Route::middleware(['checkRole:operatorDesa,opDinCapil'])->group(function () {
+        Route::get('/respon/{id}/revisi', [ResponController::class, 'revisi'])->name('ajuan.revisi');
+        Route::put('/respon/{id}/revisi', [ResponController::class, 'revisiProses'])->name('ajuan.revisi');
     });
 });

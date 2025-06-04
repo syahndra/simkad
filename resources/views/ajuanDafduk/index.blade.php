@@ -46,7 +46,8 @@
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('success') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
                                 </div>
                             @endif
 
@@ -68,10 +69,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($ajuan as $a)
+                                        @foreach ($ajuan as $a)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($a->layanan->created_at)->format('d-m-Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($a->layanan->created_at)->format('d-m-Y') }}
+                                                </td>
                                                 <td>{{ $a->layanan->namaLayanan }}</td>
                                                 <td>{{ $a->nama }}</td>
                                                 <td>{{ $a->nik }}</td>
@@ -79,19 +81,58 @@
                                                 <td>{{ $a->keterangan }}</td>
                                                 <td>{{ $a->operatorDesa->desa->kecamatan->namaKec ?? '-' }},
                                                     {{ $a->operatorDesa->desa->namaDesa ?? '-' }}</td>
-                                                <td>{{ ucfirst($a->statAjuan) }}</td>
+                                                <td>
+                                                    <span
+                                                        class="badge 
+                                            {{ $a->statAjuan === 'ditolak'
+                                                ? 'bg-danger'
+                                                : ($a->statAjuan === 'disetujui'
+                                                    ? 'bg-success'
+                                                    : ($a->statAjuan === 'revisi'
+                                                        ? 'bg-warning'
+                                                        : 'bg-secondary')) }}">
+                                                        {{ ucfirst($a->statAjuan) }}
+                                                    </span>
+                                                    @if ($a->respon)
+                                                        {{ $a->respon->respon }}
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <div class="action">
-                                                        <a href="{{ route('ajuanDafduk.edit', $a->idDafduk) }}"
-                                                            class="text-warning">
-                                                            <i class="lni lni lni-pencil"></i>
-                                                        </a>
-                                                        <form action="{{ route('ajuanDafduk.destroy', $a->idDafduk) }}"
-                                                            method="POST" style="display:inline;">
-                                                            @csrf @method('DELETE')
-                                                            <button onclick="return confirm('Yakin hapus?')"
-                                                                class="text-danger"><i class="lni lni-trash-can"></i></button>
-                                                        </form>
+                                                        @if (Auth::user()->roleUser === 'operatorDesa')
+                                                            @if ($a->statAjuan === 'belum diproses')
+                                                                <a href="{{ route('ajuanDafduk.edit', $a->idDafduk) }}"
+                                                                    class="text-warning">
+                                                                    <i class="lni lni lni-pencil"></i>
+                                                                </a>
+                                                                <form
+                                                                    action="{{ route('ajuanDafduk.destroy', $a->idDafduk) }}"
+                                                                    method="POST" style="display:inline;">
+                                                                    @csrf @method('DELETE')
+                                                                    <button onclick="return confirm('Yakin hapus?')"
+                                                                        class="text-danger"><i
+                                                                            class="lni lni-trash-can"></i></button>
+                                                                </form>
+                                                            @endif
+                                                            @if ($a->statAjuan === 'ditolak')
+                                                                <a href="{{ route('respon.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                    class="btn btn-sm btn-success">
+                                                                    Ajukan Ulang
+                                                                </a>
+                                                            @endif
+                                                        @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
+                                                            @if ($a->statAjuan === 'belum diproses')
+                                                                <a href="{{ route('respon.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                    class="btn btn-sm btn-primary">
+                                                                    Beri Respon
+                                                                </a>
+                                                            @else
+                                                                <a href="{{ route('respon.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                    class="btn btn-sm btn-warning">
+                                                                    Ubah Respon
+                                                                </a>
+                                                            @endif
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>

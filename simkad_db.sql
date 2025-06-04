@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2025 at 01:30 AM
+-- Generation Time: Jun 04, 2025 at 06:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,8 @@ CREATE TABLE `ajuancapil` (
 --
 
 INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'disetujui', '2025-06-01 23:41:45', '2025-06-03 16:29:11');
+(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'disetujui', '2025-06-01 23:41:45', '2025-06-04 03:44:55'),
+(4, 2, 5, '3329136712000003', '3329135305250001', 'RUHWI', '3329-KM-02062025-0059', NULL, 'disetujui', '2025-06-03 18:49:18', '2025-06-03 19:50:01');
 
 -- --------------------------------------------------------
 
@@ -72,7 +73,9 @@ CREATE TABLE `ajuandafduk` (
 --
 
 INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'belum diproses', '2025-06-02 01:14:33', '2025-06-02 01:14:33');
+(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'disetujui', '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
+(4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'disetujui', '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
+(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'disetujui', '2025-06-03 21:22:52', '2025-06-03 21:29:09');
 
 -- --------------------------------------------------------
 
@@ -160,7 +163,12 @@ CREATE TABLE `layanan` (
 INSERT INTO `layanan` (`idLayanan`, `namaLayanan`, `jenis`, `aksesVer`) VALUES
 (1, 'Penambahan Anggota Keluarga', 'dafduk', 'kecamatan'),
 (2, 'Akta Kelahiran', 'capil', 'dinasCapil'),
-(5, 'Akta Kematian', 'capil', 'dinasCapil');
+(5, 'Akta Kematian', 'capil', 'dinasCapil'),
+(6, 'Pembuatan KK Baru', 'dafduk', 'kecamatan'),
+(7, 'Pengurangan Anggota Keluarga', 'dafduk', 'kecamatan'),
+(8, 'Perubahan Data', 'dafduk', 'kecamatan'),
+(9, 'Perpindahan Antardesa, Kecamatan', 'dafduk', 'kecamatan'),
+(10, 'Perpindahan AntarKab/Prov', 'dafduk', 'dinasDafduk');
 
 -- --------------------------------------------------------
 
@@ -218,7 +226,7 @@ CREATE TABLE `operatorkec` (
 --
 
 INSERT INTO `operatorkec` (`idOpkec`, `idUser`, `idKec`) VALUES
-(1, 5, 8),
+(1, 5, 6),
 (2, 6, 9);
 
 -- --------------------------------------------------------
@@ -254,7 +262,11 @@ CREATE TABLE `respon` (
 --
 
 INSERT INTO `respon` (`idRespon`, `idUser`, `idAjuan`, `jenis`, `respon`, `created_at`, `updated_at`) VALUES
-(2, 7, 1, 'capil', 'sudah benar', '2025-06-03 07:54:21', '2025-06-03 16:29:11');
+(3, 7, 1, 'capil', NULL, '2025-06-03 18:17:38', '2025-06-03 18:48:12'),
+(6, 7, 4, 'capil', NULL, '2025-06-03 19:17:10', '2025-06-03 19:50:01'),
+(7, 6, 3, 'dafduk', NULL, '2025-06-03 19:25:47', '2025-06-03 19:59:31'),
+(9, 15, 4, 'dafduk', NULL, '2025-06-03 21:29:04', '2025-06-03 21:29:04'),
+(10, 15, 5, 'dafduk', NULL, '2025-06-03 21:29:09', '2025-06-03 21:29:09');
 
 -- --------------------------------------------------------
 
@@ -280,13 +292,15 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`idUser`, `nama`, `username`, `email`, `password`, `roleUser`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'M. Syahndra Ramadhan', 'syahndra', 'mohammadsyahndra@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'superadmin', 'aktif', NULL, NULL),
-(4, 'Farohis', 'farohis', 'farohis@gmail.com', '$2y$12$De/KIsm.oIuBWfxHqnFSkO0UEhhPhf2zsjtgv5WN.25SEiiN2Y7mm', 'admin', 'aktif', '2025-05-01 08:31:05', '2025-05-01 08:31:18'),
-(5, 'Edi', 'edi', 'edi@gmail.com', '$2y$12$faINwKjpht4NmmPH.YB2P.fbdlQfegLPwXEyC0Ua/HgkKlzMSa4By', 'operatorKecamatan', 'aktif', '2025-05-01 18:33:10', '2025-05-01 18:37:38'),
-(6, 'Wildan', 'wildan', 'wildan@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-05-01 18:43:09'),
-(7, 'Jimmy', 'jimmy', 'jimmy@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'opDinCapil', 'aktif', '2025-05-01 18:52:20', '2025-05-01 18:52:20'),
-(9, 'Siyung', 'siyung', 'siyunggg_ganteng@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'operatorDesa', 'aktif', '2025-05-03 02:36:07', '2025-05-05 18:26:45'),
-(10, 'Toni Setiawan', 'toni', 'toni_setiawan@gmail.com', '$2y$12$ji6PkhLjDpv35uS.DPDK2eK8.D9prYH7lFY5c1MxlCnoXFkhtUZm6', 'admin', 'aktif', '2025-05-05 18:25:59', '2025-05-05 18:25:59'),
-(11, 'Endah Tri W', 'endahhh', 'endah@gmail.com', '$2y$12$tBmjyhpZE0GUQ72T9Y3MTu.HFkX5z7HXoU8VO/pPULUiTNpSIX5I2', 'operatorDesa', 'aktif', '2025-05-05 18:31:15', '2025-05-05 18:31:15');
+(4, 'Farohi', 'farohi', 'farohi@gmail.com', '$2y$12$4NDaLJPdEFSAXr55XjsKdeQ71FLULKyxnawogFItRbfcDQrdYwhru', 'admin', 'aktif', '2025-05-01 08:31:05', '2025-06-03 21:03:48'),
+(5, 'Edi', 'edi', 'edi@gmail.com', '$2y$12$/k450AxFIAf0vY4wZtyXyOCCbgRvGlp.LIFEUCKL.crfdNq7tKIQi', 'operatorKecamatan', 'aktif', '2025-05-01 18:33:10', '2025-06-03 21:05:48'),
+(6, 'Wildan', 'wildan', 'wildan@gmail.com', '$2y$12$eRvtk6g/ZMMj0gHc67asT.ioto6xIJ1TSaXm0q4GWn6aBIj3AY8nq', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-06-03 21:06:04'),
+(7, 'Jimmy', 'jimmy', 'jimmy@gmail.com', '$2y$12$SeuCQplSgYP3fWexiCH9Wu2M1tXPsGFtVEA4u3ZKseASD6rX3x24S', 'opDinCapil', 'aktif', '2025-05-01 18:52:20', '2025-06-03 21:05:18'),
+(9, 'Siyung', 'siyung', 'siyunggg_ganteng@gmail.com', '$2y$12$61Lqk4/8Dvab7ZinFMhHl.ZWXbwbj5OSe4266wlFc5yBNqe6Xc7QW', 'operatorDesa', 'aktif', '2025-05-03 02:36:07', '2025-06-03 21:06:44'),
+(10, 'Toni Setiawan', 'toni', 'toni_setiawan@gmail.com', '$2y$12$o5nGh3eaKfvMB/Jk57SWEO6ifz8f9M3W5Xmch.LhYFDaNZyTw0UZO', 'admin', 'aktif', '2025-05-05 18:25:59', '2025-06-03 21:03:30'),
+(11, 'Endah Tri W', 'endah', 'endah@gmail.com', '$2y$12$cTiOzakLftVpWPlfnmEEleU3Ap4.OGZTPKDWnfaU1wcLks3O/GDvy', 'operatorDesa', 'aktif', '2025-05-05 18:31:15', '2025-06-03 21:07:06'),
+(14, 'Fiker Aofa', 'fiker', 'fiker@gmail.com', '$2y$12$hJawn.ckdrxVhx8semOEQ.KX/DrOW2C4Zhfgzi9F5Uz55SZ9yZWTu', 'admin', 'aktif', '2025-06-03 21:03:05', '2025-06-03 21:03:05'),
+(15, 'Fiqih Fardana', 'fiqih', 'fiqih@gmail.com', '$2y$12$UzQMaASkgOOuAx5EGjPCTOWTNzEkZ81wyuspYKSPreTbjHO/gDnN.', 'opDinDafduk', 'aktif', '2025-06-03 21:04:54', '2025-06-03 21:04:54');
 
 --
 -- Indexes for dumped tables
@@ -378,13 +392,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `ajuancapil`
 --
 ALTER TABLE `ajuancapil`
-  MODIFY `idCapil` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCapil` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ajuandafduk`
 --
 ALTER TABLE `ajuandafduk`
-  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `desa`
@@ -402,7 +416,7 @@ ALTER TABLE `kecamatan`
 -- AUTO_INCREMENT for table `layanan`
 --
 ALTER TABLE `layanan`
-  MODIFY `idLayanan` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idLayanan` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -426,13 +440,13 @@ ALTER TABLE `operatorkec`
 -- AUTO_INCREMENT for table `respon`
 --
 ALTER TABLE `respon`
-  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idUser` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables

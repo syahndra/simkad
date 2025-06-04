@@ -24,15 +24,22 @@ class AjuanDafdukController extends Controller
                     $query->where('idDesa', $opdes->idDesa);
                 })
                 ->get();
-
         } elseif ($user->roleUser === 'operatorKecamatan') {
             $opkec = OperatorKec::where('idUser', $user->idUser)->first();
             $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')
                 ->whereHas('operatorDesa.desa', function ($query) use ($opkec) {
                     $query->where('idKec', $opkec->idKec);
                 })
+                ->whereHas('layanan', function ($query) {
+                    $query->where('aksesVer', 'kecamatan');
+                })
                 ->get();
-
+        } elseif ($user->roleUser === 'opDinDafduk') {
+            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')
+                ->whereHas('layanan', function ($query) {
+                    $query->where('aksesVer', 'dinasDafduk');
+                })
+                ->get();
         } else {
             // Role lain, ambil semua
             $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->get();
