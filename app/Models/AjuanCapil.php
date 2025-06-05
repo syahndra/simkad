@@ -38,4 +38,9 @@ class AjuanCapil extends Model
     {
         return $this->hasOne(Respon::class, 'idAjuan')->where('jenis', 'capil');
     }
+
+     public function FinalDokumen()
+    {
+        return $this->hasOne(FinalDokumen::class, 'idAjuan')->where('jenis', 'capil');
+    }
 }

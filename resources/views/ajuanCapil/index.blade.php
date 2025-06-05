@@ -66,6 +66,7 @@
                                             <th>Keterangan</th>
                                             <th>Wilayah</th>
                                             <th>Status</th>
+                                            <th>#</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -99,7 +100,14 @@
                                                     @if ($a->respon)
                                                         {{ $a->respon->respon }}
                                                     @endif
-
+                                                </td>
+                                                <td>
+                                                    @isset($a->finalDokumen->filePath)
+                                                        <a href="{{ asset('storage/' . $a->finalDokumen->filePath) }}"
+                                                            target="_blank" class="text-primary" title="Lihat Dokumen">
+                                                            <i class="lni lni-files"></i>
+                                                        </a>
+                                                    @endisset
                                                 </td>
                                                 <td>
                                                     <div class="action">
@@ -123,6 +131,17 @@
                                                                     class="btn btn-sm btn-success">
                                                                     Ajukan Ulang
                                                                 </a>
+                                                            @endif
+                                                            @if ($a->statAjuan === 'disetujui')
+                                                                @isset($a->finalDokumen)
+                                                                    <a href="{{ route('finalDokumen.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
+                                                                        class="btn btn-sm btn-warning">Ubah
+                                                                        Dokumen </a>
+                                                                @else
+                                                                    <a href="{{ route('finalDokumen.create', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
+                                                                        class="btn btn-sm btn-primary">Upload
+                                                                        Dokumen </a>
+                                                                @endisset
                                                             @endif
                                                         @elseif (Auth::user()->roleUser === 'opDinCapil')
                                                             @if ($a->statAjuan === 'belum diproses')

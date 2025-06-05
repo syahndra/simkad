@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2025 at 06:41 AM
+-- Generation Time: Jun 05, 2025 at 06:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -108,6 +108,30 @@ INSERT INTO `desa` (`idDesa`, `namaDesa`, `idKec`) VALUES
 (14, 'Kalimati', 9),
 (15, 'Banjaranyar', 9),
 (16, 'Kutamendala', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `finaldokumen`
+--
+
+CREATE TABLE `finaldokumen` (
+  `idFinDok` int(10) UNSIGNED NOT NULL,
+  `idAjuan` int(10) UNSIGNED NOT NULL,
+  `jenis` enum('capil','dafduk') NOT NULL,
+  `filename` varchar(255) DEFAULT NULL,
+  `filePath` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `finaldokumen`
+--
+
+INSERT INTO `finaldokumen` (`idFinDok`, `idAjuan`, `jenis`, `filename`, `filePath`, `created_at`, `updated_at`) VALUES
+(1, 3, 'dafduk', 'KK - KADRIM', 'dokumen_final/h1x9wZ2GtVP8O4VO3dzcDz1FUii6zEKwC0TSC45o.pdf', '2025-06-04 19:30:03', '2025-06-04 20:47:17'),
+(2, 1, 'capil', 'AKTA LAHIR - ALENA SAFIRA', 'dokumen_final/cEKH0TbYifAg3abzkzBMfPSOpJfLTrtz2c755Ovi.pdf', '2025-06-04 20:58:17', '2025-06-04 20:59:43');
 
 -- --------------------------------------------------------
 
@@ -330,6 +354,12 @@ ALTER TABLE `desa`
   ADD KEY `id_kecamatan` (`idKec`);
 
 --
+-- Indexes for table `finaldokumen`
+--
+ALTER TABLE `finaldokumen`
+  ADD PRIMARY KEY (`idFinDok`);
+
+--
 -- Indexes for table `kecamatan`
 --
 ALTER TABLE `kecamatan`
@@ -405,6 +435,12 @@ ALTER TABLE `ajuandafduk`
 --
 ALTER TABLE `desa`
   MODIFY `idDesa` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `finaldokumen`
+--
+ALTER TABLE `finaldokumen`
+  MODIFY `idFinDok` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kecamatan`

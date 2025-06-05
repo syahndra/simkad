@@ -65,6 +65,7 @@
                                             <th>Keterangan</th>
                                             <th>Wilayah</th>
                                             <th>Status</th>
+                                            <th>#</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -98,6 +99,14 @@
                                                     @endif
                                                 </td>
                                                 <td>
+                                                    @isset($a->finalDokumen->filePath)
+                                                        <a href="{{ asset('storage/' . $a->finalDokumen->filePath) }}"
+                                                            target="_blank" class="text-primary" title="Lihat Dokumen">
+                                                            <i class="lni lni-files"></i>
+                                                        </a>
+                                                    @endisset
+                                                </td>
+                                                <td>
                                                     <div class="action">
                                                         @if (Auth::user()->roleUser === 'operatorDesa')
                                                             @if ($a->statAjuan === 'belum diproses')
@@ -119,6 +128,17 @@
                                                                     class="btn btn-sm btn-success">
                                                                     Ajukan Ulang
                                                                 </a>
+                                                            @endif
+                                                            @if ($a->statAjuan === 'disetujui')
+                                                                @isset($a->finalDokumen)
+                                                                    <a href="{{ route('finalDokumen.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                        class="btn btn-sm btn-warning">Ubah
+                                                                        Dokumen </a>
+                                                                @else
+                                                                    <a href="{{ route('finalDokumen.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                        class="btn btn-sm btn-primary">Upload
+                                                                        Dokumen </a>
+                                                                @endisset
                                                             @endif
                                                         @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
                                                             @if ($a->statAjuan === 'belum diproses')

@@ -30,4 +30,9 @@ class AjuanDafduk extends Model
     {
         return $this->hasOne(Respon::class, 'idAjuan')->where('jenis', 'dafduk');
     }
+
+    public function finalDokumen()
+    {
+        return $this->hasOne(FinalDokumen::class, 'idAjuan')->where('jenis', 'dafduk');
+    }
 }

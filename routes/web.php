@@ -12,7 +12,8 @@ use App\Http\Controllers\OperatorDesaController;
 use App\Http\Controllers\AjuanDafdukController;
 use App\Http\Controllers\AjuanCapilController;
 use App\Http\Controllers\ResponController;
-use App\Models\AjuanCapil;
+use App\Http\Controllers\FinalDokumenController;
+use App\Models\FinalDokumen;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -60,4 +61,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/respon/{id}/revisi', [ResponController::class, 'revisi'])->name('ajuan.revisi');
         Route::put('/respon/{id}/revisi', [ResponController::class, 'revisiProses'])->name('ajuan.revisi');
     });
+    Route::get('/finalDok/{jenis}/{id}/create', [FinalDokumenController::class, 'create'])->name('finalDokumen.create');
+    Route::post('/finalDok', [FinalDokumenController::class, 'store'])->name('finalDokumen.store');
+    Route::get('/finalDok/{jenis}/{id}/edit', [FinalDokumenController::class, 'edit'])->name('finalDokumen.edit');
+    Route::put('/finalDok/{id}', [FinalDokumenController::class, 'update'])->name('finalDokumen.update');
 });
