@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\AjuanCapil;
 use App\Models\AjuanDafduk;
 use App\Models\Respon;
-use App\Models\Layanan;
-use App\Models\OperatorDesa;
 use Illuminate\Support\Facades\Auth;
 
 class ResponController extends Controller
@@ -28,9 +26,6 @@ class ResponController extends Controller
     }
     public function store(Request $request)
     {
-
-        $statAjuan = $request->statAjuan;
-
         if ($request->jenis === 'capil') {
             $ajuan = AjuanCapil::findOrFail($request->idAjuan);
             $ajuan->statAjuan = $request->statAjuan;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\Desa;
 use App\Models\Kecamatan;
 use Illuminate\Http\Request;

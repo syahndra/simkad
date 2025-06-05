@@ -8,8 +8,6 @@ use App\Models\AjuanDafduk;
 use App\Models\OperatorDesa;
 use App\Models\OperatorKec;
 use App\Models\Layanan;
-use App\Models\Desa;
-use App\Models\Kecamatan;
 
 class AjuanDafdukController extends Controller
 {
@@ -50,11 +48,7 @@ class AjuanDafdukController extends Controller
 
     public function create()
     {
-        // Ambil layanan hanya yang jenis = dafduk
         $layanan = Layanan::where('jenis', 'dafduk')->get();
-
-        // Ambil hanya operator desa
-        // $operatorDesa = OperatorDesa::with('user', 'desa.kecamatan')->get();
         $operatorDesa = OperatorDesa::with('desa.kecamatan', 'user')
             ->where('idUser', Auth::id())
             ->firstOrFail();

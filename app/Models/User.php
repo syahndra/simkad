@@ -21,21 +21,4 @@ class User extends Authenticatable
         'roleUser',
         'status'
     ];
-    public function operatorDinas()
-    {
-        return $this->hasOne(OperatorDinas::class, 'idUser', 'idUser');
-    }
-
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
-
-    // protected function casts(): array
-    // {
-    //     return [
-    //         'email_verified_at' => 'datetime',
-    //         'password' => 'hashed',
-    //     ];
-    // }
 }
