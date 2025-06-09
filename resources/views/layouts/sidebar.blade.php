@@ -62,6 +62,7 @@
                             class="@if (Str::contains($title, 'Admin')) active @endif">Admin</a>
                     </li>
                     @endif
+                    @if ($role == 'admin')
                     <li>
                         <a href="{{ route('operatorDinas.index') }}"
                             class="@if (Str::contains($title, 'Operator Dinas')) active @endif">Operator Dinas</a>
@@ -74,6 +75,7 @@
                         <a href="{{ route('operatorDesa.index') }}"
                             class="@if (Str::contains($title, 'Operator Desa')) active @endif">Operator Desa</a>
                     </li>
+                    @endif
                 </ul>
             </li>
             @endif

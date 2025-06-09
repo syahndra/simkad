@@ -93,7 +93,7 @@
                                     <textarea name="keterangan" class="form-control"></textarea>
                                 </div>
 
-                                <input type="hidden" name="statAjuan" value="belum diproses">
+                                <input type="hidden" name="statAjuan" value="dalam proses">
                                 <a href="{{ route('ajuanCapil.index') }}" class="btn btn-secondary">Kembali</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </form>

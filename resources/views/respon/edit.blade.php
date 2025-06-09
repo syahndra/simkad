@@ -82,8 +82,8 @@
                                         <label>Tindak Lanjut</label>
                                         <select name="statAjuan" class="form-control" required>
                                             <option disabled selected>-- Pilih Tindak Lanjut --</option>
-                                            <option value="disetujui"
-                                                {{ $ajuan->statAjuan === 'disetujui' ? 'selected' : '' }}>Disetujui
+                                            <option value="sudah diproses"
+                                                {{ $ajuan->statAjuan === 'sudah diproses' ? 'selected' : '' }}>Sudah Diproses
                                             </option>
                                             <option value="ditolak"
                                                 {{ $ajuan->statAjuan === 'ditolak' ? 'selected' : '' }}>

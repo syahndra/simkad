@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('admin', AdminController::class);
     });
 
-    Route::middleware(['checkRole:superadmin,admin'])->group(function () {
+    Route::middleware(['checkRole:admin'])->group(function () {
         Route::resource('operatorDinas', OperatorDinasController::class);
         Route::resource('operatorKec', OperatorKecController::class);
         Route::resource('operatorDesa', OperatorDesaController::class);

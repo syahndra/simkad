@@ -97,6 +97,7 @@
 
                                 <input type="hidden" name="idAjuan" value="{{ $ajuan->getKey() }}">
                                 <input type="hidden" name="jenis" value="{{ $jenis }}">
+                                <input type="hidden" name="statAjuan" value="selesai">
 
                                 <div class="mb-3">
                                     <label>Nama Dokumen</label>

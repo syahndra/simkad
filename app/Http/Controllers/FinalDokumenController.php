@@ -32,6 +32,18 @@ class FinalDokumenController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->jenis === 'capil') {
+            $ajuan = AjuanCapil::findOrFail($request->idAjuan);
+            $ajuan->statAjuan = $request->statAjuan;
+            $ajuan->save();
+        } elseif ($request->jenis === 'dafduk') {
+            $ajuan = AjuanDafduk::findOrFail($request->idAjuan);
+            $ajuan->statAjuan = $request->statAjuan;
+            $ajuan->save();
+        } else {
+            abort(404, 'Permintaan tidak dikenali');
+        }
+        
         $request->validate([
             'jenis' => 'required|in:capil,dafduk',
             'idAjuan' => 'required',

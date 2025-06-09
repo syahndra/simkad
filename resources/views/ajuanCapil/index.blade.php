@@ -90,11 +90,13 @@
                                                         class="badge 
                                             {{ $a->statAjuan === 'ditolak'
                                                 ? 'bg-danger'
-                                                : ($a->statAjuan === 'disetujui'
-                                                    ? 'bg-success'
+                                                : ($a->statAjuan === 'sudah diproses'
+                                                    ? 'bg-primary'
                                                     : ($a->statAjuan === 'revisi'
                                                         ? 'bg-warning'
-                                                        : 'bg-secondary')) }}">
+                                                        : ($a->statAjuan === 'selesai'
+                                                            ? 'bg-success'
+                                                            : 'bg-secondary'))) }}">
                                                         {{ ucfirst($a->statAjuan) }}
                                                     </span>
                                                     @if ($a->respon)
@@ -104,17 +106,17 @@
                                                 <td>
                                                     @isset($a->finalDokumen->filePath)
                                                         <a href="{{ asset('storage/' . $a->finalDokumen->filePath) }}"
-                                                            target="_blank" class="text-primary" title="Lihat Dokumen">
-                                                            <i class="lni lni-files"></i>
+                                                            target="_blank" class="badge text-primary" title="Lihat Dokumen">
+                                                            Dokumen
                                                         </a>
                                                     @endisset
                                                 </td>
                                                 <td>
                                                     <div class="action">
                                                         @if (Auth::user()->roleUser === 'operatorDesa')
-                                                            @if ($a->statAjuan === 'belum diproses')
+                                                            @if ($a->statAjuan === 'dalam proses')
                                                                 <a href="{{ route('ajuanCapil.edit', $a->idCapil) }}"
-                                                                    class="text-warning">
+                                                                    class="text-warning" title="Edit Ajuan">
                                                                     <i class="lni lni lni-pencil"></i>
                                                                 </a>
                                                                 <form
@@ -122,37 +124,37 @@
                                                                     method="POST" style="display:inline;">
                                                                     @csrf @method('DELETE')
                                                                     <button onclick="return confirm('Yakin hapus?')"
-                                                                        class="text-danger"><i
+                                                                        class="text-danger" title="Hapus Ajuan"><i
                                                                             class="lni lni-trash-can"></i></button>
                                                                 </form>
                                                             @endif
                                                             @if ($a->statAjuan === 'ditolak')
                                                                 <a href="{{ route('respon.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                    class="btn btn-sm btn-success">
-                                                                    Ajukan Ulang
+                                                                    class="text-secondary" title="Ajukan Ulang">
+                                                                        <i class="lni lni-reload"></i>
                                                                 </a>
                                                             @endif
-                                                            @if ($a->statAjuan === 'disetujui')
+                                                            @if (in_array($a->statAjuan, ['sudah diproses', 'selesai']))
                                                                 @isset($a->finalDokumen)
                                                                     <a href="{{ route('finalDokumen.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                        class="btn btn-sm btn-warning">Ubah
-                                                                        Dokumen </a>
+                                                                        class="text-warning" title="Ubah Dokumen">
+                                                                        <i class="lni lni-pencil-alt"></i>
                                                                 @else
                                                                     <a href="{{ route('finalDokumen.create', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                        class="btn btn-sm btn-primary">Upload
-                                                                        Dokumen </a>
+                                                                        class="text-primary" title="Upload Dokumen">
+                                                                        <i class="lni lni lni-cloud-upload"></i>
                                                                 @endisset
                                                             @endif
                                                         @elseif (Auth::user()->roleUser === 'opDinCapil')
-                                                            @if ($a->statAjuan === 'belum diproses')
+                                                            @if ($a->statAjuan === 'dalam proses')
                                                                 <a href="{{ route('respon.create', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                    class="btn btn-sm btn-primary">
-                                                                    Beri Respon
+                                                                    class="text-primary" title="Beri Respon">
+                                                                        <i class="lni lni-reply"></i>
                                                                 </a>
                                                             @else
                                                                 <a href="{{ route('respon.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                    class="btn btn-sm btn-warning">
-                                                                    Ubah Respon
+                                                                    class="text-warning" title="Ubah Respon">
+                                                                        <i class="lni lni-pencil-alt"></i>
                                                                 </a>
                                                             @endif
                                                         @endif
