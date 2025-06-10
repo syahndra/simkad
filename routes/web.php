@@ -13,7 +13,7 @@ use App\Http\Controllers\AjuanDafdukController;
 use App\Http\Controllers\AjuanCapilController;
 use App\Http\Controllers\ResponController;
 use App\Http\Controllers\FinalDokumenController;
-use App\Models\FinalDokumen;
+use App\Http\Controllers\TokenController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -65,4 +65,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/finalDok', [FinalDokumenController::class, 'store'])->name('finalDokumen.store');
     Route::get('/finalDok/{jenis}/{id}/edit', [FinalDokumenController::class, 'edit'])->name('finalDokumen.edit');
     Route::put('/finalDok/{id}', [FinalDokumenController::class, 'update'])->name('finalDokumen.update');
+    Route::get('/cetak-token/{jenis}/{id}', [TokenController::class, 'cetakToken'])->name('ajuan.cetak');
+    Route::get('/cek-pengajuan/{token}', [TokenController::class, 'cek'])->name('cek.pengajuan');
 });

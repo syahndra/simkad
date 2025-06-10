@@ -7,6 +7,7 @@ use App\Models\AjuanCapil;
 use App\Models\AjuanDafduk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FinalDokumenController extends Controller
 {
