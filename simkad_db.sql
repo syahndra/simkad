@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2025 at 08:52 AM
+-- Generation Time: Jun 10, 2025 at 05:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -78,7 +78,8 @@ CREATE TABLE `ajuandafduk` (
 INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `token`, `statAjuan`, `created_at`, `updated_at`) VALUES
 (3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'gfh743', 'selesai', '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
 (4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'ief825', 'sudah diproses', '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
-(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'sudah diproses', '2025-06-03 21:22:52', '2025-06-03 21:29:09');
+(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'sudah diproses', '2025-06-03 21:22:52', '2025-06-03 21:29:09'),
+(7, 3, 8, '3329136712000001', '3329135305250002', 'Toni Setiawan', NULL, '9fO84g', 'dalam proses', '2025-06-10 06:17:53', '2025-06-10 06:17:53');
 
 -- --------------------------------------------------------
 
@@ -432,7 +433,7 @@ ALTER TABLE `ajuancapil`
 -- AUTO_INCREMENT for table `ajuandafduk`
 --
 ALTER TABLE `ajuandafduk`
-  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `desa`

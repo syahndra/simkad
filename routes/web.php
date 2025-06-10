@@ -66,5 +66,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/finalDok/{jenis}/{id}/edit', [FinalDokumenController::class, 'edit'])->name('finalDokumen.edit');
     Route::put('/finalDok/{id}', [FinalDokumenController::class, 'update'])->name('finalDokumen.update');
     Route::get('/cetak-token/{jenis}/{id}', [TokenController::class, 'cetakToken'])->name('ajuan.cetak');
-    Route::get('/cek-pengajuan/{token}', [TokenController::class, 'cek'])->name('cek.pengajuan');
+    Route::get('/cek-pengajuan', [TokenController::class, 'form'])->name('cek.form');
+    Route::get('/cek-pengajuan/{jenis}/{token}', [TokenController::class, 'cek'])->name('cek.pengajuan');
 });

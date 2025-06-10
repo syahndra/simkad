@@ -21,7 +21,8 @@ class AjuanCapil extends Model
         'nik',
         'nama',
         'keterangan',
-        'statAjuan'
+        'statAjuan',
+        'token'
     ];
 
     public function layanan()
@@ -39,7 +40,7 @@ class AjuanCapil extends Model
         return $this->hasOne(Respon::class, 'idAjuan')->where('jenis', 'capil');
     }
 
-     public function FinalDokumen()
+    public function FinalDokumen()
     {
         return $this->hasOne(FinalDokumen::class, 'idAjuan')->where('jenis', 'capil');
     }

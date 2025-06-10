@@ -118,7 +118,7 @@
                                                                 </a>
                                                                 <form
                                                                     action="{{ route('ajuanDafduk.destroy', $a->idDafduk) }}"
-                                                                    method="POST" style="display:inline;">
+                                                                    method="POST">
                                                                     @csrf @method('DELETE')
                                                                     <button onclick="return confirm('Yakin hapus?')"
                                                                         class="text-danger" title="Hapus Ajuan"><i
@@ -133,17 +133,25 @@
                                                             @endif
                                                             @if (in_array($a->statAjuan, ['sudah diproses', 'selesai']))
                                                                 @isset($a->finalDokumen)
-                                                                    <a href="{{ route('finalDokumen.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                        class="text-warning" title="Ubah Dokumen">
-                                                                        <i class="lni lni-pencil-alt"></i>
-                                                                    </a>
+                                                                    <button>
+                                                                        <a href="{{ route('finalDokumen.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                            class="text-warning" title="Ubah Dokumen">
+                                                                            <i class="lni lni-pencil-alt"></i>
+                                                                        </a>
+                                                                    </button>
                                                                 @else
-                                                                    <a href="{{ route('finalDokumen.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                        class="text-primary" title="Upload Dokumen">
-                                                                        <i class="lni lni lni-cloud-upload"></i>
-                                                                    </a>
+                                                                    <button>
+                                                                        <a href="{{ route('finalDokumen.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                            class="text-primary" title="Upload Dokumen">
+                                                                            <i class="lni lni lni-cloud-upload"></i>
+                                                                        </a>
+                                                                    </button>
                                                                 @endisset
                                                             @endif
+                                                            <a href="{{ route('ajuan.cetak', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                                class="text-secondary" title="Generate Token" target="_blank">
+                                                                <i class="lni lni-cog"></i>
+                                                            </a>
                                                         @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
                                                             @if ($a->statAjuan === 'dalam proses')
                                                                 <a href="{{ route('respon.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"

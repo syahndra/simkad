@@ -8,6 +8,7 @@ use App\Models\AjuanDafduk;
 use App\Models\OperatorDesa;
 use App\Models\OperatorKec;
 use App\Models\Layanan;
+use Illuminate\Support\Str;
 
 class AjuanDafdukController extends Controller
 {
@@ -68,7 +69,10 @@ class AjuanDafdukController extends Controller
             'statAjuan' => 'required|in:dalam proses,ditolak,sudah diproses,revisi',
         ]);
 
-        AjuanDafduk::create($request->all());
+        $data = $request->all();
+        $data['token'] = Str::random(6);
+
+        AjuanDafduk::create($data);
 
         return redirect()->route('ajuanDafduk.index')->with('success', 'Ajuan berhasil ditambahkan.');
     }

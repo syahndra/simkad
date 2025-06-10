@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Token Ajuan</title>
+    <title>Token Ajuan | Sistem Monitoring Kios Adminduk Desa</title>
+
     <style>
         body { font-family: sans-serif; text-align: center; }
         .qr-wrapper {
@@ -15,14 +16,14 @@
     </style>
 </head>
 <body>
-    <h2>Token Ajuan: {{ $token }}</h2>
+    <h2>Token Ajuan: {{ $jenis }}/{{ $token }}</h2>
     <p>Layanan: {{ $layanan }}</p>
     <p>Nama: {{ $nama }}</p>
     <p>Tanggal Ajuan: {{ $created_at }}</p>
 
     <div class="qr-wrapper">
         <img src="data:image/png;base64,{{ $barcode }}">
-        {{-- <p><small>Scan untuk cek status: {{ route('cek.pengajuan', $token) }}</small></p> --}}
+        <p><small>Scan untuk cek status: {{ route('cek.pengajuan', ['jenis' => $jenis, 'token' => $token]) }}</small></p>
     </div>
 </body>
 </html>

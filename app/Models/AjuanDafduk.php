@@ -8,12 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class AjuanDafduk extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'ajuanDafduk';
     protected $primaryKey = 'idDafduk';
 
     protected $fillable = [
-        'idOpdes', 'idLayanan', 'tanggalAjuan', 'noKK', 'nik', 'nama', 'keterangan', 'statAjuan'
+        'idOpdes',
+        'idLayanan',
+        'tanggalAjuan',
+        'noKK',
+        'nik',
+        'nama',
+        'keterangan',
+        'statAjuan',
+        'token'
     ];
 
     public function layanan()

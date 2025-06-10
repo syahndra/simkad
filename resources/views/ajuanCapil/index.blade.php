@@ -136,15 +136,25 @@
                                                             @endif
                                                             @if (in_array($a->statAjuan, ['sudah diproses', 'selesai']))
                                                                 @isset($a->finalDokumen)
-                                                                    <a href="{{ route('finalDokumen.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                        class="text-warning" title="Ubah Dokumen">
-                                                                        <i class="lni lni-pencil-alt"></i>
+                                                                    <button>
+                                                                        <a href="{{ route('finalDokumen.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
+                                                                            class="text-warning" title="Ubah Dokumen">
+                                                                            <i class="lni lni-pencil-alt"></i>
+                                                                        </a>
+                                                                    </button>
                                                                 @else
-                                                                    <a href="{{ route('finalDokumen.create', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                        class="text-primary" title="Upload Dokumen">
-                                                                        <i class="lni lni lni-cloud-upload"></i>
+                                                                    <button>
+                                                                        <a href="{{ route('finalDokumen.create', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
+                                                                            class="text-primary" title="Upload Dokumen">
+                                                                            <i class="lni lni lni-cloud-upload"></i>
+                                                                        </a>
+                                                                    </button>
                                                                 @endisset
                                                             @endif
+                                                            <a href="{{ route('ajuan.cetak', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
+                                                                class="text-secondary" title="Generate Token" target="_blank">
+                                                                <i class="lni lni-cog"></i>
+                                                            </a>
                                                         @elseif (Auth::user()->roleUser === 'opDinCapil')
                                                             @if ($a->statAjuan === 'dalam proses')
                                                                 <a href="{{ route('respon.create', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"

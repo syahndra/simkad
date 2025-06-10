@@ -7,6 +7,7 @@ use App\Models\Layanan;
 use App\Models\OperatorDesa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AjuanCapilController extends Controller
 {
@@ -50,7 +51,11 @@ class AjuanCapilController extends Controller
             'nama' => 'required|string|max:100',
             'keterangan' => 'nullable|string|max:255',
         ]);
-        AjuanCapil::create($request->all());
+
+        $data = $request->all();
+        $data['token'] = Str::random(6);
+
+        AjuanCapil::create($data);
 
         return redirect()->route('ajuanCapil.index')->with('success', 'Ajuan berhasil ditambahkan.');
     }

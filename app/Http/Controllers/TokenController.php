@@ -22,7 +22,7 @@ class TokenController extends Controller
         }
 
         // $barcode = base64_encode(QrCode::format('svg')->size(200)->generate($ajuan->token));
-        $qrUrl = route('cek.pengajuan', $ajuan->token);
+        $qrUrl = route('cek.pengajuan', ['jenis' => $jenis, 'token' => $ajuan->token]);
 
         $barcode = base64_encode(
             QrCode::format('svg')->size(200)->generate($qrUrl)
@@ -35,6 +35,7 @@ class TokenController extends Controller
             'token' => $ajuan->token,
             'created_at' => $ajuan->created_at->translatedFormat('d F Y'),
             'barcode' => $barcode,
+            'jenis' => $jenis
         ];
 
         // Buat PDF langsung dari view
@@ -44,14 +45,34 @@ class TokenController extends Controller
         // gunakan ->download() jika ingin diunduh
     }
 
+    public function form()
+    {
+        // Halaman awal tanpa data
+        return view('token.cek', ['data' => null, 'jenis' => null, 'token' => null]);
+    }
+
     public function cek($jenis, $token)
     {
         if ($jenis === 'capil') {
             $ajuan = AjuanCapil::where('token', $token)->firstOrFail();
+            $data['akta'] = $ajuan->noAkta ?? '-';
         } elseif ($jenis === 'dafduk') {
             $ajuan = AjuanDafduk::where('token', $token)->firstOrFail();
         } else {
             abort(404, 'Permintaan tidak dikenali');
         }
+
+        // Data yang akan dikirim ke view
+        $data = [
+            'tgl' => $ajuan->created_at->format('Y-m-d'),
+            'layanan' => $ajuan->layanan->namaLayanan ?? '-',
+            'nama' => $ajuan->nama ?? '-',
+            'kk' => $ajuan->noKK ?? '-',
+            'nik' => $ajuan->nik ?? '-',
+            'opdes' => $ajuan->operatorDesa->user->nama ?? '-',
+            'status' => $ajuan->statAjuan ?? '-'
+        ];
+
+        return view('token.cek', ['data' => $data, 'jenis' => $jenis, 'token' => $token, 'ajuan' => $ajuan]);
     }
 }
