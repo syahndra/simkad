@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2025 at 04:06 PM
+-- Generation Time: Jun 10, 2025 at 08:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,7 @@ CREATE TABLE `ajuancapil` (
   `nama` varchar(255) NOT NULL,
   `noAkta` varchar(50) NOT NULL,
   `keterangan` text DEFAULT NULL,
+  `token` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `statAjuan` enum('dalam proses','ditolak','sudah diproses','revisi','selesai') NOT NULL DEFAULT 'dalam proses',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -45,10 +46,10 @@ CREATE TABLE `ajuancapil` (
 -- Dumping data for table `ajuancapil`
 --
 
-INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'selesai', '2025-06-01 23:41:45', '2025-06-09 13:39:15'),
-(4, 2, 5, '3329136712000003', '3329135305250001', 'RUHWI', '3329-KM-02062025-0059', NULL, 'selesai', '2025-06-03 18:49:18', '2025-06-09 06:57:47'),
-(5, 2, 2, '3329136712000001', '3329014505840005', 'Arhan', '3329-LU-02062025-0046', NULL, 'dalam proses', '2025-06-05 01:10:52', '2025-06-09 13:32:38');
+INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `token`, `statAjuan`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'afe8jk', 'selesai', '2025-06-01 23:41:45', '2025-06-10 06:46:32'),
+(4, 2, 5, '3329136712000003', '3329135305250001', 'RUHWI', '3329-KM-02062025-0059', NULL, 'fzd342', 'selesai', '2025-06-03 18:49:18', '2025-06-10 06:46:20'),
+(5, 2, 2, '3329136712000001', '3329014505840005', 'Arhan', '3329-LU-02062025-0046', NULL, 'ddeb27', 'dalam proses', '2025-06-05 01:10:52', '2025-06-10 03:41:05');
 
 -- --------------------------------------------------------
 
@@ -64,6 +65,7 @@ CREATE TABLE `ajuandafduk` (
   `nik` varchar(20) DEFAULT NULL,
   `nama` varchar(100) DEFAULT NULL,
   `keterangan` text DEFAULT NULL,
+  `token` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `statAjuan` enum('dalam proses','ditolak','sudah diproses','revisi','selesai') DEFAULT 'dalam proses',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
@@ -73,10 +75,10 @@ CREATE TABLE `ajuandafduk` (
 -- Dumping data for table `ajuandafduk`
 --
 
-INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'selesai', '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
-(4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'sudah diproses', '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
-(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'sudah diproses', '2025-06-03 21:22:52', '2025-06-03 21:29:09');
+INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `token`, `statAjuan`, `created_at`, `updated_at`) VALUES
+(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'gfh743', 'selesai', '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
+(4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'ief825', 'sudah diproses', '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
+(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'sudah diproses', '2025-06-03 21:22:52', '2025-06-03 21:29:09');
 
 -- --------------------------------------------------------
 
@@ -131,7 +133,7 @@ CREATE TABLE `finaldokumen` (
 --
 
 INSERT INTO `finaldokumen` (`idFinDok`, `idAjuan`, `jenis`, `filename`, `filePath`, `created_at`, `updated_at`) VALUES
-(1, 3, 'dafduk', 'KK - KADRIM', 'dokumen_final/Mp25zYVSjtrMhjMthy8dQRTK2Syfi1I5qywKdgPq.pdf', '2025-06-04 19:30:03', '2025-06-05 01:15:02'),
+(1, 3, 'dafduk', 'KK - HENGKI', 'dokumen_final/Mp25zYVSjtrMhjMthy8dQRTK2Syfi1I5qywKdgPq.pdf', '2025-06-04 19:30:03', '2025-06-10 01:43:39'),
 (2, 1, 'capil', 'AKTA LAHIR - ALENA SAFIRA', 'dokumen_final/cEKH0TbYifAg3abzkzBMfPSOpJfLTrtz2c755Ovi.pdf', '2025-06-04 20:58:17', '2025-06-04 20:59:43'),
 (3, 4, 'capil', 'AKTA MATI - RUHWI', 'dokumen_final/u7ERxfENH3bV7GxWsAR4Y81YlT9wPyGf3Iv89p9P.pdf', '2025-06-09 06:57:49', '2025-06-09 06:57:49');
 
