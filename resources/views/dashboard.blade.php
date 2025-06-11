@@ -7,7 +7,9 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="title">
-                            <h2>eCommerce Dashboard</h2>
+                            <h2>
+                                Dashboard {{ $role }}
+                            </h2>
                         </div>
                     </div>
                     <!-- end col -->
@@ -19,7 +21,7 @@
                                         <a href="#0">Dashboard</a>
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        eCommerce
+                                        {{ $role }}
                                     </li>
                                 </ol>
                             </nav>
