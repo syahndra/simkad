@@ -19,7 +19,8 @@ use App\Http\Controllers\DashboardController;
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
+Route::get('/cek-pengajuan', [TokenController::class, 'form'])->name('cek.form');
+Route::get('/cek-pengajuan/{jenis}/{token}', [TokenController::class, 'cek'])->name('cek.pengajuan');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -51,21 +52,24 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['checkRole:operatorDesa,opDinCapil'])->group(function () {
         Route::resource('ajuanCapil', AjuanCapilController::class);
     });
+
     Route::middleware(['checkRole:operatorDesa,opDinCapil,opDinDafduk,operatorKecamatan'])->group(function () {
         Route::get('/respon/{jenis}/{id}/create', [ResponController::class, 'create'])->name('respon.create');
         Route::post('/respon', [ResponController::class, 'store'])->name('respon.store');
         Route::get('/respon/{jenis}/{id}/edit', [ResponController::class, 'edit'])->name('respon.edit');
         Route::put('/respon/{id}', [ResponController::class, 'update'])->name('respon.update');
     });
+
     Route::middleware(['checkRole:operatorDesa,opDinCapil'])->group(function () {
         Route::get('/respon/{id}/revisi', [ResponController::class, 'revisi'])->name('ajuan.revisi');
         Route::put('/respon/{id}/revisi', [ResponController::class, 'revisiProses'])->name('ajuan.revisi');
     });
-    Route::get('/finalDok/{jenis}/{id}/create', [FinalDokumenController::class, 'create'])->name('finalDokumen.create');
-    Route::post('/finalDok', [FinalDokumenController::class, 'store'])->name('finalDokumen.store');
-    Route::get('/finalDok/{jenis}/{id}/edit', [FinalDokumenController::class, 'edit'])->name('finalDokumen.edit');
-    Route::put('/finalDok/{id}', [FinalDokumenController::class, 'update'])->name('finalDokumen.update');
-    Route::get('/cetak-token/{jenis}/{id}', [TokenController::class, 'cetakToken'])->name('ajuan.cetak');
-    Route::get('/cek-pengajuan', [TokenController::class, 'form'])->name('cek.form');
-    Route::get('/cek-pengajuan/{jenis}/{token}', [TokenController::class, 'cek'])->name('cek.pengajuan');
+    
+    Route::middleware(['checkRole:operatorDesa'])->group(function () {
+        Route::get('/finalDok/{jenis}/{id}/create', [FinalDokumenController::class, 'create'])->name('finalDokumen.create');
+        Route::post('/finalDok', [FinalDokumenController::class, 'store'])->name('finalDokumen.store');
+        Route::get('/finalDok/{jenis}/{id}/edit', [FinalDokumenController::class, 'edit'])->name('finalDokumen.edit');
+        Route::put('/finalDok/{id}', [FinalDokumenController::class, 'update'])->name('finalDokumen.update');
+        Route::get('/cetak-token/{jenis}/{id}', [TokenController::class, 'cetakToken'])->name('ajuan.cetak');
+    });
 });
