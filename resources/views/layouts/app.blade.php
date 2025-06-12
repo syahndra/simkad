@@ -69,10 +69,70 @@
     <script src="{{ asset('assets/js/datatable.js') }}"></script>
     <script src="{{ asset('assets/js/Sortable.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <script>
         const dataTable = new simpleDatatables.DataTable("#table", {
             searchable: true,
         });
+    </script>
+    <script>
+        function exportToExcel() {
+            const table = document.getElementById("table");
+
+            // Ambil semua baris <tr>
+            const rows = Array.from(table.querySelectorAll("tr")).map(row => {
+                const cells = Array.from(row.querySelectorAll("th, td"));
+                return cells.slice(0, -3).map(cell => cell.innerText); // buang 3 kolom terakhir
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(rows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Data");
+            XLSX.writeFile(wb, "data-export.xlsx");
+        }
+    </script>
+    <script>
+        async function exportToPDF() {
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'landscape',
+                unit: 'pt',
+                format: 'a4',
+            });
+
+            const table = document.getElementById("table");
+
+            // Ambil header
+            const headers = Array.from(table.querySelectorAll("thead th"))
+                .slice(0, -3) // hapus 3 kolom terakhir
+                .map(th => th.innerText);
+
+            // Ambil body
+            const body = Array.from(table.querySelectorAll("tbody tr")).map(row =>
+                Array.from(row.querySelectorAll("td"))
+                .slice(0, -3) // hapus 3 kolom terakhir
+                .map(td => td.innerText)
+            );
+
+            // Buat PDF
+            doc.autoTable({
+                head: [headers],
+                body: body,
+                theme: 'grid',
+                styles: {
+                    fontSize: 10
+                },
+                headStyles: {
+                    fillColor: [22, 160, 133]
+                }
+            });
+
+            doc.save('data-export.pdf');
+        }
     </script>
 
     <script>

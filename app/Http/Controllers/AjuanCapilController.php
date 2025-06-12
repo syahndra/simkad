@@ -8,11 +8,13 @@ use App\Models\OperatorDesa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AjuanCapilController extends Controller
 {
     public function index()
     {
+        $listLayanan = Layanan::where('jenis', 'capil')->get();
         if (Auth::user()->roleUser === 'operatorDesa') {
             $opdes = OperatorDesa::where('idUser', Auth::user()->idUser)->first();
 
@@ -20,12 +22,13 @@ class AjuanCapilController extends Controller
                 ->whereHas('operatorDesa', function ($query) use ($opdes) {
                     $query->where('idDesa', $opdes->idDesa);
                 })
+                ->orderBy('created_at', 'desc')
                 ->get();
         } else {
-            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan', 'respon')->get();
+            $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan', 'respon')->orderBy('created_at', 'desc')->get();
         }
 
-        return view('ajuanCapil.index', compact('ajuan'));
+        return view('ajuanCapil.index', compact('ajuan','listLayanan'));
     }
 
     public function create()
@@ -92,5 +95,43 @@ class AjuanCapilController extends Controller
     {
         AjuanCapil::findOrFail($id)->delete();
         return redirect()->route('ajuanCapil.index')->with('success', 'Ajuan berhasil dihapus.');
+    }
+
+    public function filter(Request $request)
+    {
+        $user = Auth::user();
+        $query = AjuanCapil::with([
+            'layanan',
+            'operatorDesa.desa.kecamatan',
+            'finalDokumen',
+            'respon'
+        ]);
+
+        if ($user->roleUser === 'operatorDesa') {
+            $opdes = OperatorDesa::where('idUser', $user->idUser)->first();
+            $query->whereHas('operatorDesa', function ($q) use ($opdes) {
+                $q->where('idDesa', $opdes->idDesa);
+            });
+        }
+
+        $start = Carbon::parse($request->startDate)->startOfDay();
+        $end = Carbon::parse($request->endDate)->endOfDay();
+        if ($request->startDate && $request->endDate) {
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        if ($request->layanan) {
+            $query->where('idLayanan', $request->layanan);
+        }
+
+        if ($request->status) {
+            $query->where('statAjuan', $request->status);
+        }
+
+        $result = $query->orderBy('created_at', 'desc')->get();
+
+        return response()->json([
+            'data' => $result
+        ]);
     }
 }

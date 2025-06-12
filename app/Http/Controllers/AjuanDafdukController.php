@@ -24,8 +24,10 @@ class AjuanDafdukController extends Controller
                 ->whereHas('operatorDesa', function ($query) use ($opdes) {
                     $query->where('idDesa', $opdes->idDesa);
                 })
+                ->orderBy('created_at', 'desc')
                 ->get();
         } elseif ($user->roleUser === 'operatorKecamatan') {
+            $listLayanan = Layanan::where('aksesVer', 'kecamatan')->get();
             $opkec = OperatorKec::where('idUser', $user->idUser)->first();
             $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')
                 ->whereHas('operatorDesa.desa', function ($query) use ($opkec) {
@@ -34,16 +36,19 @@ class AjuanDafdukController extends Controller
                 ->whereHas('layanan', function ($query) {
                     $query->where('aksesVer', 'kecamatan');
                 })
+                ->orderBy('created_at', 'desc')
                 ->get();
         } elseif ($user->roleUser === 'opDinDafduk') {
+            $listLayanan = Layanan::where('aksesVer', 'dinasDafduk')->get();
             $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')
                 ->whereHas('layanan', function ($query) {
                     $query->where('aksesVer', 'dinasDafduk');
                 })
+                ->orderBy('created_at', 'desc')
                 ->get();
         } else {
             // Role lain, ambil semua
-            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->get();
+            $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->orderBy('created_at', 'desc')->get();
         }
 
         return view('ajuanDafduk.index', compact('ajuan', 'listLayanan'));
@@ -119,7 +124,8 @@ class AjuanDafdukController extends Controller
         $query = AjuanDafduk::with([
             'layanan',
             'operatorDesa.desa.kecamatan',
-            'finalDokumen'
+            'finalDokumen',
+            'respon'
         ]);
 
         if ($user->roleUser === 'operatorDesa') {
@@ -142,7 +148,7 @@ class AjuanDafdukController extends Controller
 
         $start = Carbon::parse($request->startDate)->startOfDay();
         $end = Carbon::parse($request->endDate)->endOfDay();
-        if ($start && $end) {
+        if ($request->startDate && $request->endDate) {
             $query->whereBetween('created_at', [$start, $end]);
         }
 

@@ -1,105 +1,129 @@
 @extends('layouts.app', ['title' => 'Ajuan Dafduk', 'menu' => 'ajuanDafduk'])
 
 @section('content')
-    <section class="table-components">
-        <div class="container-fluid">
+<section class="table-components">
+    <div class="container-fluid">
 
-            <div class="title-wrapper pt-30">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <div class="title">
-                            <h2>Daftar Pengajuan Pendaftaran Penduduk</h2>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="breadcrumb-wrapper">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="{{ route('dashboard') }}">Dashboard</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">Ajuan Dafduk</li>
-                                </ol>
-                            </nav>
-                        </div>
+        <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <div class="title">
+                        <h2>Daftar Pengajuan Pendaftaran Penduduk</h2>
                     </div>
                 </div>
+                <!-- end col -->
+                <div class="col-md-5">
+                    <div class="breadcrumb-wrapper">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item"><a>Pengajuan Dafduk</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Daftar Ajuan Dafduk
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <!-- end col -->
             </div>
+            <!-- end row -->
+        </div>
 
-            <!-- Filter -->
-            <div class="card-style mb-3">
-                <form id="filterForm" class="row g-2 align-items-end">
-                    <div class="col-md-2">
-                        <label>Tanggal Mulai</label>
-                        <input type="date" class="form-control" name="startDate">
-                    </div>
-                    <div class="col-md-2">
-                        <label>Tanggal Akhir</label>
-                        <input type="date" class="form-control" name="endDate">
-                    </div>
-                    <div class="col-md-3">
-                        <label>Layanan</label>
-                        <select class="form-control" name="layanan">
-                            <option value="">Semua</option>
-                            @foreach ($listLayanan as $l)
-                                <option value="{{ $l->idLayanan }}">{{ $l->namaLayanan }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Status</label>
-                        <select class="form-control" name="status">
-                            <option value="">Semua</option>
-                            <option value="dalam proses">Dalam Proses</option>
-                            <option value="sudah diproses">Sudah Diproses</option>
-                            <option value="revisi">Revisi</option>
-                            <option value="ditolak">Ditolak</option>
-                            <option value="selesai">Selesai</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">Filter</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Table -->
-            <div class="tables-wrapper">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card-style mb-30">
-                            <a href="{{ route('ajuanDafduk.create') }}" class="btn btn-success mb-3">Tambah +</a>
-                            <div class="table-responsive">
-                                <table id="table" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Tgl Ajuan</th>
-                                            <th>Layanan</th>
-                                            <th>Nama</th>
-                                            <th>NIK</th>
-                                            <th>No KK</th>
-                                            <th>Keterangan</th>
-                                            <th>Wilayah</th>
-                                            <th>Status</th>
-                                            <th>#</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableBody">
-                                        @foreach ($ajuan as $a)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($a->created_at)->format('d-m-Y') }}</td>
-                                                <td>{{ $a->layanan->namaLayanan ?? '-' }}</td>
-                                                <td>{{ $a->nama }}</td>
-                                                <td>{{ $a->nik }}</td>
-                                                <td>{{ $a->noKK }}</td>
-                                                <td>{{ $a->keterangan }}</td>
-                                                <td>{{ $a->operatorDesa->desa->kecamatan->namaKec ?? '-' }},
-                                                    {{ $a->operatorDesa->desa->namaDesa ?? '-' }}</td>
-                                                <td>
-                                                    <span class="badge 
+        <!-- Table -->
+        <div class="tables-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-style mb-30">
+                        @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                        @endif
+                        <div class="d-flex gap-2 align-items-center mb-3">
+                            <!-- Tombol Tambah -->
+                            <a href="{{ route('ajuanDafduk.create') }}" class="btn btn-success">Tambah +</a>
+                            <!-- Dropdown Export -->
+                            <div class="dropdown">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Export
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item" onclick="exportToExcel()">Export ke Excel</button>
+                                    <li><button class="dropdown-item" onclick="exportToPDF()">Export ke PDF</button>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Filter -->
+                        <form id="filterForm" class="row g-2 align-items-end mb-3">
+                            <div class="col-md-2">
+                                <input type="date" class="form-control" name="startDate">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="date" class="form-control" name="endDate">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="layanan">
+                                    <option disabled selected>-- Pilih Layanan --</option>
+                                    <option value="">Semua</option>
+                                    @foreach ($listLayanan as $l)
+                                    <option value="{{ $l->idLayanan }}">{{ $l->namaLayanan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="status">
+                                    <option disabled selected>-- Pilih Status --</option>
+                                    <option value="">Semua</option>
+                                    <option value="dalam proses">Dalam Proses</option>
+                                    <option value="sudah diproses">Sudah Diproses</option>
+                                    <option value="revisi">Revisi</option>
+                                    <option value="ditolak">Ditolak</option>
+                                    <option value="selesai">Selesai</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">Filter</button>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <table id="table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tgl Ajuan</th>
+                                        <th>Layanan</th>
+                                        <th>Nama</th>
+                                        <th>NIK</th>
+                                        <th>No KK</th>
+                                        <th>Keterangan</th>
+                                        <th>Wilayah</th>
+                                        <th>Status</th>
+                                        <th>Note</th>
+                                        <th>#</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                    @foreach ($ajuan as $a)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($a->created_at)->format('j/n/Y') }}</td>
+                                        <td>{{ $a->layanan->namaLayanan ?? '-' }}</td>
+                                        <td>{{ $a->nama }}</td>
+                                        <td>{{ $a->nik }}</td>
+                                        <td>{{ $a->noKK }}</td>
+                                        <td>{{ $a->keterangan }}</td>
+                                        <td>{{ $a->operatorDesa->desa->kecamatan->namaKec ?? '-' }},
+                                            {{ $a->operatorDesa->desa->namaDesa ?? '-' }}
+                                        </td>
+                                        <td>
+                                            <span class="badge 
                                                         @if ($a->statAjuan === 'ditolak') bg-danger
                                                         @elseif ($a->statAjuan === 'sudah diproses') bg-primary
                                                         @elseif ($a->statAjuan === 'revisi') bg-warning
@@ -107,102 +131,121 @@
                                                         @else bg-secondary
                                                         @endif
                                                     ">
-                                                        {{ ucfirst($a->statAjuan) }}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    @isset($a->finalDokumen->filePath)
-                                                        <a href="{{ asset('storage/' . $a->finalDokumen->filePath) }}"
-                                                            target="_blank" class="badge text-primary" title="Lihat Dokumen">
-                                                            Dokumen
-                                                        </a>
-                                                    @endisset
-                                                </td>
-                                                <td>
-                                                    <div class="action">
-                                                        @if (Auth::user()->roleUser === 'operatorDesa')
-                                                            @if ($a->statAjuan === 'dalam proses')
-                                                                <a href="{{ route('ajuanDafduk.edit', $a->idDafduk) }}"
-                                                                    class="text-warning" title="Edit Ajuan">
-                                                                    <i class="lni lni lni-pencil"></i>
-                                                                </a>
-                                                                <form
-                                                                    action="{{ route('ajuanDafduk.destroy', $a->idDafduk) }}"
-                                                                    method="POST">
-                                                                    @csrf @method('DELETE')
-                                                                    <button onclick="return confirm('Yakin hapus?')"
-                                                                        class="text-danger" title="Hapus Ajuan"><i
-                                                                            class="lni lni-trash-can"></i></button>
-                                                                </form>
-                                                            @endif
-                                                            @if ($a->statAjuan === 'ditolak')
-                                                                <a href="{{ route('respon.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                    class="text-success" title="Ajukan Ulang">
-                                                                        <i class="lni lni-reload"></i>
-                                                                </a>
-                                                            @endif
-                                                            @if (in_array($a->statAjuan, ['sudah diproses', 'selesai']))
-                                                                @isset($a->finalDokumen)
-                                                                    <button>
-                                                                        <a href="{{ route('finalDokumen.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                            class="text-warning" title="Ubah Dokumen">
-                                                                            <i class="lni lni-pencil-alt"></i>
-                                                                        </a>
-                                                                    </button>
-                                                                @else
-                                                                    <button>
-                                                                        <a href="{{ route('finalDokumen.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                            class="text-primary" title="Upload Dokumen">
-                                                                            <i class="lni lni lni-cloud-upload"></i>
-                                                                        </a>
-                                                                    </button>
-                                                                @endisset
-                                                            @endif
-                                                            <a href="{{ route('ajuan.cetak', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                class="text-secondary" title="Generate Token" target="_blank">
-                                                                <i class="lni lni-cog"></i>
-                                                            </a>
-                                                        @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
-                                                            @if ($a->statAjuan === 'dalam proses')
-                                                                <a href="{{ route('respon.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                    class="text-primary" title="Beri Respon">
-                                                                        <i class="lni lni-reply"></i>
-                                                                </a>
-                                                            @else
-                                                                <a href="{{ route('respon.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                    class="text-warning" title="Ubah Respon">
-                                                                        <i class="lni lni-pencil-alt"></i>
-                                                                </a>
-                                                            @endif
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                {{ $a->statAjuan }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if ($a->respon)
+                                            {{ $a->respon->respon }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @isset($a->finalDokumen->filePath)
+                                            <a href="{{ asset('storage/' . $a->finalDokumen->filePath) }}"
+                                                target="_blank" class="badge text-primary" title="Lihat Dokumen">
+                                                Dokumen
+                                            </a>
+                                            @endisset
+                                        </td>
+                                        <td>
+                                            <div class="action">
+                                                @if (Auth::user()->roleUser === 'operatorDesa')
+                                                @if ($a->statAjuan === 'dalam proses')
+                                                <a href="{{ route('ajuanDafduk.edit', $a->idDafduk) }}"
+                                                    class="text-warning" title="Edit Ajuan">
+                                                    <i class="lni lni lni-pencil"></i>
+                                                </a>
+                                                <form
+                                                    action="{{ route('ajuanDafduk.destroy', $a->idDafduk) }}"
+                                                    method="POST">
+                                                    @csrf @method('DELETE')
+                                                    <button onclick="return confirm('Yakin hapus?')"
+                                                        class="text-danger" title="Hapus Ajuan"><i
+                                                            class="lni lni-trash-can"></i></button>
+                                                </form>
+                                                @endif
+                                                @if ($a->statAjuan === 'ditolak')
+                                                <button>
+                                                    <a href="{{ route('respon.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                        class="text-success" title="Ajukan Ulang">
+                                                        <i class="lni lni-reload"></i>
+                                                    </a>
+                                                </button>
+                                                @endif
+                                                @if (in_array($a->statAjuan, ['sudah diproses', 'selesai']))
+                                                @isset($a->finalDokumen)
+                                                <button>
+                                                    <a href="{{ route('finalDokumen.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                        class="text-warning" title="Ubah Dokumen">
+                                                        <i class="lni lni-pencil-alt"></i>
+                                                    </a>
+                                                </button>
+                                                @else
+                                                <button>
+                                                    <a href="{{ route('finalDokumen.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                        class="text-primary" title="Upload Dokumen">
+                                                        <i class="lni lni lni-cloud-upload"></i>
+                                                    </a>
+                                                </button>
+                                                @endisset
+                                                @endif
+                                                <a href="{{ route('ajuan.cetak', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                    class="text-secondary" title="Generate Token" target="_blank">
+                                                    <i class="lni lni-cog"></i>
+                                                </a>
+                                                @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
+                                                @if ($a->statAjuan === 'dalam proses')
+                                                <a href="{{ route('respon.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                    class="text-primary" title="Beri Respon">
+                                                    <i class="lni lni-reply"></i>
+                                                </a>
+                                                @else
+                                                <a href="{{ route('respon.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
+                                                    class="text-warning" title="Ubah Respon">
+                                                    <i class="lni lni-pencil-alt"></i>
+                                                </a>
+                                                @endif
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </section>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
     const csrfToken = '{{ csrf_token() }}';
     const roleUser = '{{ Auth::user()->roleUser }}';
 
     function getBadgeClass(status) {
         switch (status) {
-            case 'ditolak': return 'bg-danger';
-            case 'sudah diproses': return 'bg-primary';
-            case 'revisi': return 'bg-warning';
-            case 'selesai': return 'bg-success';
-            default: return 'bg-secondary';
+            case 'ditolak':
+                return 'bg-danger';
+            case 'sudah diproses':
+                return 'bg-primary';
+            case 'revisi':
+                return 'bg-warning';
+            case 'selesai':
+                return 'bg-success';
+            default:
+                return 'bg-secondary';
         }
+    }
+
+    function renderNote(a) {
+        if (a.respon) {
+            return `${a.respon.respon ?? ''}`;
+        }
+        return ''; // opsional, jika tidak ada respon
     }
 
     function renderDokumenLink(a) {
@@ -216,28 +259,30 @@
         const status = a.statAjuan;
         let html = '';
 
+        html += `<div class="action">`;
         if (roleUser === 'operatorDesa') {
             if (status === 'dalam proses') {
                 html += `<a href="/ajuanDafduk/${a.idDafduk}/edit" class="text-warning" title="Edit Ajuan"><i class="lni lni-pencil"></i></a>`;
                 html += `<form action="/ajuanDafduk/${a.idDafduk}" method="POST" style="display:inline;">
                             <input type="hidden" name="_token" value="${csrfToken}">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button onclick="return confirm('Yakin hapus?')" class="text-danger" title="Hapus Ajuan">
+                            <button onclick="return confirm('Yakin hapus?')" class="text-danger" title="Hapus Ajuan" style="background: none; border: none; padding: 0;">
                                 <i class="lni lni-trash-can"></i>
                             </button>
                          </form>`;
+
             }
             if (status === 'ditolak') {
-                html += `<a href="/respon/dafduk/${a.idDafduk}/edit" class="text-success" title="Ajukan Ulang"><i class="lni lni-reload"></i></a>`;
+                html += `<button style="background: none; border: none; padding: 0;"><a href="/respon/dafduk/${a.idDafduk}/edit" class="text-success" title="Ajukan Ulang"><i class="lni lni-reload"></i></a><button>`;
             }
             if (['sudah diproses', 'selesai'].includes(status)) {
                 if (a.final_dokumen && a.final_dokumen.filePath) {
-                    html += `<a href="/finalDokumen/dafduk/${a.idDafduk}/edit" class="text-warning" title="Ubah Dokumen"><i class="lni lni-pencil-alt"></i></a>`;
+                    html += `<button style="background: none; border: none; padding: 0;"><a href="/finalDok/dafduk/${a.idDafduk}/edit" class="text-warning" title="Ubah Dokumen"><i class="lni lni-pencil-alt"></i></a></button>`;
                 } else {
-                    html += `<a href="/finalDokumen/dafduk/${a.idDafduk}/create" class="text-primary" title="Upload Dokumen"><i class="lni lni-cloud-upload"></i></a>`;
+                    html += `<button style="background: none; border: none; padding: 0;"><a href="/finalDok/dafduk/${a.idDafduk}/create" class="text-primary" title="Upload Dokumen"><i class="lni lni-cloud-upload"></i></a><button>`;
                 }
             }
-            html += `<a href="/cetak-token/dafduk/${a.idDafduk}/cetak" class="text-secondary" title="Generate Token" target="_blank"><i class="lni lni-cog"></i></a>`;
+            html += `<a href="/cetak-token/dafduk/${a.idDafduk}" class="text-secondary" title="Generate Token" target="_blank"><i class="lni lni-cog"></i></a>`;
         } else if (['opDinDafduk', 'operatorKecamatan'].includes(roleUser)) {
             if (status === 'dalam proses') {
                 html += `<a href="/respon/dafduk/${a.idDafduk}/create" class="text-primary" title="Beri Respon"><i class="lni lni-reply"></i></a>`;
@@ -245,6 +290,7 @@
                 html += `<a href="/respon/dafduk/${a.idDafduk}/edit" class="text-warning" title="Ubah Respon"><i class="lni lni-pencil-alt"></i></a>`;
             }
         }
+        html += `</div>`;
 
         return html;
     }
@@ -253,7 +299,7 @@
         e.preventDefault();
         const formData = $(this).serialize();
         $.ajax({
-            url: '{{ route('ajuanDafduk.filter') }}',
+            url: "{{ route('ajuanDafduk.filter') }}",
             type: 'GET',
             data: formData,
             success: function(res) {
@@ -272,9 +318,10 @@
                         <td>${a.nama}</td>
                         <td>${a.nik}</td>
                         <td>${a.noKK}</td>
-                        <td>${a.keterangan}</td>
+                        <td>${a.keterangan ?? ''}</td>
                         <td>${kec}, ${desa}</td>
                         <td><span class="badge ${getBadgeClass(status)}">${status}</span></td>
+                        <td>${renderNote(a)}</td>
                         <td>${renderDokumenLink(a)}</td>
                         <td>${renderActions(a)}</td>
                     </tr>`;

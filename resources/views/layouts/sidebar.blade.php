@@ -78,6 +78,24 @@
                     @endif
                 </ul>
             </li>
+            <li class="nav-item nav-item-has-children">
+                <a href="#0" class="@if ($menu != 'ajuanDafduk' && $menu != 'ajuanCapil') collapsed @endif" data-bs-toggle="collapse"
+                    data-bs-target="#ddmenu_report" aria-controls="ddmenu_report" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="lni lni-postcard icon"></i>
+                    <span class="text">Report</span>
+                </a>
+                <ul id="ddmenu_report" class="@if ($menu != 'ajuanDafduk' && $menu != 'ajuanCapil') collapse @endif dropdown-nav">
+                    <li>
+                        <a href="{{ route('ajuanDafduk.index') }}"
+                            class="@if ($menu == 'ajuanDafduk') active @endif">Pengajuan Dafduk</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('ajuanCapil.index') }}"
+                            class="@if ($menu == 'ajuanCapil') active @endif">Pengajuan Capil</a>
+                    </li>
+                </ul>
+            </li>
             @endif
 
             {{-- Untuk operatorDesa, operatorKecamatan, opDinDafduk --}}

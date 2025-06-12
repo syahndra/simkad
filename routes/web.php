@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/chart-data', [DashboardController::class, 'getSelesaiChartData'])->name('dashboard.chart-data');
     Route::get('/ajuan-dafduk/filter', [AjuanDafdukController::class, 'filter'])->name('ajuanDafduk.filter');
+    Route::get('/ajuan-capil/filter', [AjuanCapilController::class, 'filter'])->name('ajuanCapil.filter');
 
     Route::middleware(['checkRole:superadmin'])->group(function () {
         Route::resource('kecamatan', KecamatanController::class);
@@ -46,11 +47,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/getDesa-by-kecamatan/{idKec}', [OperatorDesaController::class, 'getDesaByKecamatan'])->name('getDesaByKecamatan');
     });
 
-    Route::middleware(['checkRole:operatorDesa,operatorKecamatan,opDinDafduk'])->group(function () {
+    Route::middleware(['checkRole:operatorDesa,operatorKecamatan,opDinDafduk,superadmin,admin'])->group(function () {
         Route::resource('ajuanDafduk', AjuanDafdukController::class);
     });
 
-    Route::middleware(['checkRole:operatorDesa,opDinCapil'])->group(function () {
+    Route::middleware(['checkRole:operatorDesa,opDinCapil,superadmin,admin'])->group(function () {
         Route::resource('ajuanCapil', AjuanCapilController::class);
     });
 
