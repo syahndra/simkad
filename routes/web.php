@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/chart-data', [DashboardController::class, 'getSelesaiChartData'])->name('dashboard.chart-data');
+    Route::get('/ajuan-dafduk/filter', [AjuanDafdukController::class, 'filter'])->name('ajuanDafduk.filter');
 
     Route::middleware(['checkRole:superadmin'])->group(function () {
         Route::resource('kecamatan', KecamatanController::class);

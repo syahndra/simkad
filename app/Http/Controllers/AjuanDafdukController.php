@@ -9,12 +9,14 @@ use App\Models\OperatorDesa;
 use App\Models\OperatorKec;
 use App\Models\Layanan;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AjuanDafdukController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
+        $listLayanan = Layanan::where('jenis', 'dafduk')->get();
 
         if ($user->roleUser === 'operatorDesa') {
             $opdes = OperatorDesa::where('idUser', $user->idUser)->first();
@@ -44,7 +46,7 @@ class AjuanDafdukController extends Controller
             $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan')->get();
         }
 
-        return view('ajuanDafduk.index', compact('ajuan'));
+        return view('ajuanDafduk.index', compact('ajuan', 'listLayanan'));
     }
 
     public function create()
@@ -109,5 +111,53 @@ class AjuanDafdukController extends Controller
     {
         AjuanDafduk::findOrFail($id)->delete();
         return redirect()->route('ajuanDafduk.index')->with('success', 'Ajuan berhasil dihapus.');
+    }
+
+    public function filter(Request $request)
+    {
+        $user = Auth::user();
+        $query = AjuanDafduk::with([
+            'layanan',
+            'operatorDesa.desa.kecamatan',
+            'finalDokumen'
+        ]);
+
+        if ($user->roleUser === 'operatorDesa') {
+            $opdes = OperatorDesa::where('idUser', $user->idUser)->first();
+            $query->whereHas('operatorDesa', function ($q) use ($opdes) {
+                $q->where('idDesa', $opdes->idDesa);
+            });
+        } elseif ($user->roleUser === 'operatorKecamatan') {
+            $opkec = OperatorKec::where('idUser', $user->idUser)->first();
+            $query->whereHas('operatorDesa.desa', function ($q) use ($opkec) {
+                $q->where('idKec', $opkec->idKec);
+            })->whereHas('layanan', function ($q) {
+                $q->where('aksesVer', 'kecamatan');
+            });
+        } elseif ($user->roleUser === 'opDinDafduk') {
+            $query->whereHas('layanan', function ($q) {
+                $q->where('aksesVer', 'dinasDafduk');
+            });
+        }
+
+        $start = Carbon::parse($request->startDate)->startOfDay();
+        $end = Carbon::parse($request->endDate)->endOfDay();
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        if ($request->layanan) {
+            $query->where('idLayanan', $request->layanan);
+        }
+
+        if ($request->status) {
+            $query->where('statAjuan', $request->status);
+        }
+
+        $result = $query->orderBy('created_at', 'desc')->get();
+
+        return response()->json([
+            'data' => $result
+        ]);
     }
 }

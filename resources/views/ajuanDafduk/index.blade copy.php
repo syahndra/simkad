@@ -1,9 +1,9 @@
 @extends('layouts.app', ['title' => 'Ajuan Dafduk', 'menu' => 'ajuanDafduk'])
-
 @section('content')
+    <!-- ========== table components start ========== -->
     <section class="table-components">
         <div class="container-fluid">
-
+            <!-- ========== title-wrapper start ========== -->
             <div class="title-wrapper pt-30">
                 <div class="row align-items-center">
                     <div class="col-md-6">
@@ -11,6 +11,7 @@
                             <h2>Daftar Pengajuan Pendaftaran Penduduk</h2>
                         </div>
                     </div>
+                    <!-- end col -->
                     <div class="col-md-6">
                         <div class="breadcrumb-wrapper">
                             <nav aria-label="breadcrumb">
@@ -18,56 +19,38 @@
                                     <li class="breadcrumb-item">
                                         <a href="{{ route('dashboard') }}">Dashboard</a>
                                     </li>
-                                    <li class="breadcrumb-item active">Ajuan Dafduk</li>
+                                    <li class="breadcrumb-item"><a>Pengajuan Dafduk</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        Daftar Ajuan Dafduk
+                                    </li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
+                    <!-- end col -->
                 </div>
+                <!-- end row -->
             </div>
+            <!-- ========== title-wrapper end ========== -->
 
-            <!-- Filter -->
-            <div class="card-style mb-3">
-                <form id="filterForm" class="row g-2 align-items-end">
-                    <div class="col-md-2">
-                        <label>Tanggal Mulai</label>
-                        <input type="date" class="form-control" name="startDate">
-                    </div>
-                    <div class="col-md-2">
-                        <label>Tanggal Akhir</label>
-                        <input type="date" class="form-control" name="endDate">
-                    </div>
-                    <div class="col-md-3">
-                        <label>Layanan</label>
-                        <select class="form-control" name="layanan">
-                            <option value="">Semua</option>
-                            @foreach ($listLayanan as $l)
-                                <option value="{{ $l->idLayanan }}">{{ $l->namaLayanan }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Status</label>
-                        <select class="form-control" name="status">
-                            <option value="">Semua</option>
-                            <option value="dalam proses">Dalam Proses</option>
-                            <option value="sudah diproses">Sudah Diproses</option>
-                            <option value="revisi">Revisi</option>
-                            <option value="ditolak">Ditolak</option>
-                            <option value="selesai">Selesai</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">Filter</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Table -->
+            <!-- ========== tables-wrapper start ========== -->
             <div class="tables-wrapper">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-style mb-30">
+                            {{-- <h6 class="mb-10">Tabel Kecamatan</h6> --}}
+                            {{-- <p class="text-sm mb-20">
+                                For basic styling—light padding and only horizontal
+                                dividers—use the class table.
+                            </p> --}}
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+
                             <a href="{{ route('ajuanDafduk.create') }}" class="btn btn-success mb-3">Tambah +</a>
                             <div class="table-responsive">
                                 <table id="table" class="table">
@@ -86,12 +69,13 @@
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tableBody">
+                                    <tbody>
                                         @foreach ($ajuan as $a)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($a->created_at)->format('d-m-Y') }}</td>
-                                                <td>{{ $a->layanan->namaLayanan ?? '-' }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($a->layanan->created_at)->format('d-m-Y') }}
+                                                </td>
+                                                <td>{{ $a->layanan->namaLayanan }}</td>
                                                 <td>{{ $a->nama }}</td>
                                                 <td>{{ $a->nik }}</td>
                                                 <td>{{ $a->noKK }}</td>
@@ -99,16 +83,22 @@
                                                 <td>{{ $a->operatorDesa->desa->kecamatan->namaKec ?? '-' }},
                                                     {{ $a->operatorDesa->desa->namaDesa ?? '-' }}</td>
                                                 <td>
-                                                    <span class="badge 
-                                                        @if ($a->statAjuan === 'ditolak') bg-danger
-                                                        @elseif ($a->statAjuan === 'sudah diproses') bg-primary
-                                                        @elseif ($a->statAjuan === 'revisi') bg-warning
-                                                        @elseif ($a->statAjuan === 'selesai') bg-success
-                                                        @else bg-secondary
-                                                        @endif
-                                                    ">
+                                                    <span
+                                                        class="badge 
+                                            {{ $a->statAjuan === 'ditolak'
+                                                ? 'bg-danger'
+                                                : ($a->statAjuan === 'sudah diproses'
+                                                    ? 'bg-primary'
+                                                    : ($a->statAjuan === 'revisi'
+                                                        ? 'bg-warning'
+                                                        : ($a->statAjuan === 'selesai'
+                                                            ? 'bg-success'
+                                                            : 'bg-secondary'))) }}">
                                                         {{ ucfirst($a->statAjuan) }}
                                                     </span>
+                                                    @if ($a->respon)
+                                                        {{ $a->respon->respon }}
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     @isset($a->finalDokumen->filePath)
@@ -181,111 +171,18 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <!-- end table -->
                             </div>
                         </div>
+                        <!-- end card -->
                     </div>
+                    <!-- end col -->
                 </div>
+                <!-- end row -->
             </div>
-
+            <!-- ========== tables-wrapper end ========== -->
         </div>
+        <!-- end container -->
     </section>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    const csrfToken = '{{ csrf_token() }}';
-    const roleUser = '{{ Auth::user()->roleUser }}';
-
-    function getBadgeClass(status) {
-        switch (status) {
-            case 'ditolak': return 'bg-danger';
-            case 'sudah diproses': return 'bg-primary';
-            case 'revisi': return 'bg-warning';
-            case 'selesai': return 'bg-success';
-            default: return 'bg-secondary';
-        }
-    }
-
-    function renderDokumenLink(a) {
-        if (a.final_dokumen && a.final_dokumen.filePath) {
-            return `<a href="/storage/${a.final_dokumen.filePath}" target="_blank" class="badge text-primary" title="Lihat Dokumen">Dokumen</a>`;
-        }
-        return '';
-    }
-
-    function renderActions(a) {
-        const status = a.statAjuan;
-        let html = '';
-
-        if (roleUser === 'operatorDesa') {
-            if (status === 'dalam proses') {
-                html += `<a href="/ajuanDafduk/${a.idDafduk}/edit" class="text-warning" title="Edit Ajuan"><i class="lni lni-pencil"></i></a>`;
-                html += `<form action="/ajuanDafduk/${a.idDafduk}" method="POST" style="display:inline;">
-                            <input type="hidden" name="_token" value="${csrfToken}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button onclick="return confirm('Yakin hapus?')" class="text-danger" title="Hapus Ajuan">
-                                <i class="lni lni-trash-can"></i>
-                            </button>
-                         </form>`;
-            }
-            if (status === 'ditolak') {
-                html += `<a href="/respon/dafduk/${a.idDafduk}/edit" class="text-success" title="Ajukan Ulang"><i class="lni lni-reload"></i></a>`;
-            }
-            if (['sudah diproses', 'selesai'].includes(status)) {
-                if (a.final_dokumen && a.final_dokumen.filePath) {
-                    html += `<a href="/finalDokumen/dafduk/${a.idDafduk}/edit" class="text-warning" title="Ubah Dokumen"><i class="lni lni-pencil-alt"></i></a>`;
-                } else {
-                    html += `<a href="/finalDokumen/dafduk/${a.idDafduk}/create" class="text-primary" title="Upload Dokumen"><i class="lni lni-cloud-upload"></i></a>`;
-                }
-            }
-            html += `<a href="/cetak-token/dafduk/${a.idDafduk}/cetak" class="text-secondary" title="Generate Token" target="_blank"><i class="lni lni-cog"></i></a>`;
-        } else if (['opDinDafduk', 'operatorKecamatan'].includes(roleUser)) {
-            if (status === 'dalam proses') {
-                html += `<a href="/respon/dafduk/${a.idDafduk}/create" class="text-primary" title="Beri Respon"><i class="lni lni-reply"></i></a>`;
-            } else {
-                html += `<a href="/respon/dafduk/${a.idDafduk}/edit" class="text-warning" title="Ubah Respon"><i class="lni lni-pencil-alt"></i></a>`;
-            }
-        }
-
-        return html;
-    }
-
-    $('#filterForm').on('submit', function(e) {
-        e.preventDefault();
-        const formData = $(this).serialize();
-        $.ajax({
-            url: '{{ route('ajuanDafduk.filter') }}',
-            type: 'GET',
-            data: formData,
-            success: function(res) {
-                let html = '';
-                res.data.forEach((a, i) => {
-                    const kec = a.operator_desa?.desa?.kecamatan?.namaKec || '-';
-                    const desa = a.operator_desa?.desa?.namaDesa || '-';
-                    const layanan = a.layanan?.namaLayanan || '-';
-                    const status = a.statAjuan || '-';
-
-                    html += `
-                    <tr>
-                        <td>${i + 1}</td>
-                        <td>${new Date(a.created_at).toLocaleDateString('id-ID')}</td>
-                        <td>${layanan}</td>
-                        <td>${a.nama}</td>
-                        <td>${a.nik}</td>
-                        <td>${a.noKK}</td>
-                        <td>${a.keterangan}</td>
-                        <td>${kec}, ${desa}</td>
-                        <td><span class="badge ${getBadgeClass(status)}">${status}</span></td>
-                        <td>${renderDokumenLink(a)}</td>
-                        <td>${renderActions(a)}</td>
-                    </tr>`;
-                });
-                $('#tableBody').html(html);
-            },
-            error: function(err) {
-                alert('Gagal memfilter data!');
-                console.error(err);
-            }
-        });
-    });
-</script>
+    <!-- ========== table components end ========== -->
 @endsection
