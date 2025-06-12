@@ -14,6 +14,7 @@ use App\Http\Controllers\AjuanCapilController;
 use App\Http\Controllers\ResponController;
 use App\Http\Controllers\FinalDokumenController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -26,9 +27,8 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->route('dashboard');
     })->name('home');
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/chart-data', [DashboardController::class, 'getSelesaiChartData'])->name('dashboard.chart-data');
 
     Route::middleware(['checkRole:superadmin'])->group(function () {
         Route::resource('kecamatan', KecamatanController::class);
