@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -32,5 +33,45 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+    public function ubahProfil()
+    {
+        $user = Auth::user();
+        return view('auth.ubahProfil', compact('user'));
+    }
+
+    public function updateProfil(Request $request)
+    {
+        $user = Auth::user();
+
+        // Validasi input
+        $request->validate([
+            'nama' => 'required|string|max:255|unique:users,nama,' . $user->idUser . ',idUser',
+            'username' => 'required|string|max:255|unique:users,username,' . $user->idUser . ',idUser',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->idUser . ',idUser',
+            'current_password' => 'nullable|string',
+            'password' => 'nullable|string|confirmed',
+        ]);
+
+        // Update nama/email
+        $user->nama = $request->nama;
+        $user->username = $request->username;
+        $user->email = $request->email;
+
+        // Jika user mengisi password baru, maka:
+        if ($request->filled('password')) {
+            // Validasi password lama
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+            }
+
+            // Ganti password
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui.');
     }
 }

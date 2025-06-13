@@ -7,6 +7,8 @@ use App\Models\Layanan;
 use App\Models\OperatorDesa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Respon;
+use App\Models\FinalDokumen;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -133,5 +135,13 @@ class AjuanCapilController extends Controller
         return response()->json([
             'data' => $result
         ]);
+    }
+
+    public function show($id)
+    {
+        $respon = Respon::where('idAjuan', $id)->first();
+        $finalDokumen = FinalDokumen::where('idAjuan', $id)->first();
+        $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan','respon','finalDOkumen')->findOrFail($id);
+        return view('ajuanCapil.show', compact('ajuan', 'respon', 'finalDokumen'));
     }
 }

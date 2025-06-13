@@ -157,8 +157,8 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="#0">
-                                    <i class="lni lni-user"></i> Change Profile
+                                <a href="{{ route('ubahProfil') }}">
+                                    <i class="lni lni-user"></i> Ubah Profile
                                 </a>
                             </li>
                             {{-- <li>

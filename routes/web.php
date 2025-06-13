@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/chart-data', [DashboardController::class, 'getSelesaiChartData'])->name('dashboard.chart-data');
     Route::get('/ajuan-dafduk/filter', [AjuanDafdukController::class, 'filter'])->name('ajuanDafduk.filter');
     Route::get('/ajuan-capil/filter', [AjuanCapilController::class, 'filter'])->name('ajuanCapil.filter');
+    Route::get('/ubahProfil', [AuthController::class, 'ubahProfil'])->name('ubahProfil');
+    Route::put('/ubahProfil', [AuthController::class, 'updateProfil'])->name('profil.update');
 
     Route::middleware(['checkRole:superadmin'])->group(function () {
         Route::resource('kecamatan', KecamatanController::class);
@@ -49,10 +51,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['checkRole:operatorDesa,operatorKecamatan,opDinDafduk,superadmin,admin'])->group(function () {
         Route::resource('ajuanDafduk', AjuanDafdukController::class);
+        Route::get('/ajuanDafduk/{id}', [AjuanDafdukController::class, 'show'])->name('ajuanDafduk.show');
     });
 
     Route::middleware(['checkRole:operatorDesa,opDinCapil,superadmin,admin'])->group(function () {
         Route::resource('ajuanCapil', AjuanCapilController::class);
+        Route::get('/ajuanCapil/{id}', [AjuanCapilController::class, 'show'])->name('ajuanCapil.show');
     });
 
     Route::middleware(['checkRole:operatorDesa,opDinCapil,opDinDafduk,operatorKecamatan'])->group(function () {

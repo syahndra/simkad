@@ -8,6 +8,8 @@ use App\Models\AjuanDafduk;
 use App\Models\OperatorDesa;
 use App\Models\OperatorKec;
 use App\Models\Layanan;
+use App\Models\Respon;
+use App\Models\FinalDokumen;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -165,5 +167,13 @@ class AjuanDafdukController extends Controller
         return response()->json([
             'data' => $result
         ]);
+    }
+
+    public function show($id)
+    {
+        $respon = Respon::where('idAjuan', $id)->first();
+        $finalDokumen = FinalDokumen::where('idAjuan', $id)->first();
+        $ajuan = AjuanDafduk::with('operatorDesa.desa.kecamatan', 'layanan','respon','finalDOkumen')->findOrFail($id);
+        return view('ajuanDafduk.show', compact('ajuan', 'respon', 'finalDokumen'));
     }
 }
