@@ -27,7 +27,6 @@ class OperatorDesaController extends Controller
     {
         $request->validate([
             'nama' => 'required|string',
-            'username' => 'required|string|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'idDesa' => 'required|exists:desa,idDesa'
@@ -35,7 +34,6 @@ class OperatorDesaController extends Controller
 
         $user = User::create([
             'nama' => $request->nama,
-            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'roleUser' => 'operatorDesa',
@@ -64,14 +62,12 @@ class OperatorDesaController extends Controller
 
         $request->validate([
             'nama' => 'required|string',
-            'username' => 'required|string|unique:users,username,' . $op->user->idUser . ',idUser',
             'email' => 'required|email|unique:users,email,' . $op->user->idUser . ',idUser',
             'idDesa' => 'required|exists:desa,idDesa'
         ]);
 
         $op->user->update([
             'nama' => $request->nama,
-            'username' => $request->username,
             'email' => $request->email,
         ]);
 

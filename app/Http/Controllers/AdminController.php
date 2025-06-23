@@ -22,14 +22,12 @@ class AdminController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         User::create([
             'nama' => $request->nama,
-            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'roleUser' => 'admin',
@@ -50,13 +48,11 @@ class AdminController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . $id . ',idUser',
             'email' => 'required|email|unique:users,email,' . $id . ',idUser',
             'password' => 'nullable|string|min:6|confirmed',
         ]);
 
         $admin->nama = $request->nama;
-        $admin->username = $request->username;
         $admin->email = $request->email;
         if ($request->filled('password')) {
             $admin->password = Hash::make($request->password);

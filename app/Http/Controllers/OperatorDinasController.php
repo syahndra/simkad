@@ -23,7 +23,6 @@ class OperatorDinasController extends Controller
     {
         $request->validate([
             'nama' => 'required',
-            'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
             'roleUser' => 'required|in:opDinDafduk,opDinCapil',
@@ -31,7 +30,6 @@ class OperatorDinasController extends Controller
 
         $user = User::create([
             'nama' => $request->nama,
-            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'roleUser' => $request->roleUser,
@@ -52,14 +50,12 @@ class OperatorDinasController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'username' => 'required|unique:users,username,' . $id . ',idUser',
             'email' => 'required|email|unique:users,email,' . $id . ',idUser',
             'password' => 'nullable|confirmed|min:6',
             'roleUser' => 'required|in:opDinDafduk,opDinCapil',
         ]);
 
         $opdinas->nama = $request->nama;
-        $opdinas->username = $request->username;
         $opdinas->email = $request->email;
         $opdinas->roleUser = $request->roleUser;
         if ($request->filled('password')) {

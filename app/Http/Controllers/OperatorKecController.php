@@ -26,7 +26,6 @@ class OperatorKecController extends Controller
     {
         $request->validate([
             'nama' => 'required',
-            'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'nullable|confirmed|min:6',
             'idKec' => 'required|exists:kecamatan,idKec',
@@ -34,7 +33,6 @@ class OperatorKecController extends Controller
 
         $user = User::create([
             'nama' => $request->nama,
-            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'roleUser' => 'operatorKecamatan',
@@ -62,7 +60,6 @@ class OperatorKecController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'username' => 'required|unique:users,username,' . $user->idUser . ',idUser',
             'email' => 'required|email|unique:users,email,' . $user->idUser . ',idUser',
             'password' => 'nullable|confirmed|min:6',
             'idKec' => 'required|exists:kecamatan,idKec',
@@ -70,7 +67,6 @@ class OperatorKecController extends Controller
 
         $user->update([
             'nama' => $request->nama,
-            'username' => $request->username,
             'email' => $request->email,
         ]);
 

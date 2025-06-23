@@ -54,11 +54,6 @@
                                 <input type="text" name="nama" value="{{ $admin->nama }}" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label>Username</label>
-                                <input type="text" name="username" value="{{ $admin->username }}" class="form-control"
-                                    required>
-                            </div>
-                            <div class="mb-3">
                                 <label>Email</label>
                                 <input type="email" name="email" value="{{ $admin->email }}" class="form-control"
                                     required>

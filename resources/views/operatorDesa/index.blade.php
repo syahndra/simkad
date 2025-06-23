@@ -51,7 +51,6 @@
                                 <thead>
                                     <tr>
                                         <th>Nama</th>
-                                        <th>Username</th>
                                         <th>Email</th>
                                         <th>Desa</th>
                                         <th>Kecamatan</th>
@@ -62,7 +61,6 @@
                                     @foreach ($data as $i => $op)
                                     <tr>
                                         <td>{{ $op->user->nama }}</td>
-                                        <td>{{ $op->user->username }}</td>
                                         <td>{{ $op->user->email }}</td>
                                         <td>{{ $op->desa->namaDesa }}</td>
                                         <td>{{ $op->desa->kecamatan->namaKec }}</td>

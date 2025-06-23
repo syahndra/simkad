@@ -70,15 +70,15 @@
                             <div class="form-wrapper">
                                 <h6 class="mb-15">Form Login</h6>
                                 <p class="text-sm mb-25">
-                                    Silahkan masukan username dan password terdaftar.
+                                    Silahkan masukan email dan password terdaftar.
                                 </p>
                                 <form method="POST" action="/login">
                                     @csrf
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="input-style-1">
-                                                <label>Username</label>
-                                                <input name="username" type="text" placeholder="Username" />
+                                                <label>Email</label>
+                                                <input type="email" name="email" placeholder="Email" />
                                             </div>
                                         </div>
                                         <!-- end col -->

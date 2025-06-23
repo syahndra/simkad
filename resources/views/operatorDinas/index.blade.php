@@ -57,7 +57,6 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th>Username</th>
                                         <th>Bidang</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -67,7 +66,6 @@
                                     <tr>
                                         <td>{{ $item->nama }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->username }}</td>
                                         <td>
                                             @if ($item->roleUser === 'opDinCapil')
                                             Capil

@@ -58,7 +58,6 @@
                                         <th>ID</th>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th>Username</th>
                                         <th>Role User</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -69,7 +68,6 @@
                                         <td>{{ $admin->idUser }}</td>
                                         <td>{{ $admin->nama }}</td>
                                         <td>{{ $admin->email }}</td>
-                                        <td>{{ $admin->username }}</td>
                                         <td>{{ $admin->roleUser }}</td>
                                         <td>
                                             <div class="action">

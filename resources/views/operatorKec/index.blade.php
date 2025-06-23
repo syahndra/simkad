@@ -57,7 +57,6 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Username</th>
                                         <th>Email</th>
                                         <th>Kecamatan</th>
                                         <th>Aksi</th>
@@ -68,7 +67,6 @@
                                     <tr>
                                         <td>{{ $i + 1 }}</td>
                                         <td>{{ $op->user->nama }}</td>
-                                        <td>{{ $op->user->username }}</td>
                                         <td>{{ $op->user->email }}</td>
                                         <td>{{ $op->kecamatan->namaKec }}</td>
                                         <td>

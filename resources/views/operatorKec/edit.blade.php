@@ -57,12 +57,6 @@
                             </div>
 
                             <div class="mb-3">
-                                <label>Username</label>
-                                <input type="text" name="username" class="form-control"
-                                    value="{{ old('username', $operatorKec->user->username) }}" required>
-                            </div>
-
-                            <div class="mb-3">
                                 <label>Email</label>
                                 <input type="email" name="email" class="form-control"
                                     value="{{ old('email', $operatorKec->user->email) }}" required>

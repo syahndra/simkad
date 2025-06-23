@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('idUser');
             $table->string('name');
-            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('roleUser', ['superadmin', 'operatorDesa', 'operatorKecamatan', 'verifikatorDafduk', 'verifikatorCapil', 'admin']); // Menambahkan kolom roleUser

@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
@@ -23,7 +23,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
+            'email' => 'The provided credentials do not match our records.',
         ]);
     }
 
@@ -48,7 +48,6 @@ class AuthController extends Controller
         // Validasi input
         $request->validate([
             'nama' => 'required|string|max:255|unique:users,nama,' . $user->idUser . ',idUser',
-            'username' => 'required|string|max:255|unique:users,username,' . $user->idUser . ',idUser',
             'email' => 'required|email|max:255|unique:users,email,' . $user->idUser . ',idUser',
             'current_password' => 'nullable|string',
             'password' => 'nullable|string|confirmed',
@@ -56,7 +55,6 @@ class AuthController extends Controller
 
         // Update nama/email
         $user->nama = $request->nama;
-        $user->username = $request->username;
         $user->email = $request->email;
 
         // Jika user mengisi password baru, maka:
