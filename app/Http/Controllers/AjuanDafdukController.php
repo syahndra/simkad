@@ -12,6 +12,8 @@ use App\Models\Respon;
 use App\Models\FinalDokumen;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PengajuanMasukMail;
 
 class AjuanDafdukController extends Controller
 {
@@ -81,7 +83,22 @@ class AjuanDafdukController extends Controller
         $data = $request->all();
         $data['token'] = Str::random(6);
 
-        AjuanDafduk::create($data);
+        $dafduk = AjuanDafduk::create($data);
+        $ajuan = AjuanDafduk::with(['layanan', 'operatorDesa.desa.kecamatan'])
+            ->where('idDafduk', $dafduk->idDafduk)
+            ->first();
+            
+        // Untuk Kirim email
+        $data = [
+            'nama' => $ajuan->nama,
+            'layanan' => $ajuan->layanan->namaLayanan,
+            'jenis' => $ajuan->layanan->jenis,
+            'token' => $ajuan->token,
+            'created_at' => $ajuan->created_at
+        ];
+        if (!empty($request->email)) {
+            Mail::to($request->email)->send(new PengajuanMasukMail($data));;
+        }
 
         return redirect()->route('ajuanDafduk.index')->with('success', 'Ajuan berhasil ditambahkan.');
     }

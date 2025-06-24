@@ -15,6 +15,8 @@ use App\Http\Controllers\ResponController;
 use App\Http\Controllers\FinalDokumenController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PengajuanMasukMail;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -78,4 +80,15 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/finalDok/{id}', [FinalDokumenController::class, 'update'])->name('finalDokumen.update');
         Route::get('/cetak-token/{jenis}/{id}', [TokenController::class, 'cetakToken'])->name('ajuan.cetak');
     });
+    Route::get('/coba-email', function () {
+    $data = [
+        'nama' => 'Budi Santoso',
+        'desa' => 'Desa Suka Maju',
+        'jenis' => 'Permohonan KK'
+    ];
+
+    Mail::to('mohammadsyahndra@gmail.com')->send(new PengajuanMasukMail($data));
+
+    return 'Email berhasil dikirim!';
+});
 });

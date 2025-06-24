@@ -11,6 +11,8 @@ use App\Models\Respon;
 use App\Models\FinalDokumen;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PengajuanMasukMail;
 
 class AjuanCapilController extends Controller
 {
@@ -30,7 +32,7 @@ class AjuanCapilController extends Controller
             $ajuan = AjuanCapil::with('layanan', 'operatorDesa.desa.kecamatan', 'respon')->orderBy('created_at', 'desc')->get();
         }
 
-        return view('ajuanCapil.index', compact('ajuan','listLayanan'));
+        return view('ajuanCapil.index', compact('ajuan', 'listLayanan'));
     }
 
     public function create()
@@ -60,7 +62,22 @@ class AjuanCapilController extends Controller
         $data = $request->all();
         $data['token'] = Str::random(6);
 
-        AjuanCapil::create($data);
+        $capil = AjuanCapil::create($data);
+        $ajuan = AjuanCapil::with(['layanan', 'operatorDesa.desa.kecamatan'])
+            ->where('idCapil', $capil->idCapil)
+            ->first();
+            
+        // Untuk Kirim email
+        $data = [
+            'nama' => $ajuan->nama,
+            'layanan' => $ajuan->layanan->namaLayanan,
+            'jenis' => $ajuan->layanan->jenis,
+            'token' => $ajuan->token,
+            'created_at' => $ajuan->created_at
+        ];
+        if (!empty($request->email)) {
+            Mail::to($request->email)->send(new PengajuanMasukMail($data));;
+        }
 
         return redirect()->route('ajuanCapil.index')->with('success', 'Ajuan berhasil ditambahkan.');
     }
@@ -141,7 +158,7 @@ class AjuanCapilController extends Controller
     {
         $respon = Respon::where('idAjuan', $id)->first();
         $finalDokumen = FinalDokumen::where('idAjuan', $id)->first();
-        $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan','respon','finalDOkumen')->findOrFail($id);
+        $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan', 'respon', 'finalDOkumen')->findOrFail($id);
         return view('ajuanCapil.show', compact('ajuan', 'respon', 'finalDokumen'));
     }
 }
