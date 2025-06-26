@@ -108,7 +108,6 @@
                                             <th>Wilayah</th>
                                             <th>Status</th>
                                             <th>Note</th>
-                                            <th>#</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -143,14 +142,6 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @isset($a->finalDokumen->filePath)
-                                                        <a href="{{ asset('storage/' . $a->finalDokumen->filePath) }}"
-                                                            target="_blank" class="badge text-primary" title="Lihat Dokumen">
-                                                            Dokumen
-                                                        </a>
-                                                    @endisset
-                                                </td>
-                                                <td>
                                                     <div class="action">
                                                         <button>
                                                             <a href="{{ route('ajuanDafduk.show', $a->idDafduk) }}"
@@ -158,6 +149,23 @@
                                                                 <i class="lni lni-eye"></i>
                                                             </a>
                                                         </button>
+                                                        @isset($a->finalDokumen->filePath)
+                                                            <button>
+                                                                <a href="{{ asset('storage/' . $a->finalDokumen->filePath) }}"
+                                                                    target="_blank" class="text-primary"
+                                                                    title="Lihat Final Dokumen">
+                                                                    <i class="lni lni-archive"></i>
+                                                                </a>
+                                                            </button>
+                                                        @endisset
+                                                        @if (!empty($a->linkBerkas))
+                                                            <button>
+                                                                <a href="{{ $a->linkBerkas }}" target="_blank"
+                                                                    class="text-muted" title="Lihat Berkas di GDrive">
+                                                                    <i class="lni lni-telegram-original"></i>
+                                                                </a>
+                                                            </button>
+                                                        @endif
                                                         @if (Auth::user()->roleUser === 'operatorDesa')
                                                             @if ($a->statAjuan === 'dalam antrian')
                                                                 <a href="{{ route('ajuanDafduk.edit', $a->idDafduk) }}"
