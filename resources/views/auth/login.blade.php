@@ -68,10 +68,12 @@
                     <div class="col-lg-6">
                         <div class="signin-wrapper">
                             <div class="form-wrapper">
-                                <h6 class="mb-15">Form Login</h6>
-                                <p class="text-sm mb-25">
-                                    Silahkan masukan email dan password terdaftar.
-                                </p>
+                                <div id="login-text">
+                                    <h6 class="mb-15">Form Login</h6>
+                                    <p class="text-sm mb-25">
+                                        Silahkan masukan email dan password terdaftar.
+                                    </p>
+                                </div>
                                 <form method="POST" action="/login">
                                     @csrf
                                     <div class="row">
@@ -89,18 +91,9 @@
                                             </div>
                                         </div>
                                         <!-- end col -->
-                                        <div class="col-xxl-6 col-lg-12 col-md-6">
-                                            <div class="form-check checkbox-style mb-30">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="checkbox-remember" />
-                                                <label class="form-check-label" for="checkbox-remember">
-                                                    Remember me next time</label>
-                                            </div>
-                                        </div>
-                                        <!-- end col -->
-                                        <div class="col-xxl-6 col-lg-12 col-md-6">
+                                        <div class="col-xxl-12 col-lg-12 col-md-12">
                                             <div class="text-start text-md-end text-lg-start text-xxl-end mb-30">
-                                                <a href="reset-password.html" class="hover-underline">
+                                                <a href="#" id="show-reset-form" class="hover-underline">
                                                     Forgot Password?
                                                 </a>
                                             </div>
@@ -117,6 +110,51 @@
                                     </div>
                                     <!-- end row -->
                                 </form>
+
+                                <!-- Form Lupa Password -->
+                                <div id="forgot-password-form" style="display:none;">
+                                    <h6 class="mb-15">Reset Password</h6>
+                                    <form id="form-reset-password">
+                                        <div class="input-style-1">
+                                            <label>Email</label>
+                                            <input type="email" name="email" placeholder="Email" required />
+                                        </div>
+
+                                        <div class="input-style-1 d-flex">
+                                            <div style="flex: 1; margin-right: 5px;">
+                                                <label>Kode Verifikasi</label>
+                                                <input type="text" name="otp_code" placeholder="Kode OTP" />
+                                            </div>
+                                            <button type="button" id="send-code-btn"
+                                                class="main-btn primary-btn btn-hover mt-30">Kirim Kode</button>
+                                        </div>
+
+                                        <div class="input-style-1 position-relative">
+                                            <label>Password Baru</label>
+                                            <input type="password" name="password" id="password"
+                                                placeholder="Password Baru" />
+                                            <span class="toggle-password" data-target="password"
+                                                style="cursor:pointer; position:absolute; right:10px; top:35px;">👁</span>
+                                        </div>
+
+                                        <div class="input-style-1 position-relative">
+                                            <label>Konfirmasi Password</label>
+                                            <input type="password" name="password_confirmation"
+                                                id="password_confirmation" placeholder="Konfirmasi Password" />
+                                            <span class="toggle-password" data-target="password_confirmation"
+                                                style="cursor:pointer; position:absolute; right:10px; top:35px;">👁</span>
+                                        </div>
+
+                                        <div class="button-group d-flex justify-content-center flex-wrap">
+                                            <button type="submit" class="main-btn primary-btn btn-hover w-100">Reset
+                                                Password</button>
+                                        </div>
+                                    </form>
+                                    <div class="text-center mt-3">
+                                        <a href="#" id="back-to-login" class="text-sm hover-underline">←
+                                            Kembali ke Login</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -167,6 +205,75 @@
     <script src="{{ asset('assets/js/world-merc.js') }}"></script>
     <script src="{{ asset('assets/js/polyfill.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = document.getElementById(btn.dataset.target);
+                target.type = (target.type === 'password') ? 'text' : 'password';
+            });
+        });
+
+        // Ganti form login -> reset password
+        document.getElementById('show-reset-form').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('form[action="/login"]').style.display = 'none';
+            document.getElementById('login-text').style.display = 'none';
+            document.getElementById('forgot-password-form').style.display = 'block';
+        });
+
+        // Kirim kode verifikasi
+        document.getElementById('send-code-btn').addEventListener('click', function() {
+            const email = document.querySelector('#forgot-password-form input[name="email"]').value;
+            if (!email) return alert('Email harus diisi');
+
+            fetch('/send-reset-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                })
+                .then(res => res.json())
+                .then(data => alert(data.message))
+                .catch(() => alert('Terjadi kesalahan'));
+        });
+
+        // Submit reset password
+        document.getElementById('form-reset-password').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('/submit-reset-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status) {
+                        location.reload(); // kembali ke login
+                    }
+                })
+                .catch(() => alert('Terjadi kesalahan'));
+        });
+
+        // back to login
+        document.getElementById('back-to-login').addEventListener('click', function(e) {
+            e.preventDefault(); // Mencegah halaman reload saat klik link
+            document.querySelector('form[action="/login"]').style.display = 'block'; // Tampilkan form login
+            document.getElementById('login-text').style.display = 'block'; // Tampilkan teks Form Login & deskripsi
+            document.getElementById('forgot-password-form').style.display = 'none'; // Sembunyikan form reset
+        });
+    </script>
 </body>
 
 </html>

@@ -23,6 +23,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/cek-pengajuan', [TokenController::class, 'form'])->name('cek.form');
 Route::get('/cek-pengajuan/{jenis}/{token}', [TokenController::class, 'cek'])->name('cek.pengajuan');
+// Lupa Password
+Route::post('/send-reset-code', [AuthController::class, 'sendResetCode']);
+Route::post('/submit-reset-password', [AuthController::class, 'submitResetPassword']);
+
 
 Route::middleware(['auth'])->group(function () {
 

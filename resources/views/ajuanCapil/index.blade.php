@@ -47,7 +47,9 @@
                             @endif
                             <div class="d-flex gap-2 align-items-center mb-3">
                                 <!-- Tombol Tambah -->
-                                <a href="{{ route('ajuanCapil.create') }}" class="btn btn-success">Tambah +</a>
+                                @if (Auth::user()->roleUser === 'operatorDesa')
+                                    <a href="{{ route('ajuanCapil.create') }}" class="btn btn-success">Tambah +</a>
+                                @endif
                                 <!-- Dropdown Export -->
                                 <div class="dropdown">
                                     <button class="btn btn-primary" type="button" data-bs-toggle="dropdown"
@@ -179,10 +181,12 @@
                                                                 </form>
                                                             @endif
                                                             @if ($a->statAjuan === 'ditolak')
-                                                                <a href="{{ route('respon.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                    class="text-secondary" title="Ajukan Ulang">
-                                                                    <i class="lni lni-reload"></i>
-                                                                </a>
+                                                                <button>
+                                                                    <a href="{{ route('respon.edit', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
+                                                                        class="text-warning" title="Ajukan Ulang">
+                                                                        <i class="lni lni-reload"></i>
+                                                                    </a>
+                                                                </button>
                                                             @endif
                                                             @if (in_array($a->statAjuan, ['sudah diproses', 'selesai']))
                                                                 @isset($a->finalDokumen)

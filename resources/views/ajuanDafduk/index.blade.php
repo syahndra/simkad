@@ -46,7 +46,9 @@
                             @endif
                             <div class="d-flex gap-2 align-items-center mb-3">
                                 <!-- Tombol Tambah -->
-                                <a href="{{ route('ajuanDafduk.create') }}" class="btn btn-success">Tambah +</a>
+                                @if (Auth::user()->roleUser === 'operatorDesa')
+                                    <a href="{{ route('ajuanDafduk.create') }}" class="btn btn-success">Tambah +</a>
+                                @endif
                                 <!-- Dropdown Export -->
                                 <div class="dropdown">
                                     <button class="btn btn-primary" type="button" data-bs-toggle="dropdown"
@@ -174,7 +176,7 @@
                                                             @if ($a->statAjuan === 'ditolak')
                                                                 <button>
                                                                     <a href="{{ route('respon.edit', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                        class="text-success" title="Ajukan Ulang">
+                                                                        class="text-warning" title="Ajukan Ulang">
                                                                         <i class="lni lni-reload"></i>
                                                                     </a>
                                                                 </button>

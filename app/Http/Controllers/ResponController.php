@@ -56,7 +56,9 @@ class ResponController extends Controller
 
     public function edit($jenis, $id)
     {
-        $respon = Respon::where('idAjuan', $id)->firstOrFail();
+        $respon = Respon::where('idAjuan', $id)
+            ->where('jenis', $jenis)
+            ->firstOrFail();
 
         if ($jenis === 'capil') {
             $ajuan = AjuanCapil::with('operatorDesa.desa.kecamatan', 'layanan')->findOrFail($respon->idAjuan);
