@@ -57,6 +57,7 @@ class AjuanCapilController extends Controller
             'nik' => 'required|string|max:50',
             'nama' => 'required|string|max:100',
             'keterangan' => 'nullable|string|max:255',
+            'linkBerkas' => 'nullable|url'
         ]);
 
         $data = $request->all();
@@ -66,7 +67,7 @@ class AjuanCapilController extends Controller
         $ajuan = AjuanCapil::with(['layanan', 'operatorDesa.desa.kecamatan'])
             ->where('idCapil', $capil->idCapil)
             ->first();
-            
+
         // Untuk Kirim email
         $data = [
             'nama' => $ajuan->nama,
@@ -103,6 +104,7 @@ class AjuanCapilController extends Controller
             'nama' => 'required|string|max:255',
             'keterangan' => 'nullable|string',
             'noAkta' => 'nullable|string|max:50',
+            'linkBerkas' => 'nullable|url'
         ]);
 
         $ajuan->update($request->all());

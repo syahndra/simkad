@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2025 at 05:01 AM
+-- Generation Time: Jun 26, 2025 at 06:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,6 +38,7 @@ CREATE TABLE `ajuancapil` (
   `keterangan` text DEFAULT NULL,
   `token` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `statAjuan` enum('dalam antrian','ditolak','sudah diproses','revisi','selesai') NOT NULL DEFAULT 'dalam antrian',
+  `linkBerkas` varchar(1024) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -46,10 +47,11 @@ CREATE TABLE `ajuancapil` (
 -- Dumping data for table `ajuancapil`
 --
 
-INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `token`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'afe8jk', 'selesai', '2025-06-01 23:41:45', '2025-06-10 06:46:32'),
-(4, 2, 5, '3329136712000003', '3329135305250001', 'RUHWI', '3329-KM-02062025-0059', NULL, 'fzd342', 'selesai', '2025-06-03 18:49:18', '2025-06-10 06:46:20'),
-(5, 2, 2, '3329136712000001', '3329014505840005', 'Arhan', '3329-LU-02062025-0046', NULL, 'ddeb27', 'ditolak', '2025-06-05 01:10:52', '2025-06-26 01:55:52');
+INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `token`, `statAjuan`, `linkBerkas`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'afe8jk', 'selesai', NULL, '2025-06-01 23:41:45', '2025-06-10 06:46:32'),
+(4, 2, 5, '3329136712000003', '3329135305250001', 'RUHWI', '3329-KM-02062025-0059', NULL, 'fzd342', 'selesai', NULL, '2025-06-03 18:49:18', '2025-06-10 06:46:20'),
+(5, 2, 2, '3329136712000001', '3329014505840005', 'Arhan', '3329-LU-02062025-0046', NULL, 'ddeb27', 'selesai', NULL, '2025-06-05 01:10:52', '2025-06-25 20:34:44'),
+(7, 3, 2, '3329136712000001', '3329081106480001', 'Jimmy', '3329-LU-02062025-0046', NULL, 'aOb82e', 'dalam antrian', 'https://drive.google.com/drive/folders/1PuqJNCiX4lHGn3MOBGq1PGDT_zrmn0Km', '2025-06-25 21:14:25', '2025-06-25 21:14:25');
 
 -- --------------------------------------------------------
 
@@ -67,6 +69,7 @@ CREATE TABLE `ajuandafduk` (
   `keterangan` text DEFAULT NULL,
   `token` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `statAjuan` enum('dalam antrian','ditolak','sudah diproses','revisi','selesai') DEFAULT 'dalam antrian',
+  `linkBerkas` varchar(1024) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -75,11 +78,12 @@ CREATE TABLE `ajuandafduk` (
 -- Dumping data for table `ajuandafduk`
 --
 
-INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `token`, `statAjuan`, `created_at`, `updated_at`) VALUES
-(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'gfh743', 'selesai', '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
-(4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'ief825', 'sudah diproses', '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
-(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'ditolak', '2025-06-03 21:22:52', '2025-06-25 18:37:12'),
-(7, 3, 8, '3329136712000001', '3329135305250002', 'Toni Setiawan', NULL, '9fO84g', 'dalam antrian', '2025-06-10 06:17:53', '2025-06-10 06:17:53');
+INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `token`, `statAjuan`, `linkBerkas`, `created_at`, `updated_at`) VALUES
+(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'gfh743', 'selesai', NULL, '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
+(4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'ief825', 'sudah diproses', NULL, '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
+(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'ditolak', NULL, '2025-06-03 21:22:52', '2025-06-25 18:37:12'),
+(7, 3, 8, '3329136712000001', '3329135305250002', 'Toni Setiawan', NULL, '9fO84g', 'dalam antrian', 'https://drive.google.com/drive/folders/1PuqJNCiX4lHGn3MOBGq1PGDT_zrmn0Km', '2025-06-10 06:17:53', '2025-06-25 21:31:15'),
+(8, 2, 7, '3329136712000001', '3329081106480001', 'RUHWI', NULL, '70w2bb', 'dalam antrian', NULL, '2025-06-25 20:36:21', '2025-06-25 20:36:21');
 
 -- --------------------------------------------------------
 
@@ -136,7 +140,8 @@ CREATE TABLE `finaldokumen` (
 INSERT INTO `finaldokumen` (`idFinDok`, `idAjuan`, `jenis`, `filename`, `filePath`, `created_at`, `updated_at`) VALUES
 (1, 3, 'dafduk', 'KK - HENGKI', 'dokumen_final/Mp25zYVSjtrMhjMthy8dQRTK2Syfi1I5qywKdgPq.pdf', '2025-06-04 19:30:03', '2025-06-10 01:43:39'),
 (2, 1, 'capil', 'AKTA LAHIR - ALENA SAFIRA', 'dokumen_final/cEKH0TbYifAg3abzkzBMfPSOpJfLTrtz2c755Ovi.pdf', '2025-06-04 20:58:17', '2025-06-04 20:59:43'),
-(3, 4, 'capil', 'AKTA MATI - RUHWI', 'dokumen_final/u7ERxfENH3bV7GxWsAR4Y81YlT9wPyGf3Iv89p9P.pdf', '2025-06-09 06:57:49', '2025-06-09 06:57:49');
+(3, 4, 'capil', 'AKTA MATI - RUHWI', 'dokumen_final/u7ERxfENH3bV7GxWsAR4Y81YlT9wPyGf3Iv89p9P.pdf', '2025-06-09 06:57:49', '2025-06-09 06:57:49'),
+(4, 5, 'capil', 'AKTA LAHIR - ALENA SAFIRA', 'dokumen_final/bZJ1RC7Wkn8eVCR5yTNEsNP9NwIl1noYgaKrO0PS.pdf', '2025-06-25 20:34:44', '2025-06-25 20:34:44');
 
 -- --------------------------------------------------------
 
@@ -296,7 +301,7 @@ INSERT INTO `respon` (`idRespon`, `idUser`, `idAjuan`, `jenis`, `respon`, `creat
 (7, 6, 3, 'dafduk', NULL, '2025-06-03 19:25:47', '2025-06-03 19:59:31'),
 (9, 15, 4, 'dafduk', NULL, '2025-06-03 21:29:04', '2025-06-03 21:29:04'),
 (10, 15, 5, 'dafduk', NULL, '2025-06-03 21:29:09', '2025-06-25 18:31:53'),
-(11, 7, 5, 'capil', NULL, '2025-06-25 18:28:49', '2025-06-25 18:46:09');
+(11, 7, 5, 'capil', NULL, '2025-06-25 18:28:49', '2025-06-25 20:34:02');
 
 -- --------------------------------------------------------
 
@@ -428,13 +433,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `ajuancapil`
 --
 ALTER TABLE `ajuancapil`
-  MODIFY `idCapil` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idCapil` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `ajuandafduk`
 --
 ALTER TABLE `ajuandafduk`
-  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `desa`
@@ -446,7 +451,7 @@ ALTER TABLE `desa`
 -- AUTO_INCREMENT for table `finaldokumen`
 --
 ALTER TABLE `finaldokumen`
-  MODIFY `idFinDok` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idFinDok` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `kecamatan`

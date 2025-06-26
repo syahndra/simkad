@@ -78,6 +78,7 @@ class AjuanDafdukController extends Controller
             'nama' => 'required|string|max:255',
             'keterangan' => 'nullable|string',
             'statAjuan' => 'required|in:dalam antrian,ditolak,sudah diproses,revisi',
+            'linkBerkas' => 'nullable|url'
         ]);
 
         $data = $request->all();
@@ -124,6 +125,7 @@ class AjuanDafdukController extends Controller
             'nik' => 'required',
             'nama' => 'required|string|max:255',
             'keterangan' => 'nullable|string',
+            'linkBerkas' => 'nullable|url'
         ]);
 
         $ajuan->update($request->all());

@@ -22,6 +22,7 @@ class AjuanCapil extends Model
         'nama',
         'keterangan',
         'statAjuan',
+        'linkBerkas',
         'token'
     ];
 

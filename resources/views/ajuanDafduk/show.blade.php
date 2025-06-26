@@ -85,6 +85,14 @@
                                     <textarea name="keterangan" class="form-control" disabled>{{ $ajuan->keterangan }}</textarea>
                                 </div>
                             @endif
+                            @if ($ajuan->linkBerkas)
+                                <div class="mb-3">
+                                    <label>Link GDrive</label>
+                                    <div class="form-control">
+                                        <a href="{{ $ajuan->linkBerkas }}" target="_blank">Lihat Berkas</a>
+                                    </div>
+                                </div>
+                            @endif
                             @if (!empty($respon) && !empty($respon->respon))
                                 <div class="mb-3">
                                     <label>Respon</label>

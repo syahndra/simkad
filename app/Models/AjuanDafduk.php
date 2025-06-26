@@ -21,6 +21,7 @@ class AjuanDafduk extends Model
         'nama',
         'keterangan',
         'statAjuan',
+        'linkBerkas',
         'token'
     ];
 
