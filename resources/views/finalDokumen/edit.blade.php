@@ -92,7 +92,7 @@
 
                             <div class="mb-3">
                                 <label>Upload Dokumen <small>(Biarkan kosong jika tidak ingin ganti file)</small></label>
-                                <input type="file" name="file" class="form-control">
+                                <input type="file" name="file" class="form-control" accept=".pdf">
                                 @if($finalDokumen->filePath)
                                     <p>File saat ini: <a href="{{ asset('storage/' . $finalDokumen->filePath) }}" target="_blank">Lihat Dokumen</a></p>
                                 @endif

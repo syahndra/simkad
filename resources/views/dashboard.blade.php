@@ -33,15 +33,15 @@
             </div>
             <!-- ========== title-wrapper end ========== -->
             <div class="row">
-                <!-- Dalam Proses -->
+                <!-- dalam antrian -->
                 <div class="col-xl-3 col-lg-4 col-sm-6">
                     <div class="icon-card mb-30">
                         <div class="icon purple">
                             <i class="lni lni-spinner"></i>
                         </div>
                         <div class="content">
-                            <h6 class="mb-10">Dalam Proses</h6>
-                            <h3 class="text-bold mb-10">{{ $statusCounts['dalam proses'] }}</h3>
+                            <h6 class="mb-10">dalam antrian</h6>
+                            <h3 class="text-bold mb-10">{{ $statusCounts['dalam antrian'] }}</h3>
                             <p class="text-sm text-info">
                                 <i class="lni lni-hourglass"></i> Menunggu verifikasi
                             </p>

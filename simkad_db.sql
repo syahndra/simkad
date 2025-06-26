@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2025 at 05:28 PM
+-- Generation Time: Jun 26, 2025 at 05:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,7 +37,7 @@ CREATE TABLE `ajuancapil` (
   `noAkta` varchar(50) NOT NULL,
   `keterangan` text DEFAULT NULL,
   `token` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `statAjuan` enum('dalam proses','ditolak','sudah diproses','revisi','selesai') NOT NULL DEFAULT 'dalam proses',
+  `statAjuan` enum('dalam antrian','ditolak','sudah diproses','revisi','selesai') NOT NULL DEFAULT 'dalam antrian',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -49,7 +49,7 @@ CREATE TABLE `ajuancapil` (
 INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `token`, `statAjuan`, `created_at`, `updated_at`) VALUES
 (1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'afe8jk', 'selesai', '2025-06-01 23:41:45', '2025-06-10 06:46:32'),
 (4, 2, 5, '3329136712000003', '3329135305250001', 'RUHWI', '3329-KM-02062025-0059', NULL, 'fzd342', 'selesai', '2025-06-03 18:49:18', '2025-06-10 06:46:20'),
-(5, 2, 2, '3329136712000001', '3329014505840005', 'Arhan', '3329-LU-02062025-0046', NULL, 'ddeb27', 'dalam proses', '2025-06-05 01:10:52', '2025-06-10 03:41:05');
+(5, 2, 2, '3329136712000001', '3329014505840005', 'Arhan', '3329-LU-02062025-0046', NULL, 'ddeb27', 'ditolak', '2025-06-05 01:10:52', '2025-06-26 01:55:52');
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE `ajuandafduk` (
   `nama` varchar(100) DEFAULT NULL,
   `keterangan` text DEFAULT NULL,
   `token` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `statAjuan` enum('dalam proses','ditolak','sudah diproses','revisi','selesai') DEFAULT 'dalam proses',
+  `statAjuan` enum('dalam antrian','ditolak','sudah diproses','revisi','selesai') DEFAULT 'dalam antrian',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -78,8 +78,8 @@ CREATE TABLE `ajuandafduk` (
 INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `token`, `statAjuan`, `created_at`, `updated_at`) VALUES
 (3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'gfh743', 'selesai', '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
 (4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'ief825', 'sudah diproses', '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
-(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'sudah diproses', '2025-06-03 21:22:52', '2025-06-03 21:29:09'),
-(7, 3, 8, '3329136712000001', '3329135305250002', 'Toni Setiawan', NULL, '9fO84g', 'dalam proses', '2025-06-10 06:17:53', '2025-06-10 06:17:53');
+(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'ditolak', '2025-06-03 21:22:52', '2025-06-25 18:37:12'),
+(7, 3, 8, '3329136712000001', '3329135305250002', 'Toni Setiawan', NULL, '9fO84g', 'dalam antrian', '2025-06-10 06:17:53', '2025-06-10 06:17:53');
 
 -- --------------------------------------------------------
 
@@ -295,7 +295,8 @@ INSERT INTO `respon` (`idRespon`, `idUser`, `idAjuan`, `jenis`, `respon`, `creat
 (6, 7, 4, 'capil', NULL, '2025-06-03 19:17:10', '2025-06-03 19:50:01'),
 (7, 6, 3, 'dafduk', NULL, '2025-06-03 19:25:47', '2025-06-03 19:59:31'),
 (9, 15, 4, 'dafduk', NULL, '2025-06-03 21:29:04', '2025-06-03 21:29:04'),
-(10, 15, 5, 'dafduk', NULL, '2025-06-03 21:29:09', '2025-06-03 21:29:09');
+(10, 15, 5, 'dafduk', NULL, '2025-06-03 21:29:09', '2025-06-25 18:31:53'),
+(11, 7, 5, 'capil', NULL, '2025-06-25 18:28:49', '2025-06-25 18:46:09');
 
 -- --------------------------------------------------------
 
@@ -306,11 +307,12 @@ INSERT INTO `respon` (`idRespon`, `idUser`, `idAjuan`, `jenis`, `respon`, `creat
 CREATE TABLE `users` (
   `idUser` int(20) UNSIGNED NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `roleUser` enum('superadmin','admin','opDinCapil','opDinDafduk','operatorKecamatan','operatorDesa','') NOT NULL,
   `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif',
+  `otp_code` varchar(6) DEFAULT NULL,
+  `otp_expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -319,17 +321,17 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`idUser`, `nama`, `username`, `email`, `password`, `roleUser`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'superadmin', 'superadmin', 'superadmin@gmail.com', '$2y$12$WYTUBNGmQTuKG6GTX5TPBer6fvR3/HxFlQ.mVDnlJHRiP/i8kYjCG', 'superadmin', 'aktif', NULL, NULL),
-(4, 'admin1', 'admin1', 'admin1@gmail.com', '$2y$12$4NDaLJPdEFSAXr55XjsKdeQ71FLULKyxnawogFItRbfcDQrdYwhru', 'admin', 'aktif', '2025-05-01 08:31:05', '2025-06-03 21:03:48'),
-(5, 'kecamatan tonjong', 'kecamatan_tonjong', 'kecamatan_tonjong@gmail.com', '$2y$12$/k450AxFIAf0vY4wZtyXyOCCbgRvGlp.LIFEUCKL.crfdNq7tKIQi', 'operatorKecamatan', 'aktif', '2025-05-01 18:33:10', '2025-06-03 21:05:48'),
-(6, 'kecamatan brebes', 'kecamatan_brebes', 'kecamatan_brebes@gmail.com', '$2y$12$eRvtk6g/ZMMj0gHc67asT.ioto6xIJ1TSaXm0q4GWn6aBIj3AY8nq', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-06-03 21:06:04'),
-(7, 'dinas capil', 'dinas_capil', 'dinas_capil@gmail.com', '$2y$12$SeuCQplSgYP3fWexiCH9Wu2M1tXPsGFtVEA4u3ZKseASD6rX3x24S', 'opDinCapil', 'aktif', '2025-05-01 18:52:20', '2025-06-03 21:05:18'),
-(9, 'desa kalimati', 'desa_kalimati', 'desa_kalimati@gmail.com', '$2y$12$61Lqk4/8Dvab7ZinFMhHl.ZWXbwbj5OSe4266wlFc5yBNqe6Xc7QW', 'operatorDesa', 'aktif', '2025-05-03 02:36:07', '2025-06-03 21:06:44'),
-(10, 'admin2', 'admin2', 'admin2@gmail.com', '$2y$12$o5nGh3eaKfvMB/Jk57SWEO6ifz8f9M3W5Xmch.LhYFDaNZyTw0UZO', 'admin', 'aktif', '2025-05-05 18:25:59', '2025-06-03 21:03:30'),
-(11, 'desa kutamendala', 'desa_kutamendala', 'desa_kutamendala@gmail.com', '$2y$12$cTiOzakLftVpWPlfnmEEleU3Ap4.OGZTPKDWnfaU1wcLks3O/GDvy', 'operatorDesa', 'aktif', '2025-05-05 18:31:15', '2025-06-03 21:07:06'),
-(14, 'admin3', 'admin3', 'admin3@gmail.com', '$2y$12$hJawn.ckdrxVhx8semOEQ.KX/DrOW2C4Zhfgzi9F5Uz55SZ9yZWTu', 'admin', 'aktif', '2025-06-03 21:03:05', '2025-06-03 21:03:05'),
-(15, 'dinas dafduk', 'dinas_dafduk', 'dinas_dafduk@gmail.com', '$2y$12$UzQMaASkgOOuAx5EGjPCTOWTNzEkZ81wyuspYKSPreTbjHO/gDnN.', 'opDinDafduk', 'aktif', '2025-06-03 21:04:54', '2025-06-03 21:04:54');
+INSERT INTO `users` (`idUser`, `nama`, `email`, `password`, `roleUser`, `status`, `otp_code`, `otp_expires_at`, `created_at`, `updated_at`) VALUES
+(1, 'superadmin', 'superadmin@gmail.com', '$2y$12$0MzM/Z2G8Qpji642bdznRegw2KB19BtAmX8ihUPP7aaIOI7LDecge', 'superadmin', 'aktif', NULL, NULL, NULL, '2025-06-25 19:46:35'),
+(4, 'admin1', 'admin1@gmail.com', '$2y$12$4NDaLJPdEFSAXr55XjsKdeQ71FLULKyxnawogFItRbfcDQrdYwhru', 'admin', 'aktif', NULL, NULL, '2025-05-01 08:31:05', '2025-06-03 21:03:48'),
+(5, 'kecamatan tonjong', 'kecamatan_tonjong@gmail.com', '$2y$12$/k450AxFIAf0vY4wZtyXyOCCbgRvGlp.LIFEUCKL.crfdNq7tKIQi', 'operatorKecamatan', 'aktif', NULL, NULL, '2025-05-01 18:33:10', '2025-06-03 21:05:48'),
+(6, 'kecamatan brebes', 'kecamatan_brebes@gmail.com', '$2y$12$eRvtk6g/ZMMj0gHc67asT.ioto6xIJ1TSaXm0q4GWn6aBIj3AY8nq', 'operatorKecamatan', 'aktif', NULL, NULL, '2025-05-01 18:42:38', '2025-06-03 21:06:04'),
+(7, 'dinas capil', 'dinas_capil@gmail.com', '$2y$12$SeuCQplSgYP3fWexiCH9Wu2M1tXPsGFtVEA4u3ZKseASD6rX3x24S', 'opDinCapil', 'aktif', NULL, NULL, '2025-05-01 18:52:20', '2025-06-03 21:05:18'),
+(9, 'desa kalimati', 'desa_kalimati@gmail.com', '$2y$12$61Lqk4/8Dvab7ZinFMhHl.ZWXbwbj5OSe4266wlFc5yBNqe6Xc7QW', 'operatorDesa', 'aktif', NULL, NULL, '2025-05-03 02:36:07', '2025-06-03 21:06:44'),
+(10, 'admin2', 'admin2@gmail.com', '$2y$12$o5nGh3eaKfvMB/Jk57SWEO6ifz8f9M3W5Xmch.LhYFDaNZyTw0UZO', 'admin', 'aktif', NULL, NULL, '2025-05-05 18:25:59', '2025-06-03 21:03:30'),
+(11, 'desa kutamendala', 'desa_kutamendala@gmail.com', '$2y$12$cTiOzakLftVpWPlfnmEEleU3Ap4.OGZTPKDWnfaU1wcLks3O/GDvy', 'operatorDesa', 'aktif', NULL, NULL, '2025-05-05 18:31:15', '2025-06-03 21:07:06'),
+(14, 'admin3', 'admin3@gmail.com', '$2y$12$hJawn.ckdrxVhx8semOEQ.KX/DrOW2C4Zhfgzi9F5Uz55SZ9yZWTu', 'admin', 'aktif', NULL, NULL, '2025-06-03 21:03:05', '2025-06-03 21:03:05'),
+(15, 'dinas dafduk', 'dinas_dafduk@gmail.com', '$2y$12$UzQMaASkgOOuAx5EGjPCTOWTNzEkZ81wyuspYKSPreTbjHO/gDnN.', 'opDinDafduk', 'aktif', NULL, NULL, '2025-06-03 21:04:54', '2025-06-03 21:04:54');
 
 --
 -- Indexes for dumped tables
@@ -416,7 +418,6 @@ ALTER TABLE `respon`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`idUser`),
-  ADD UNIQUE KEY `users_username_unique` (`username`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
@@ -481,7 +482,7 @@ ALTER TABLE `operatorkec`
 -- AUTO_INCREMENT for table `respon`
 --
 ALTER TABLE `respon`
-  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`

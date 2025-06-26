@@ -45,10 +45,10 @@ class DashboardController extends Controller
         $dafdukStats = $dafduk->select('statAjuan', DB::raw('COUNT(*) as jumlah'))
             ->groupBy('statAjuan')->pluck('jumlah', 'statAjuan');
 
-        // Hitung total per status (gabung revisi ke dalam proses)
+        // Hitung total per status (gabung revisi ke dalam antrian)
         $statusCounts = collect([
-            'dalam proses' => ($capilStats['dalam proses'] ?? 0) + ($capilStats['revisi'] ?? 0)
-                + ($dafdukStats['dalam proses'] ?? 0) + ($dafdukStats['revisi'] ?? 0),
+            'dalam antrian' => ($capilStats['dalam antrian'] ?? 0) + ($capilStats['revisi'] ?? 0)
+                + ($dafdukStats['dalam antrian'] ?? 0) + ($dafdukStats['revisi'] ?? 0),
             'sudah diproses' => ($capilStats['sudah diproses'] ?? 0) + ($dafdukStats['sudah diproses'] ?? 0),
             'ditolak' => ($capilStats['ditolak'] ?? 0) + ($dafdukStats['ditolak'] ?? 0),
             'selesai' => ($capilStats['selesai'] ?? 0) + ($dafdukStats['selesai'] ?? 0),

@@ -52,7 +52,8 @@
                 <div class="row mb-3">
                     <label for="search" class="col-sm-2 col-form-label">Kode. Pengajuan</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="search" placeholder="cth: capil/abc123" required>
+                        <input type="text" class="form-control" id="search" placeholder="cth: capil/abc123"
+                            required>
                     </div>
                     <div class="col-sm-2">
                         <button type="submit" class="btn btn-cari w-100">🔍 CARI</button>
@@ -61,66 +62,75 @@
             </form>
 
             @if ($data)
-            <!-- Hasil Ajuan -->
-            <div id="hasil">
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Tanggal Ajuan</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $data['tgl'] ?? '-' }}</div>
+                <!-- Hasil Ajuan -->
+                <div id="hasil">
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Tanggal Ajuan</label>
+                        <div class="col-sm-10">
+                            <div class="form-control-plaintext">{{ $data['tgl'] ?? '-' }}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Pelayanan</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $data['layanan'] ?? '-' }}</div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Pelayanan</label>
+                        <div class="col-sm-10">
+                            <div class="form-control-plaintext">{{ $data['layanan'] ?? '-' }}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Nama</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $data['nama'] ?? '-' }}</div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <div class="form-control-plaintext">{{ $data['nama'] ?? '-' }}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">No KK</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $data['kk'] ?? '-' }}</div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">No KK</label>
+                        <div class="col-sm-10">
+                            <div class="form-control-plaintext">{{ $data['kk'] ?? '-' }}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">NIK</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $data['nik'] ?? '-' }}</div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">NIK</label>
+                        <div class="col-sm-10">
+                            <div class="form-control-plaintext">{{ $data['nik'] ?? '-' }}</div>
+                        </div>
                     </div>
-                </div>
-                @if ($jenis === 'capil')
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">No Akta</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $ajuan->noAkta ?? '-' }}</div>
+                    @if ($jenis === 'capil')
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">No Akta</label>
+                            <div class="col-sm-10">
+                                <div class="form-control-plaintext">{{ $ajuan->noAkta ?? '-' }}</div>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Operator Desa</label>
+                        <div class="col-sm-10">
+                            <div class="form-control-plaintext">{{ $data['opdes'] ?? '-' }}</div>
+                        </div>
                     </div>
-                </div>
-                @endif
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Operator Desa</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $data['opdes'] ?? '-' }}</div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Status Ajuan</label>
+                        <div class="col-sm-10">
+                            <div class="form-control-plaintext">{{ $data['status'] ?? '-' }}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Status Ajuan</label>
-                    <div class="col-sm-10">
-                        <div class="form-control-plaintext">{{ $data['status'] ?? '-' }}</div>
-                    </div>
-                </div>
+                    @if (Str::lower($data['status'] ?? '') === 'dalam antrian')
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">Antrian Ke</label>
+                            <div class="col-sm-10">
+                                <div class="form-control-plaintext">{{ $data['antrian'] ?? '-' }}</div>
+                            </div>
+                        </div>
+                    @endif
 
-                <!-- Tombol Dokumen -->
-                @if ($ajuan->finalDokumen)
-                <div class="text-center mt-4">
-                    <a href="{{ asset('storage/' . $ajuan->finalDokumen->filePath) }}" target="_blank" class="btn btn-view px-4">View Document</a>
+                    <!-- Tombol Dokumen -->
+                    @if ($ajuan->finalDokumen)
+                        <div class="text-center mt-4">
+                            <a href="{{ asset('storage/' . $ajuan->finalDokumen->filePath) }}" target="_blank"
+                                class="btn btn-view px-4">View Document</a>
+                        </div>
+                    @endif
                 </div>
-                @endif
-            </div>
             @endif
         </div>
     </div>

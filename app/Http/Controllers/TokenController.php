@@ -55,14 +55,50 @@ class TokenController extends Controller
     {
         if ($jenis === 'capil') {
             $ajuan = AjuanCapil::where('token', $token)->firstOrFail();
-            $data['akta'] = $ajuan->noAkta ?? '-';
+            $aksesVer = $ajuan->layanan->aksesVer ?? null;
+            $createdAt = $ajuan->created_at;
+
+            $query = AjuanCapil::where('created_at', '<', $createdAt)
+                ->whereHas('layanan', function ($q) use ($aksesVer) {
+                    $q->where('aksesVer', $aksesVer);
+                });
+
+            // Jika akses verifikasi adalah kecamatan, tambahkan where kecamatan
+            if ($aksesVer === 'kecamatan') {
+                $idKec = $ajuan->operatorDesa->desa->idKec ?? null;
+                if ($idKec) {
+                    $query->whereHas('operatorDesa.desa', function ($q) use ($idKec) {
+                        $q->where('idKec', $idKec);
+                    });
+                }
+            }
+
+            $antrian = $query->count() + 1;
         } elseif ($jenis === 'dafduk') {
             $ajuan = AjuanDafduk::where('token', $token)->firstOrFail();
+            $aksesVer = $ajuan->layanan->aksesVer ?? null;
+            $createdAt = $ajuan->created_at;
+
+            $query = AjuanDafduk::where('created_at', '<', $createdAt)
+                ->whereHas('layanan', function ($q) use ($aksesVer) {
+                    $q->where('aksesVer', $aksesVer);
+                });
+
+            if ($aksesVer === 'kecamatan') {
+                $idKec = $ajuan->operatorDesa->desa->idKec ?? null;
+                if ($idKec) {
+                    $query->whereHas('operatorDesa.desa', function ($q) use ($idKec) {
+                        $q->where('idKec', $idKec);
+                    });
+                }
+            }
+
+            $antrian = $query->count() + 1;
         } else {
             abort(404, 'Permintaan tidak dikenali');
         }
 
-        // Data yang akan dikirim ke view
+        // Data yang dikirim ke view
         $data = [
             'tgl' => $ajuan->created_at->format('Y-m-d'),
             'layanan' => $ajuan->layanan->namaLayanan ?? '-',
@@ -70,7 +106,8 @@ class TokenController extends Controller
             'kk' => $ajuan->noKK ?? '-',
             'nik' => $ajuan->nik ?? '-',
             'opdes' => $ajuan->operatorDesa->user->nama ?? '-',
-            'status' => $ajuan->statAjuan ?? '-'
+            'status' => $ajuan->statAjuan ?? '-',
+            'antrian' => $antrian
         ];
 
         return view('token.cek', ['data' => $data, 'jenis' => $jenis, 'token' => $token, 'ajuan' => $ajuan]);

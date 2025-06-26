@@ -77,7 +77,7 @@ class AjuanDafdukController extends Controller
             'nik' => 'required',
             'nama' => 'required|string|max:255',
             'keterangan' => 'nullable|string',
-            'statAjuan' => 'required|in:dalam proses,ditolak,sudah diproses,revisi',
+            'statAjuan' => 'required|in:dalam antrian,ditolak,sudah diproses,revisi',
         ]);
 
         $data = $request->all();

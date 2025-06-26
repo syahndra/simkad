@@ -83,7 +83,7 @@
                                     <select class="form-control" name="status">
                                         <option disabled selected>-- Pilih Status --</option>
                                         <option value="">Semua</option>
-                                        <option value="dalam proses">Dalam Proses</option>
+                                        <option value="dalam antrian">dalam antrian</option>
                                         <option value="sudah diproses">Sudah Diproses</option>
                                         <option value="revisi">Revisi</option>
                                         <option value="ditolak">Ditolak</option>
@@ -159,7 +159,7 @@
                                                             </a>
                                                         </button>
                                                         @if (Auth::user()->roleUser === 'operatorDesa')
-                                                            @if ($a->statAjuan === 'dalam proses')
+                                                            @if ($a->statAjuan === 'dalam antrian')
                                                                 <a href="{{ route('ajuanDafduk.edit', $a->idDafduk) }}"
                                                                     class="text-warning" title="Edit Ajuan">
                                                                     <i class="lni lni lni-pencil"></i>
@@ -204,7 +204,7 @@
                                                                 <i class="lni lni-cog"></i>
                                                             </a>
                                                         @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
-                                                            @if ($a->statAjuan === 'dalam proses')
+                                                            @if ($a->statAjuan === 'dalam antrian')
                                                                 <a href="{{ route('respon.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
                                                                     class="text-primary" title="Beri Respon">
                                                                     <i class="lni lni-reply"></i>
@@ -273,7 +273,7 @@
             html +=
                 `<button><a href="/ajuanDafduk/${a.idDafduk}" class="text-success" title="Detail"><i class="lni lni-eye"></i></a></button>`;
             if (roleUser === 'operatorDesa') {
-                if (status === 'dalam proses') {
+                if (status === 'dalam antrian') {
                     html +=
                         `<a href="/ajuanDafduk/${a.idDafduk}/edit" class="text-warning" title="Edit Ajuan"><i class="lni lni-pencil"></i></a>`;
                     html += `<form action="/ajuanDafduk/${a.idDafduk}" method="POST" style="display:inline;">
@@ -301,7 +301,7 @@
                 html +=
                     `<a href="/cetak-token/dafduk/${a.idDafduk}" class="text-secondary" title="Generate Token" target="_blank"><i class="lni lni-cog"></i></a>`;
             } else if (['opDinDafduk', 'operatorKecamatan'].includes(roleUser)) {
-                if (status === 'dalam proses') {
+                if (status === 'dalam antrian') {
                     html +=
                         `<a href="/respon/dafduk/${a.idDafduk}/create" class="text-primary" title="Beri Respon"><i class="lni lni-reply"></i></a>`;
                 } else {

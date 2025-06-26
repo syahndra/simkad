@@ -48,7 +48,7 @@ class FinalDokumenController extends Controller
             'jenis' => 'required|in:capil,dafduk',
             'idAjuan' => 'required',
             'filename' => 'required',
-            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'file' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         $path = $request->file('file')->store('dokumen_final', 'public');
@@ -85,7 +85,7 @@ class FinalDokumenController extends Controller
     {
         $request->validate([
             'filename' => 'required',
-            'file' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'file' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         $finalDokumen = FinalDokumen::findOrFail($id);

@@ -106,7 +106,7 @@
 
                                 <div class="mb-3">
                                     <label>Upload Dokumen</label>
-                                    <input type="file" name="file" class="form-control" required>
+                                    <input type="file" name="file" class="form-control" accept=".pdf" required>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Simpan</button>

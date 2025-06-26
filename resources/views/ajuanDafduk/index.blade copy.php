@@ -111,7 +111,7 @@
                                                 <td>
                                                     <div class="action">
                                                         @if (Auth::user()->roleUser === 'operatorDesa')
-                                                            @if ($a->statAjuan === 'dalam proses')
+                                                            @if ($a->statAjuan === 'dalam antrian')
                                                                 <a href="{{ route('ajuanDafduk.edit', $a->idDafduk) }}"
                                                                     class="text-warning" title="Edit Ajuan">
                                                                     <i class="lni lni lni-pencil"></i>
@@ -153,7 +153,7 @@
                                                                 <i class="lni lni-cog"></i>
                                                             </a>
                                                         @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
-                                                            @if ($a->statAjuan === 'dalam proses')
+                                                            @if ($a->statAjuan === 'dalam antrian')
                                                                 <a href="{{ route('respon.create', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
                                                                     class="text-primary" title="Beri Respon">
                                                                         <i class="lni lni-reply"></i>

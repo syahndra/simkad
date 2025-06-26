@@ -95,10 +95,10 @@
 
                             <div class="mb-3">
                                 <label>Email</label>
-                                <input type="email" name="email" class="form-control">
+                                <input type="email" name="email" class="form-control" required>
                             </div>
 
-                            <input type="hidden" name="statAjuan" value="dalam proses">
+                            <input type="hidden" name="statAjuan" value="dalam antrian">
                             <a href="{{ route('ajuanCapil.index') }}" class="btn btn-secondary">Kembali</a>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
