@@ -48,6 +48,7 @@
                                 @csrf
                                 @method('PUT')
 
+                                <input type="hidden" name="idUser" value="{{ $user->idUser }}">
                                 <div class="mb-3">
                                     <label>nama</label>
                                     <input type="text" name="nama" class="form-control"

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\ResetPassword as Reset;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordOtpMail;
 
@@ -46,12 +47,12 @@ class AuthController extends Controller
 
     public function updateProfil(Request $request)
     {
-        $user = Auth::user();
+        $user = User::findOrFail($request->idUser);
 
         // Validasi input
         $request->validate([
-            'nama' => 'required|string|max:255|unique:users,nama,' . $user->idUser . ',idUser',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->idUser . ',idUser',
+            'nama' => 'required|string|max:255|unique:users,nama,' . $request->idUser . ',idUser',
+            'email' => 'required|email|max:255|unique:users,email,' . $request->idUser . ',idUser',
             'current_password' => 'nullable|string',
             'password' => 'nullable|string|confirmed',
         ]);
@@ -75,27 +76,54 @@ class AuthController extends Controller
 
         return back()->with('success', 'Profil berhasil diperbarui.');
     }
+
     public function sendResetCode(Request $request)
     {
         $request->validate(['email' => 'required|email']);
+
         $user = User::where('email', $request->email)->first();
 
-        if (!$user) return response()->json(['status' => false, 'message' => 'Email tidak ditemukan']);
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Email tidak ditemukan'
+            ]);
+        }
 
         $otp = rand(100000, 999999);
-        $user->otp_code = $otp;
-        $user->otp_expires_at = now()->addMinutes(10);
-        $user->save();
+        $expiredAt = now()->addMinutes(10);
 
+        // Cek apakah sudah ada data reset sebelumnya
+        $reset = Reset::where('email', $request->email)->first();
+
+        if ($reset) {
+            // update existing reset record
+            $reset->update([
+                'otp_code' => $otp,
+                'otp_expires_at' => $expiredAt
+            ]);
+        } else {
+            // buat baru jika belum ada
+            Reset::create([
+                'email' => $request->email,
+                'otp_code' => $otp,
+                'otp_expires_at' => $expiredAt
+            ]);
+        }
+
+        // data untuk email
         $data = [
-            'nama' => $user->name,
+            'nama' => $user->nama ?? $user->name ?? 'User',
             'otp' => $otp,
-            'expired' => now()->addMinutes(10)->format('H:i'),
+            'expired' => $expiredAt->format('H:i'),
         ];
 
         Mail::to($user->email)->send(new ResetPasswordOtpMail($data));
 
-        return response()->json(['status' => true, 'message' => 'Kode telah dikirim ke email Anda']);
+        return response()->json([
+            'status' => true,
+            'message' => 'Kode OTP telah dikirim ke email Anda'
+        ]);
     }
 
     public function submitResetPassword(Request $request)
@@ -114,8 +142,6 @@ class AuthController extends Controller
         if (!$user) return response()->json(['status' => false, 'message' => 'Kode OTP salah atau kadaluarsa']);
 
         $user->password = Hash::make($request->password);
-        $user->otp_code = null;
-        $user->otp_expires_at = null;
         $user->save();
 
         return response()->json(['status' => true, 'message' => 'Password berhasil direset, silakan login']);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2025 at 06:34 AM
+-- Generation Time: Jun 30, 2025 at 04:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -270,10 +270,19 @@ INSERT INTO `operatorkec` (`idOpkec`, `idUser`, `idKec`) VALUES
 --
 
 CREATE TABLE `password_reset_tokens` (
+  `idToken` int(20) UNSIGNED NOT NULL,
   `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `otp_code` varchar(6) NOT NULL,
+  `otp_expires_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`idToken`, `email`, `otp_code`, `otp_expires_at`) VALUES
+(1, 'msyahndra@gmail.com', '200496', '2025-06-28 17:17:33'),
+(2, 'msyahndra@gmail.com', '662397', '2025-06-28 17:16:39');
 
 -- --------------------------------------------------------
 
@@ -316,27 +325,25 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `roleUser` enum('superadmin','admin','opDinCapil','opDinDafduk','operatorKecamatan','operatorDesa','') NOT NULL,
   `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif',
-  `otp_code` varchar(6) DEFAULT NULL,
-  `otp_expires_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`idUser`, `nama`, `email`, `password`, `roleUser`, `status`, `otp_code`, `otp_expires_at`, `created_at`, `updated_at`) VALUES
-(1, 'superadmin', 'superadmin@gmail.com', '$2y$12$0MzM/Z2G8Qpji642bdznRegw2KB19BtAmX8ihUPP7aaIOI7LDecge', 'superadmin', 'aktif', NULL, NULL, NULL, '2025-06-25 19:46:35'),
-(4, 'admin1', 'admin1@gmail.com', '$2y$12$4NDaLJPdEFSAXr55XjsKdeQ71FLULKyxnawogFItRbfcDQrdYwhru', 'admin', 'aktif', NULL, NULL, '2025-05-01 08:31:05', '2025-06-03 21:03:48'),
-(5, 'kecamatan tonjong', 'kecamatan_tonjong@gmail.com', '$2y$12$/k450AxFIAf0vY4wZtyXyOCCbgRvGlp.LIFEUCKL.crfdNq7tKIQi', 'operatorKecamatan', 'aktif', NULL, NULL, '2025-05-01 18:33:10', '2025-06-03 21:05:48'),
-(6, 'kecamatan brebes', 'kecamatan_brebes@gmail.com', '$2y$12$eRvtk6g/ZMMj0gHc67asT.ioto6xIJ1TSaXm0q4GWn6aBIj3AY8nq', 'operatorKecamatan', 'aktif', NULL, NULL, '2025-05-01 18:42:38', '2025-06-03 21:06:04'),
-(7, 'dinas capil', 'dinas_capil@gmail.com', '$2y$12$SeuCQplSgYP3fWexiCH9Wu2M1tXPsGFtVEA4u3ZKseASD6rX3x24S', 'opDinCapil', 'aktif', NULL, NULL, '2025-05-01 18:52:20', '2025-06-03 21:05:18'),
-(9, 'desa kalimati', 'desa_kalimati@gmail.com', '$2y$12$61Lqk4/8Dvab7ZinFMhHl.ZWXbwbj5OSe4266wlFc5yBNqe6Xc7QW', 'operatorDesa', 'aktif', NULL, NULL, '2025-05-03 02:36:07', '2025-06-03 21:06:44'),
-(10, 'admin2', 'admin2@gmail.com', '$2y$12$o5nGh3eaKfvMB/Jk57SWEO6ifz8f9M3W5Xmch.LhYFDaNZyTw0UZO', 'admin', 'aktif', NULL, NULL, '2025-05-05 18:25:59', '2025-06-03 21:03:30'),
-(11, 'desa kutamendala', 'desa_kutamendala@gmail.com', '$2y$12$cTiOzakLftVpWPlfnmEEleU3Ap4.OGZTPKDWnfaU1wcLks3O/GDvy', 'operatorDesa', 'aktif', NULL, NULL, '2025-05-05 18:31:15', '2025-06-03 21:07:06'),
-(14, 'admin3', 'admin3@gmail.com', '$2y$12$hJawn.ckdrxVhx8semOEQ.KX/DrOW2C4Zhfgzi9F5Uz55SZ9yZWTu', 'admin', 'aktif', NULL, NULL, '2025-06-03 21:03:05', '2025-06-03 21:03:05'),
-(15, 'dinas dafduk', 'dinas_dafduk@gmail.com', '$2y$12$UzQMaASkgOOuAx5EGjPCTOWTNzEkZ81wyuspYKSPreTbjHO/gDnN.', 'opDinDafduk', 'aktif', NULL, NULL, '2025-06-03 21:04:54', '2025-06-03 21:04:54');
+INSERT INTO `users` (`idUser`, `nama`, `email`, `password`, `roleUser`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'superadmin', 'superadmin@gmail.com', '$2y$12$0MzM/Z2G8Qpji642bdznRegw2KB19BtAmX8ihUPP7aaIOI7LDecge', 'superadmin', 'aktif', '2025-06-25 19:46:35', '2025-06-28 22:27:35'),
+(4, 'admin1', 'admin1@gmail.com', '$2y$12$4NDaLJPdEFSAXr55XjsKdeQ71FLULKyxnawogFItRbfcDQrdYwhru', 'admin', 'aktif', '2025-05-01 08:31:05', '2025-06-03 21:03:48'),
+(5, 'kecamatan tonjong', 'kecamatan_tonjong@gmail.com', '$2y$12$/k450AxFIAf0vY4wZtyXyOCCbgRvGlp.LIFEUCKL.crfdNq7tKIQi', 'operatorKecamatan', 'aktif', '2025-05-01 18:33:10', '2025-06-03 21:05:48'),
+(6, 'kecamatan brebes', 'kecamatan_brebes@gmail.com', '$2y$12$eRvtk6g/ZMMj0gHc67asT.ioto6xIJ1TSaXm0q4GWn6aBIj3AY8nq', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-06-03 21:06:04'),
+(7, 'dinas capil', 'dinas_capil@gmail.com', '$2y$12$SeuCQplSgYP3fWexiCH9Wu2M1tXPsGFtVEA4u3ZKseASD6rX3x24S', 'opDinCapil', 'aktif', '2025-05-01 18:52:20', '2025-06-03 21:05:18'),
+(9, 'msyahndra', 'msyahndra@gmail.com', '$2y$12$61Lqk4/8Dvab7ZinFMhHl.ZWXbwbj5OSe4266wlFc5yBNqe6Xc7QW', 'operatorDesa', 'aktif', '2025-05-03 02:36:07', '2025-06-28 16:17:49'),
+(10, 'admin2', 'admin2@gmail.com', '$2y$12$o5nGh3eaKfvMB/Jk57SWEO6ifz8f9M3W5Xmch.LhYFDaNZyTw0UZO', 'admin', 'aktif', '2025-05-05 18:25:59', '2025-06-03 21:03:30'),
+(11, 'desa kutamendala', 'desa_kutamendala@gmail.com', '$2y$12$cTiOzakLftVpWPlfnmEEleU3Ap4.OGZTPKDWnfaU1wcLks3O/GDvy', 'operatorDesa', 'aktif', '2025-05-05 18:31:15', '2025-06-03 21:07:06'),
+(14, 'admin3', 'admin3@gmail.com', '$2y$12$hJawn.ckdrxVhx8semOEQ.KX/DrOW2C4Zhfgzi9F5Uz55SZ9yZWTu', 'admin', 'aktif', '2025-06-03 21:03:05', '2025-06-03 21:03:05'),
+(15, 'dinas dafduk', 'dinas_dafduk@gmail.com', '$2y$12$UzQMaASkgOOuAx5EGjPCTOWTNzEkZ81wyuspYKSPreTbjHO/gDnN.', 'opDinDafduk', 'aktif', '2025-06-03 21:04:54', '2025-06-03 21:04:54');
 
 --
 -- Indexes for dumped tables
@@ -409,7 +416,7 @@ ALTER TABLE `operatorkec`
 -- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
-  ADD PRIMARY KEY (`email`);
+  ADD PRIMARY KEY (`idToken`);
 
 --
 -- Indexes for table `respon`
@@ -482,6 +489,12 @@ ALTER TABLE `operatordesa`
 --
 ALTER TABLE `operatorkec`
   MODIFY `idOpkec` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  MODIFY `idToken` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `respon`
