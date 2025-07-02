@@ -65,7 +65,7 @@
                                 <tbody>
                                     @foreach($admins as $admin)
                                     <tr>
-                                        <td>{{ $admin->idUser }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $admin->nama }}</td>
                                         <td>{{ $admin->email }}</td>
                                         <td>{{ $admin->roleUser }}</td>
