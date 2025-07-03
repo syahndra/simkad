@@ -28,7 +28,7 @@ class OperatorDesaController extends Controller
         $request->validate([
             'nama' => 'required|string',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
             'idDesa' => 'required|exists:desa,idDesa'
         ]);
 
