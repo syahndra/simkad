@@ -78,23 +78,114 @@
         });
     </script>
     <script>
-        function exportToExcel() {
+        function exportToExcel(jenis) {
             const table = document.getElementById("table");
 
-            // Ambil semua baris <tr>
+            // Ambil data filter dari form
+            const form = document.getElementById("filterForm");
+            const startDate = form.elements["startDate"].value || "Semua";
+            const endDate = form.elements["endDate"].value || "Semua";
+
+            const layananSelect = form.elements["layanan"];
+            const statusSelect = form.elements["status"];
+
+            let layananText = layananSelect.value;
+            if (
+                layananSelect.selectedIndex === 0 || // -- Pilih Layanan --
+                layananText === undefined || layananText.trim() === ""
+            ) {
+                layananText = "Semua";
+            } else {
+                layananText = layananSelect.options[layananSelect.selectedIndex].text;
+            }
+
+            let statusText = statusSelect.value;
+            if (
+                statusSelect.selectedIndex === 0 || // -- Pilih Status --
+                statusText === undefined || statusText.trim() === ""
+            ) {
+                statusText = "Semua";
+            } else {
+                statusText = statusSelect.options[statusSelect.selectedIndex].text;
+            }
+
+            // Ambil isi tabel dan buang 3 kolom terakhir
             const rows = Array.from(table.querySelectorAll("tr")).map(row => {
                 const cells = Array.from(row.querySelectorAll("th, td"));
-                return cells.slice(0, -3).map(cell => cell.innerText); // buang 3 kolom terakhir
+                return cells.slice(0, -3).map(cell => cell.innerText);
             });
 
-            const ws = XLSX.utils.aoa_to_sheet(rows);
+            // Tentukan judul
+            let judul = "DATA PENGAJUAN";
+            if (jenis === "dafduk") {
+                judul = "DATA PENGAJUAN DAFDUK";
+            } else if (jenis === "capil") {
+                judul = "DATA PENGAJUAN CAPIL";
+            } else {
+                judul = `DATA PENGAJUAN ${jenis.toUpperCase()}`;
+            }
+
+            // Buat baris awal dengan info filter di kolom A dan B
+            const infoBaris1 = [judul]; // Baris 0
+            const infoBaris2 = ["Tanggal Awal :", "", startDate, "", "Layanan :", layananText]; // Baris 1
+            const infoBaris3 = ["Tanggal Akhir :", "", endDate, "", "Status :", statusText]; // Baris 2
+            const infoBaris4 = []; // Baris kosong
+
+            // Gabungkan semua baris
+            const allRows = [infoBaris1, infoBaris2, infoBaris3, infoBaris4, ...rows];
+
+            // Buat worksheet
+            const ws = XLSX.utils.aoa_to_sheet(allRows);
+
+            // Merge judul (baris 0 kolom A sampai kolom terakhir)
+            const totalColumns = rows[0]?.length || 1;
+            ws['!merges'] = [{
+                    s: {
+                        r: 0,
+                        c: 0
+                    },
+                    e: {
+                        r: 0,
+                        c: Math.max(rows[0]?.length || 5, 5) - 1
+                    }
+                }, // Merge A1:F1 (judul)
+                {
+                    s: {
+                        r: 1,
+                        c: 0
+                    },
+                    e: {
+                        r: 1,
+                        c: 1
+                    }
+                }, // Merge A2:B2 (label Tanggal Awal)
+                {
+                    s: {
+                        r: 2,
+                        c: 0
+                    },
+                    e: {
+                        r: 2,
+                        c: 1
+                    }
+                } // Merge A3:B3 (label Tanggal Akhir)
+            ];
+
+            // Buat workbook dan sheet
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Data");
-            XLSX.writeFile(wb, "data-export.xlsx");
+
+            // Nama file dinamis
+            const now = new Date();
+            const tanggal = now.toISOString().slice(0, 10);
+            const jam = now.toTimeString().slice(0, 8).replace(/:/g, "-");
+            const fileName = `data-export-${jenis}-${tanggal}_${jam}.xlsx`;
+
+            XLSX.writeFile(wb, fileName);
         }
     </script>
     <script>
-        async function exportToPDF() {
+        async function exportToPDF(jenis) {
             const {
                 jsPDF
             } = window.jspdf;
@@ -106,22 +197,64 @@
 
             const table = document.getElementById("table");
 
-            // Ambil header
+            // Ambil data filter
+            const form = document.getElementById("filterForm");
+            const startDate = form.elements["startDate"].value || "Semua";
+            const endDate = form.elements["endDate"].value || "Semua";
+
+            const layananSelect = form.elements["layanan"];
+            const statusSelect = form.elements["status"];
+
+            let layananText = layananSelect.value;
+            if (layananSelect.selectedIndex === 0 || layananText.trim() === "") {
+                layananText = "Semua";
+            } else {
+                layananText = layananSelect.options[layananSelect.selectedIndex].text;
+            }
+
+            let statusText = statusSelect.value;
+            if (statusSelect.selectedIndex === 0 || statusText.trim() === "") {
+                statusText = "Semua";
+            } else {
+                statusText = statusSelect.options[statusSelect.selectedIndex].text;
+            }
+
+            // Tentukan judul berdasarkan jenis
+            let judul = "DATA PENGAJUAN";
+            if (jenis === "dafduk") {
+                judul = "DATA PENGAJUAN DAFDUK";
+            } else if (jenis === "capil") {
+                judul = "DATA PENGAJUAN CAPIL";
+            } else {
+                judul = `DATA PENGAJUAN ${jenis.toUpperCase()}`;
+            }
+
+            // Tambahkan judul dan informasi filter ke PDF
+            doc.setFontSize(14);
+            doc.text(judul, 40, 40);
+
+            doc.setFontSize(10);
+            doc.text(`Tanggal Awal : ${startDate}`, 40, 60);
+            doc.text(`Tanggal Akhir : ${endDate}`, 40, 75);
+            doc.text(`Layanan : ${layananText}`, 300, 60);
+            doc.text(`Status : ${statusText}`, 300, 75);
+
+            // Ambil header dan isi tabel
             const headers = Array.from(table.querySelectorAll("thead th"))
-                .slice(0, -3) // hapus 3 kolom terakhir
+                .slice(0, -3)
                 .map(th => th.innerText);
 
-            // Ambil body
             const body = Array.from(table.querySelectorAll("tbody tr")).map(row =>
                 Array.from(row.querySelectorAll("td"))
-                .slice(0, -3) // hapus 3 kolom terakhir
+                .slice(0, -3)
                 .map(td => td.innerText)
             );
 
-            // Buat PDF
+            // Tambahkan tabel
             doc.autoTable({
                 head: [headers],
                 body: body,
+                startY: 95,
                 theme: 'grid',
                 styles: {
                     fontSize: 10
@@ -131,7 +264,13 @@
                 }
             });
 
-            doc.save('data-export.pdf');
+            // Nama file dinamis
+            const now = new Date();
+            const tanggal = now.toISOString().slice(0, 10);
+            const jam = now.toTimeString().slice(0, 8).replace(/:/g, "-");
+            const fileName = `data-export-${jenis}-${tanggal}_${jam}.pdf`;
+
+            doc.save(fileName);
         }
     </script>
 

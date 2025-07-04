@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2025 at 04:09 AM
+-- Generation Time: Jul 04, 2025 at 05:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,10 +48,7 @@ CREATE TABLE `ajuancapil` (
 --
 
 INSERT INTO `ajuancapil` (`idCapil`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `noAkta`, `keterangan`, `token`, `statAjuan`, `linkBerkas`, `created_at`, `updated_at`) VALUES
-(1, 2, 2, '3329010102120001', '3329135305250001', 'ALENA SAFIRA', '3329-LU-02062025-0046', 'coba ngasih keterangan', 'afe8jk', 'selesai', NULL, '2025-06-01 23:41:45', '2025-06-10 06:46:32'),
-(4, 2, 5, '3329136712000003', '3329135305250001', 'RUHWI', '3329-KM-02062025-0059', NULL, 'fzd342', 'selesai', NULL, '2025-06-03 18:49:18', '2025-06-10 06:46:20'),
-(5, 2, 2, '3329136712000001', '3329014505840005', 'Arhan', '3329-LU-02062025-0046', NULL, 'ddeb27', 'selesai', NULL, '2025-06-05 01:10:52', '2025-06-25 20:34:44'),
-(7, 3, 2, '3329136712000001', '3329081106480001', 'Jimmy', '3329-LU-02062025-0046', NULL, 'aOb82e', 'dalam antrian', 'https://drive.google.com/drive/folders/1PuqJNCiX4lHGn3MOBGq1PGDT_zrmn0Km', '2025-06-25 21:14:25', '2025-06-25 21:14:25');
+(1, 2, 2, '3329091510120051', '3329096703250006', 'JENNAIRA RAMADHANI', '3329-LT-03072025-0034', NULL, 'gCSGi9', 'selesai', NULL, '2025-07-03 19:15:03', '2025-07-03 19:47:27');
 
 -- --------------------------------------------------------
 
@@ -79,11 +76,7 @@ CREATE TABLE `ajuandafduk` (
 --
 
 INSERT INTO `ajuandafduk` (`idDafduk`, `idOpdes`, `idLayanan`, `noKK`, `nik`, `nama`, `keterangan`, `token`, `statAjuan`, `linkBerkas`, `created_at`, `updated_at`) VALUES
-(3, 2, 1, '3329136712000003', '3329135305250001', 'ALENA SAFIRA', NULL, 'gfh743', 'selesai', NULL, '2025-06-02 01:14:33', '2025-06-03 20:43:42'),
-(4, 3, 10, '3329136712000003', '3329135305250002', 'Robert', 'Pindah semua anggota keluarga', 'ief825', 'sudah diproses', NULL, '2025-06-03 21:13:02', '2025-06-03 21:29:04'),
-(5, 2, 10, '3329136712000003', '3329014505840005', 'Albert', 'pindah hanya anak pertama', 'kjf754', 'ditolak', NULL, '2025-06-03 21:22:52', '2025-06-25 18:37:12'),
-(7, 3, 8, '3329136712000001', '3329135305250002', 'Toni Setiawan', NULL, '9fO84g', 'dalam antrian', 'https://drive.google.com/drive/folders/1PuqJNCiX4lHGn3MOBGq1PGDT_zrmn0Km', '2025-06-10 06:17:53', '2025-06-25 21:31:15'),
-(8, 2, 7, '3329136712000001', '3329081106480001', 'RUHWI', NULL, '70w2bb', 'dalam antrian', NULL, '2025-06-25 20:36:21', '2025-06-25 20:36:21');
+(1, 2, 1, '3329091510120051', '3329090408760005', 'JENNAIRA RAMADHANI', 'Entri anggota baru', 'vE975O', 'selesai', NULL, '2025-07-03 19:06:14', '2025-07-03 19:11:59');
 
 -- --------------------------------------------------------
 
@@ -102,20 +95,303 @@ CREATE TABLE `desa` (
 --
 
 INSERT INTO `desa` (`idDesa`, `namaDesa`, `idKec`) VALUES
-(1, 'Cimunding', 17),
-(2, 'Tiwulandu', 17),
-(3, 'Karangmaja', 17),
-(4, 'Cikuya', 17),
-(5, 'Banjarharjo', 17),
-(6, 'Penanggapan', 17),
-(7, 'Sukareja', 17),
-(8, 'Cibuniwangi', 17),
-(9, 'Cipajang', 17),
-(10, 'Dukuhjeruk', 17),
-(11, 'Cihaur', 17),
-(14, 'Kalimati', 9),
-(15, 'Banjaranyar', 9),
-(16, 'Kutamendala', 6);
+(1, 'Banjaran', 1),
+(2, 'Bentar', 1),
+(3, 'Bentarsari', 1),
+(4, 'Capar', 1),
+(5, 'Ciputih', 1),
+(6, 'Citimbang', 1),
+(7, 'Gandoang', 1),
+(8, 'Ganggawang', 1),
+(9, 'Gunungjaya', 1),
+(10, 'Gununglarang', 1),
+(11, 'Gunungsugih', 1),
+(12, 'Gunungtajem', 1),
+(13, 'Indrajaya', 1),
+(14, 'Kadumanis', 1),
+(15, 'Pabuaran', 1),
+(16, 'Pasirpanjang', 1),
+(17, 'Salem', 1),
+(18, 'Tembongraja', 1),
+(19, 'Wanoja', 1),
+(20, 'Winduasri', 1),
+(21, 'Windusakti', 1),
+(22, 'Bangbayang', 2),
+(23, 'Banjarsari', 2),
+(24, 'Bantarkawung', 2),
+(25, 'Bantarwaru', 2),
+(26, 'Cibentang', 2),
+(27, 'Cinanas', 2),
+(28, 'Ciomas', 2),
+(29, 'Jipang', 2),
+(30, 'Karangpari', 2),
+(31, 'Kebandungan', 2),
+(32, 'Legok', 2),
+(33, 'Pangebatan', 2),
+(34, 'Pengarasan', 2),
+(35, 'Sindangwangi', 2),
+(36, 'Tambakserang', 2),
+(37, 'Telaga', 2),
+(38, 'Terlaya', 2),
+(39, 'Waru', 2),
+(40, 'Adisana', 3),
+(41, 'Bumiayu', 3),
+(42, 'Dukuhturi', 3),
+(43, 'Jatisawit', 3),
+(44, 'Kalierang', 3),
+(45, 'Kalilangkap', 3),
+(46, 'Kalinusu', 3),
+(47, 'Kalisumur', 3),
+(48, 'Kaliwadas', 3),
+(49, 'Langkap', 3),
+(50, 'Laren', 3),
+(51, 'Negaradaha', 3),
+(52, 'Pamijen', 3),
+(53, 'Penggarutan', 3),
+(54, 'Pruwatan', 3),
+(55, 'Cilibur', 4),
+(56, 'Cipetung', 4),
+(57, 'Kedungoleng', 4),
+(58, 'Kretek', 4),
+(59, 'Pagojengan', 4),
+(60, 'Paguyangan', 4),
+(61, 'Pakujati', 4),
+(62, 'Pandansari', 4),
+(63, 'Ragatunjung', 4),
+(64, 'Taraban', 4),
+(65, 'Wanatirta', 4),
+(66, 'Winduaji', 4),
+(67, 'Batursari', 5),
+(68, 'Benda', 5),
+(69, 'Buniwah', 5),
+(70, 'Dawuhan', 5),
+(71, 'Igirklanceng', 5),
+(72, 'Kaligiri', 5),
+(73, 'Kaliloka', 5),
+(74, 'Manggis', 5),
+(75, 'Mendala', 5),
+(76, 'Mlayang', 5),
+(77, 'Plompong', 5),
+(78, 'Sridadi', 5),
+(79, 'Wanareja', 5),
+(80, 'Galuhtimur', 6),
+(81, 'Kalijurang', 6),
+(82, 'Karangjongkeng', 6),
+(83, 'Kutamendala', 6),
+(84, 'Kutayu', 6),
+(85, 'Linggapura', 6),
+(86, 'Negarayu', 6),
+(87, 'Pepedan', 6),
+(88, 'Purbayasa', 6),
+(89, 'Purwodadi', 6),
+(90, 'Rajawetan', 6),
+(91, 'Tanggeran', 6),
+(92, 'Tonjong', 6),
+(93, 'Watujaya', 6),
+(94, 'Bojong', 7),
+(95, 'Buaran', 7),
+(96, 'Janegara', 7),
+(97, 'Jatibarang Kidul', 7),
+(98, 'Jatibarang Lor', 7),
+(99, 'Kalialang', 7),
+(100, 'Kalipucang', 7),
+(101, 'Karanglo', 7),
+(102, 'Kebogadung', 7),
+(103, 'Kebonagung', 7),
+(104, 'Kedungtukang', 7),
+(105, 'Kemiriamba', 7),
+(106, 'Kendawa', 7),
+(107, 'Kertasinduyasa', 7),
+(108, 'Klampis', 7),
+(109, 'Klikiran', 7),
+(110, 'Kramat', 7),
+(111, 'Pamengger', 7),
+(112, 'Pedeslohor', 7),
+(113, 'Rengasbandung', 7),
+(114, 'Tegalwulung', 7),
+(115, 'Tembelang', 7),
+(116, 'Dukuhwringin', 8),
+(117, 'Dumeling', 8),
+(118, 'Glonggong', 8),
+(119, 'Jagalempeni', 8),
+(120, 'Keboledan', 8),
+(121, 'Kertabesuki', 8),
+(122, 'Klampok', 8),
+(123, 'Kupu', 8),
+(124, 'Lengkong', 8),
+(125, 'Pebatan', 8),
+(126, 'Pesantunan', 8),
+(127, 'Sawojajar', 8),
+(128, 'Siasem', 8),
+(129, 'Sidamulya', 8),
+(130, 'Sigentong', 8),
+(131, 'Sisalam', 8),
+(132, 'Siwungkuk', 8),
+(133, 'Tanjungsari', 8),
+(134, 'Tegalgandu', 8),
+(135, 'Wanasari', 8),
+(136, 'Brebes', 9),
+(137, 'Gandasuli', 9),
+(138, 'Limbangan Kulon', 9),
+(139, 'Limbangan Wetan', 9),
+(140, 'Pasarbatang', 9),
+(141, 'Banjaranyar', 9),
+(142, 'Kaligangsa Kulon', 9),
+(143, 'Kaligangsa Wetan', 9),
+(144, 'Kalimati', 9),
+(145, 'Kaliwlingi', 9),
+(146, 'Kedunguter', 9),
+(147, 'Krasak', 9),
+(148, 'Lembarawa', 9),
+(149, 'Padasugih', 9),
+(150, 'Pagejugan', 9),
+(151, 'Pemaron', 9),
+(152, 'Pulosari', 9),
+(153, 'Randusanga Kulon', 9),
+(154, 'Randusanga Wetan', 9),
+(155, 'Sigambir', 9),
+(156, 'Tengki', 9),
+(157, 'Terlangu', 9),
+(158, 'Wangandalem', 9),
+(159, 'Cenang', 10),
+(160, 'Dukuhmaja', 10),
+(161, 'Gegerkunci', 10),
+(162, 'Jatimakmur', 10),
+(163, 'Jatirokeh', 10),
+(164, 'Karangsembung', 10),
+(165, 'Songgom', 10),
+(166, 'Songgom Lor', 10),
+(167, 'Wanacala', 10),
+(168, 'Wanatawang', 10),
+(169, 'Ciampel', 11),
+(170, 'Cigedog', 11),
+(171, 'Cikandang', 11),
+(172, 'Jagapura', 11),
+(173, 'Kemukten', 11),
+(174, 'Kersana', 11),
+(175, 'Kradenan', 11),
+(176, 'Kramatsampang', 11),
+(177, 'Kubangpari', 11),
+(178, 'Limbangan', 11),
+(179, 'Pende', 11),
+(180, 'Sindangjaya', 11),
+(181, 'Sutamaja', 11),
+(182, 'Babakan', 12),
+(183, 'Blubuk', 12),
+(184, 'Bojongsari', 12),
+(185, 'Dukuhsalam', 12),
+(186, 'Jatisawit', 12),
+(187, 'Kalibuntu', 12),
+(188, 'Karangdempel', 12),
+(189, 'Karangjunti', 12),
+(190, 'Karangsambung', 12),
+(191, 'Kecipir', 12),
+(192, 'Kedungneng', 12),
+(193, 'Limbangan', 12),
+(194, 'Losari Kidul', 12),
+(195, 'Losari Lor', 12),
+(196, 'Negla', 12),
+(197, 'Pekauman', 12),
+(198, 'Pengabean', 12),
+(199, 'Prapag Kidul', 12),
+(200, 'Prapag Lor', 12),
+(201, 'Randegan', 12),
+(202, 'Randusari', 12),
+(203, 'Rungkang', 12),
+(204, 'Karangreja', 13),
+(205, 'Kedawung', 13),
+(206, 'Kemurang Kulon', 13),
+(207, 'Kemurang Wetan', 13),
+(208, 'Krakahan', 13),
+(209, 'Kupangputat', 13),
+(210, 'Lemahabang', 13),
+(211, 'Luwungbata', 13),
+(212, 'Luwunggede', 13),
+(213, 'Mundu', 13),
+(214, 'Pejagan', 13),
+(215, 'Pengaradan', 13),
+(216, 'Sarireja', 13),
+(217, 'Sengon', 13),
+(218, 'Sidakaton', 13),
+(219, 'Tanjung', 13),
+(220, 'Tegongan', 13),
+(221, 'Tengguli', 13),
+(222, 'Bangsri', 14),
+(223, 'Banjaratma', 14),
+(224, 'Bulakamba', 14),
+(225, 'Bulakparen', 14),
+(226, 'Bulusari', 14),
+(227, 'Cimohong', 14),
+(228, 'Cipelem', 14),
+(229, 'Dukuhlo', 14),
+(230, 'Grinting', 14),
+(231, 'Jubang', 14),
+(232, 'Karangsari', 14),
+(233, 'Kluwut', 14),
+(234, 'Luwungragi', 14),
+(235, 'Pakijangan', 14),
+(236, 'Petunjungan', 14),
+(237, 'Pulogading', 14),
+(238, 'Rancawuluh', 14),
+(239, 'Siwuluh', 14),
+(240, 'Tegalglagah', 14),
+(241, 'Kamal', 15),
+(242, 'Karangbale', 15),
+(243, 'Kedungbokor', 15),
+(244, 'Larangan', 15),
+(245, 'Luwunggede', 15),
+(246, 'Pamulihan', 15),
+(247, 'Rengaspendawa', 15),
+(248, 'Siandong', 15),
+(249, 'Sitanggal', 15),
+(250, 'Slatri', 15),
+(251, 'Wlahar', 15),
+(252, 'Baros', 16),
+(253, 'Buara', 16),
+(254, 'Bulakelor', 16),
+(255, 'Ciduwet', 16),
+(256, 'Cikeusal Kidul', 16),
+(257, 'Cikeusal Lor', 16),
+(258, 'Ciseureuh', 16),
+(259, 'Dukuhbadag', 16),
+(260, 'Dukuhtengah', 16),
+(261, 'Dukuhturi', 16),
+(262, 'Jemasih', 16),
+(263, 'Karangbandung', 16),
+(264, 'Karangmalang', 16),
+(265, 'Ketanggungan', 16),
+(266, 'Kubangjati', 16),
+(267, 'Kubangsari', 16),
+(268, 'Kubangwungu', 16),
+(269, 'Padakaton', 16),
+(270, 'Pamedaran', 16),
+(271, 'Sindangjaya', 16),
+(272, 'Tanggungsari', 16),
+(273, 'Bandungsari', 17),
+(274, 'Banjarharjo', 17),
+(275, 'Banjarlor', 17),
+(276, 'Blandongan', 17),
+(277, 'Ciawi', 17),
+(278, 'Cibendung', 17),
+(279, 'Cibuniwangi', 17),
+(280, 'Cigadung', 17),
+(281, 'Cihaur', 17),
+(282, 'Cikakak', 17),
+(283, 'Cikuya', 17),
+(284, 'Cimunding', 17),
+(285, 'Cipajang', 17),
+(286, 'Dukuhjeruk', 17),
+(287, 'Karangmaja', 17),
+(288, 'Kertasari', 17),
+(289, 'Kubangjero', 17),
+(290, 'Malahayu', 17),
+(291, 'Parereja', 17),
+(292, 'Penanggapan', 17),
+(293, 'Pende', 17),
+(294, 'Sindangheula', 17),
+(295, 'Sukareja', 17),
+(296, 'Tegalreja', 17),
+(297, 'Tiwulandu', 17);
 
 -- --------------------------------------------------------
 
@@ -138,10 +414,8 @@ CREATE TABLE `finaldokumen` (
 --
 
 INSERT INTO `finaldokumen` (`idFinDok`, `idAjuan`, `jenis`, `filename`, `filePath`, `created_at`, `updated_at`) VALUES
-(1, 3, 'dafduk', 'KK - HENGKI', 'dokumen_final/Mp25zYVSjtrMhjMthy8dQRTK2Syfi1I5qywKdgPq.pdf', '2025-06-04 19:30:03', '2025-06-10 01:43:39'),
-(2, 1, 'capil', 'AKTA LAHIR - ALENA SAFIRA', 'dokumen_final/cEKH0TbYifAg3abzkzBMfPSOpJfLTrtz2c755Ovi.pdf', '2025-06-04 20:58:17', '2025-06-04 20:59:43'),
-(3, 4, 'capil', 'AKTA MATI - RUHWI', 'dokumen_final/u7ERxfENH3bV7GxWsAR4Y81YlT9wPyGf3Iv89p9P.pdf', '2025-06-09 06:57:49', '2025-06-09 06:57:49'),
-(4, 5, 'capil', 'AKTA LAHIR - ALENA SAFIRA', 'dokumen_final/bZJ1RC7Wkn8eVCR5yTNEsNP9NwIl1noYgaKrO0PS.pdf', '2025-06-25 20:34:44', '2025-06-25 20:34:44');
+(1, 1, 'dafduk', 'KK-AKHMAD BUNASIR', 'dokumen_final/eqcCosvBWyTyEbzKvV0Y0h896uRTRvm56lyRs24F.pdf', '2025-07-03 19:11:59', '2025-07-03 19:11:59'),
+(2, 1, 'capil', 'AKTALAHIR-JENNAIRA RAMADHANI', 'dokumen_final/Sot3U2ZwgBlwyD6V82zrJUHmP8D1Ul7PID8YfTkA.pdf', '2025-07-03 19:47:42', '2025-07-03 19:47:42');
 
 -- --------------------------------------------------------
 
@@ -207,25 +481,6 @@ INSERT INTO `layanan` (`idLayanan`, `namaLayanan`, `jenis`, `aksesVer`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '0001_01_01_000000_create_users_table', 1);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `operatordesa`
 --
 
@@ -240,8 +495,8 @@ CREATE TABLE `operatordesa` (
 --
 
 INSERT INTO `operatordesa` (`idOpdes`, `idUser`, `idDesa`) VALUES
-(2, 9, 14),
-(3, 11, 16);
+(1, 3, 150),
+(2, 8, 120);
 
 -- --------------------------------------------------------
 
@@ -260,8 +515,8 @@ CREATE TABLE `operatorkec` (
 --
 
 INSERT INTO `operatorkec` (`idOpkec`, `idUser`, `idKec`) VALUES
-(1, 5, 6),
-(2, 6, 9);
+(1, 4, 9),
+(2, 7, 8);
 
 -- --------------------------------------------------------
 
@@ -275,14 +530,6 @@ CREATE TABLE `password_reset_tokens` (
   `otp_code` varchar(6) NOT NULL,
   `otp_expires_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `password_reset_tokens`
---
-
-INSERT INTO `password_reset_tokens` (`idToken`, `email`, `otp_code`, `otp_expires_at`) VALUES
-(1, 'msyahndra@gmail.com', '200496', '2025-06-28 17:17:33'),
-(2, 'msyahndra@gmail.com', '662397', '2025-06-28 17:16:39');
 
 -- --------------------------------------------------------
 
@@ -305,12 +552,8 @@ CREATE TABLE `respon` (
 --
 
 INSERT INTO `respon` (`idRespon`, `idUser`, `idAjuan`, `jenis`, `respon`, `created_at`, `updated_at`) VALUES
-(3, 7, 1, 'capil', NULL, '2025-06-03 18:17:38', '2025-06-03 18:48:12'),
-(6, 7, 4, 'capil', NULL, '2025-06-03 19:17:10', '2025-06-03 19:50:01'),
-(7, 6, 3, 'dafduk', NULL, '2025-06-03 19:25:47', '2025-06-03 19:59:31'),
-(9, 15, 4, 'dafduk', NULL, '2025-06-03 21:29:04', '2025-06-03 21:29:04'),
-(10, 15, 5, 'dafduk', NULL, '2025-06-03 21:29:09', '2025-06-25 18:31:53'),
-(11, 7, 5, 'capil', NULL, '2025-06-25 18:28:49', '2025-06-25 20:34:02');
+(1, 7, 1, 'dafduk', NULL, '2025-07-03 19:09:39', '2025-07-03 19:09:39'),
+(2, 6, 1, 'capil', NULL, '2025-07-03 19:44:16', '2025-07-03 19:44:16');
 
 -- --------------------------------------------------------
 
@@ -335,15 +578,13 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`idUser`, `nama`, `email`, `password`, `roleUser`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '$2y$12$0MzM/Z2G8Qpji642bdznRegw2KB19BtAmX8ihUPP7aaIOI7LDecge', 'superadmin', 'aktif', '2025-06-25 19:46:35', '2025-06-28 22:27:35'),
-(4, 'admin1', 'admin1@gmail.com', '$2y$12$4NDaLJPdEFSAXr55XjsKdeQ71FLULKyxnawogFItRbfcDQrdYwhru', 'admin', 'aktif', '2025-05-01 08:31:05', '2025-06-03 21:03:48'),
-(5, 'kecamatan tonjong', 'kecamatan_tonjong@gmail.com', '$2y$12$/k450AxFIAf0vY4wZtyXyOCCbgRvGlp.LIFEUCKL.crfdNq7tKIQi', 'operatorKecamatan', 'aktif', '2025-05-01 18:33:10', '2025-06-03 21:05:48'),
-(6, 'kecamatan brebes', 'kecamatan_brebes@gmail.com', '$2y$12$eRvtk6g/ZMMj0gHc67asT.ioto6xIJ1TSaXm0q4GWn6aBIj3AY8nq', 'operatorKecamatan', 'aktif', '2025-05-01 18:42:38', '2025-06-03 21:06:04'),
-(7, 'dinas capil', 'dinas_capil@gmail.com', '$2y$12$SeuCQplSgYP3fWexiCH9Wu2M1tXPsGFtVEA4u3ZKseASD6rX3x24S', 'opDinCapil', 'aktif', '2025-05-01 18:52:20', '2025-06-03 21:05:18'),
-(9, 'msyahndra', 'msyahndra@gmail.com', '$2y$12$61Lqk4/8Dvab7ZinFMhHl.ZWXbwbj5OSe4266wlFc5yBNqe6Xc7QW', 'operatorDesa', 'aktif', '2025-05-03 02:36:07', '2025-06-28 16:17:49'),
-(10, 'admin2', 'admin2@gmail.com', '$2y$12$o5nGh3eaKfvMB/Jk57SWEO6ifz8f9M3W5Xmch.LhYFDaNZyTw0UZO', 'admin', 'aktif', '2025-05-05 18:25:59', '2025-06-03 21:03:30'),
-(11, 'desa kutamendala', 'desa_kutamendala@gmail.com', '$2y$12$cTiOzakLftVpWPlfnmEEleU3Ap4.OGZTPKDWnfaU1wcLks3O/GDvy', 'operatorDesa', 'aktif', '2025-05-05 18:31:15', '2025-06-03 21:07:06'),
-(14, 'admin3', 'admin3@gmail.com', '$2y$12$hJawn.ckdrxVhx8semOEQ.KX/DrOW2C4Zhfgzi9F5Uz55SZ9yZWTu', 'admin', 'aktif', '2025-06-03 21:03:05', '2025-06-03 21:03:05'),
-(15, 'dinas dafduk', 'dinas_dafduk@gmail.com', '$2y$12$UzQMaASkgOOuAx5EGjPCTOWTNzEkZ81wyuspYKSPreTbjHO/gDnN.', 'opDinDafduk', 'aktif', '2025-06-03 21:04:54', '2025-06-03 21:04:54');
+(2, 'M. Syahndra Ramadhan', 'mohammadsyahndra@gmail.com', '$2y$12$yXeQQ5BQaS07wAn.k.mPluPRk/0dlR1gbtO7qT9HoMcGMhGu/bXWm', 'admin', 'aktif', '2025-07-01 18:30:19', '2025-07-01 18:30:19'),
+(3, 'Desa Pagejugan', 'pagejugan@gmail.com', '$2y$12$KZEHhma1G3Zi3rmt9Y8JiODimK7YVE6hBUyB/3S0cocrTCmxB1hie', 'operatorDesa', 'aktif', '2025-07-02 18:36:01', '2025-07-03 18:56:25'),
+(4, 'Kecamatan Brebes', 'kecamatanbrebes@gmail.com', '$2y$12$HYNbAukAYStVfyyOqCjT/eoPS3MAtuwXII2rjTNAWpsDbjZ16MP2K', 'operatorKecamatan', 'aktif', '2025-07-03 18:49:13', '2025-07-03 18:54:18'),
+(5, 'Dinas Bid. Dafduk', 'dinasdafduk@gmail.com', '$2y$12$2p8U/8ZjQQg52uJXlg64rOlwNeMroNGRTfn0vvf26Iw768TfHoMIe', 'opDinDafduk', 'aktif', '2025-07-03 18:53:03', '2025-07-03 18:53:03'),
+(6, 'Dinas Bid. Capil', 'dinascapil@gmail.com', '$2y$12$hr.HDc8D3DmmbMMujf189uK4Gn3IbXhLESGYBEmGWjLmX9e6ej8xO', 'opDinCapil', 'aktif', '2025-07-03 18:53:48', '2025-07-03 18:53:48'),
+(7, 'Kecamatan Wanasari', 'kecamatanwanasari@gmail.com', '$2y$12$Lv1Yl54T8g3ytzRx4U10aeCrfVoAAg.IGOzo0VleuYPUjy5vs.HC6', 'operatorKecamatan', 'aktif', '2025-07-03 18:55:10', '2025-07-03 18:55:10'),
+(8, 'Desa Keboledan', 'keboledan@gmail.com', '$2y$12$E1/HfKy8kIW5rnjnftWNvumbEiZNdzKJxEs9bNTYbXvP1PITuLaKy', 'operatorDesa', 'aktif', '2025-07-03 18:56:17', '2025-07-03 18:56:17');
 
 --
 -- Indexes for dumped tables
@@ -391,12 +632,6 @@ ALTER TABLE `layanan`
   ADD PRIMARY KEY (`idLayanan`);
 
 --
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `operatordesa`
 --
 ALTER TABLE `operatordesa`
@@ -440,31 +675,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `ajuancapil`
 --
 ALTER TABLE `ajuancapil`
-  MODIFY `idCapil` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idCapil` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ajuandafduk`
 --
 ALTER TABLE `ajuandafduk`
-  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idDafduk` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `desa`
 --
 ALTER TABLE `desa`
-  MODIFY `idDesa` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idDesa` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=298;
 
 --
 -- AUTO_INCREMENT for table `finaldokumen`
 --
 ALTER TABLE `finaldokumen`
-  MODIFY `idFinDok` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idFinDok` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kecamatan`
 --
 ALTER TABLE `kecamatan`
-  MODIFY `idKec` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idKec` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `layanan`
@@ -473,16 +708,10 @@ ALTER TABLE `layanan`
   MODIFY `idLayanan` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `operatordesa`
 --
 ALTER TABLE `operatordesa`
-  MODIFY `idOpdes` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idOpdes` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `operatorkec`
@@ -494,19 +723,19 @@ ALTER TABLE `operatorkec`
 -- AUTO_INCREMENT for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
-  MODIFY `idToken` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idToken` int(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `respon`
 --
 ALTER TABLE `respon`
-  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idRespon` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idUser` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

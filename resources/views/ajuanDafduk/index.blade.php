@@ -56,8 +56,8 @@
                                         Export
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><button class="dropdown-item" onclick="exportToExcel()">Export ke Excel</button>
-                                        <li><button class="dropdown-item" onclick="exportToPDF()">Export ke PDF</button>
+                                        <li><button class="dropdown-item" onclick="exportToExcel('dafduk')">Export ke Excel</button>
+                                        <li><button class="dropdown-item" onclick="exportToPDF('dafduk')">Export ke PDF</button>
                                     </ul>
                                 </div>
                             </div>
@@ -279,7 +279,16 @@
 
             html += `<div class="action">`;
             html +=
-                `<button><a href="/ajuanDafduk/${a.idDafduk}" class="text-success" title="Detail"><i class="lni lni-eye"></i></a></button>`;
+                `<button><a href="/ajuanDafduk/${a.idDafduk}" class="text-success" title="Detail"><i class="lni lni-eye"></i></a></button>`
+            if (a.final_dokumen && a.final_dokumen.filePath) {
+                html +=
+                    `<button><a href="/storage/${a.final_dokumen.filePath}" target="_blank" class="text-primary" title="Lihat Final Dokumen"><i class="lni lni-archive"></i></a></button>`;
+            }
+
+            if (a.linkBerkas && typeof a.linkBerkas === 'string' && a.linkBerkas.trim() !== '') {
+                html +=
+                    `<button><a href="${a.linkBerkas}" target="_blank" class="text-muted" title="Lihat Berkas di GDrive"><i class="lni lni-telegram-original"></i></a></button>`;
+            }
             if (roleUser === 'operatorDesa') {
                 if (status === 'dalam antrian') {
                     html +=
@@ -287,7 +296,7 @@
                     html += `<form action="/ajuanDafduk/${a.idDafduk}" method="POST" style="display:inline;">
                             <input type="hidden" name="_token" value="${csrfToken}">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button onclick="return confirm('Yakin hapus?')" class="text-danger" title="Hapus Ajuan" style="background: none; border: none; padding: 0;">
+                            <button onclick="return confirm('Yakin hapus?')" class="text-danger" title="Hapus Ajuan">
                                 <i class="lni lni-trash-can"></i>
                             </button>
                          </form>`;
@@ -295,15 +304,15 @@
                 }
                 if (status === 'ditolak') {
                     html +=
-                        `<button style="background: none; border: none; padding: 0;"><a href="/respon/dafduk/${a.idDafduk}/edit" class="text-success" title="Ajukan Ulang"><i class="lni lni-reload"></i></a><button>`;
+                        `<button><a href="/respon/dafduk/${a.idDafduk}/edit" class="text-success" title="Ajukan Ulang"><i class="lni lni-reload"></i></a><button>`;
                 }
                 if (['sudah diproses', 'selesai'].includes(status)) {
                     if (a.final_dokumen && a.final_dokumen.filePath) {
                         html +=
-                            `<button style="background: none; border: none; padding: 0;"><a href="/finalDok/dafduk/${a.idDafduk}/edit" class="text-warning" title="Ubah Dokumen"><i class="lni lni-pencil-alt"></i></a></button>`;
+                            `<button><a href="/finalDok/dafduk/${a.idDafduk}/edit" class="text-warning" title="Ubah Dokumen"><i class="lni lni-pencil-alt"></i></a></button>`;
                     } else {
                         html +=
-                            `<button style="background: none; border: none; padding: 0;"><a href="/finalDok/dafduk/${a.idDafduk}/create" class="text-primary" title="Upload Dokumen"><i class="lni lni-cloud-upload"></i></a><button>`;
+                            `<button><a href="/finalDok/dafduk/${a.idDafduk}/create" class="text-primary" title="Upload Dokumen"><i class="lni lni-cloud-upload"></i></a><button>`;
                     }
                 }
                 html +=
@@ -349,7 +358,6 @@
                         <td>${kec}, ${desa}</td>
                         <td><span class="badge ${getBadgeClass(status)}">${status}</span></td>
                         <td>${renderNote(a)}</td>
-                        <td>${renderDokumenLink(a)}</td>
                         <td>${renderActions(a)}</td>
                     </tr>`;
                     });

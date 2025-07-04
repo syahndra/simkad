@@ -57,7 +57,6 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>No</th>
                                             <th>Nama</th>
                                             <th>Email</th>
                                             <th>Kecamatan</th>
@@ -68,7 +67,6 @@
                                         @foreach ($operatorKec as $i => $op)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $i + 1 }}</td>
                                                 <td>{{ $op->user->nama }}</td>
                                                 <td>{{ $op->user->email }}</td>
                                                 <td>{{ $op->kecamatan->namaKec }}</td>

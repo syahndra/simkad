@@ -91,7 +91,7 @@
                                 <div class="mb-3">
                                     <label>Link GDrive (Opsional)</label>
                                     <input type="url" name="linkBerkas" class="form-control">
-                                    <small class="text-muted">Masukkan link dari GDrive yang dapat diakses</small>
+                                    <small class="text-muted">digunakan hanya pada saat SIAK Terpusat mengalami kendala pada UPLOAD DOKUMEN atau ketika diperlukan</small>
                                 </div>
 
                                 <div class="mb-3">
