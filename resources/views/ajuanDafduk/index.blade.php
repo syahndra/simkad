@@ -207,9 +207,9 @@
                                                                 @endisset
                                                             @endif
                                                             <a href="{{ route('ajuan.cetak', ['jenis' => 'dafduk', 'id' => $a->idDafduk]) }}"
-                                                                class="text-secondary" title="Generate Token"
+                                                                class="text-secondary" title="Bukti Pengajuan"
                                                                 target="_blank">
-                                                                <i class="lni lni-cog"></i>
+                                                                <i class="lni lni-bookmark"></i>
                                                             </a>
                                                         @elseif (in_array(Auth::user()->roleUser, ['opDinDafduk', 'operatorKecamatan']))
                                                             @if ($a->statAjuan === 'dalam antrian')
@@ -316,7 +316,7 @@
                     }
                 }
                 html +=
-                    `<a href="/cetak-token/dafduk/${a.idDafduk}" class="text-secondary" title="Generate Token" target="_blank"><i class="lni lni-cog"></i></a>`;
+                    `<a href="/cetak-token/dafduk/${a.idDafduk}" class="text-secondary" title="Bukti Pengajuan" target="_blank"><i class="lni lni-bookmark"></i></a>`;
             } else if (['opDinDafduk', 'operatorKecamatan'].includes(roleUser)) {
                 if (status === 'dalam antrian') {
                     html +=

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\AjuanCapil;
 use App\Models\AjuanDafduk;
+use App\Models\OperatorDesa;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -21,6 +23,10 @@ class TokenController extends Controller
             abort(404, 'Permintaan tidak dikenali');
         }
 
+        $operatorDesa = OperatorDesa::with('desa.kecamatan', 'user')
+            ->where('idUser', Auth::id())
+            ->firstOrFail();
+
         // $barcode = base64_encode(QrCode::format('svg')->size(200)->generate($ajuan->token));
         $qrUrl = route('cek.pengajuan', ['jenis' => $jenis, 'token' => $ajuan->token]);
 
@@ -35,7 +41,10 @@ class TokenController extends Controller
             'token' => $ajuan->token,
             'created_at' => $ajuan->created_at->translatedFormat('d F Y'),
             'barcode' => $barcode,
-            'jenis' => $jenis
+            'jenis' => $jenis,
+            'nokk' => $ajuan->noKK,
+            'nik' => $ajuan->nik,
+            'desa'=> $operatorDesa
         ];
 
         // Buat PDF langsung dari view

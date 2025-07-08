@@ -214,7 +214,7 @@
                                                                 @endisset
                                                             @endif
                                                             <a href="{{ route('ajuan.cetak', ['jenis' => 'capil', 'id' => $a->idCapil]) }}"
-                                                                class="text-secondary" title="Generate Token"
+                                                                class="text-secondary" title="Bukti Pengajuan"
                                                                 target="_blank">
                                                                 <i class="lni lni-cog"></i>
                                                             </a>
@@ -328,7 +328,7 @@
                     }
                 }
                 html +=
-                    `<a href="/cetak-token/capil/${a.idCapil}" class="text-secondary" title="Generate Token" target="_blank"><i class="lni lni-cog"></i></a>`;
+                    `<a href="/cetak-token/capil/${a.idCapil}" class="text-secondary" title="Bukti Pengajuan" target="_blank"><i class="lni lni-cog"></i></a>`;
             } else if (['opDinCapil'].includes(roleUser)) {
                 if (status === 'dalam antrian') {
                     html +=

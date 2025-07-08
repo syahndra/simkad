@@ -94,7 +94,7 @@
                                         <div class="col-xxl-12 col-lg-12 col-md-12">
                                             <div class="text-start text-md-end text-lg-start text-xxl-end mb-30">
                                                 <a href="#" id="show-reset-form" class="hover-underline">
-                                                    Forgot Password?
+                                                    Lupa password?
                                                 </a>
                                             </div>
                                         </div>
