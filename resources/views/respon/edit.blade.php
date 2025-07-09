@@ -6,7 +6,12 @@
             <div class="title-wrapper pt-30">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <h2>Edit Respon Ajuan {{ ucfirst($respon->jenis) }}</h2>
+                        <h2>
+                            Edit Respon Ajuan {{ ucfirst($respon->jenis) }}
+                            @if (Auth::user()->roleUser === 'operatorDesa')
+                                - Ajukan Ulang
+                            @endif
+                        </h2>
                     </div>
                     <div class="col-md-6">
                         <ol class="breadcrumb float-end">
@@ -75,7 +80,7 @@
 
                                     <div class="form-group mb-3">
                                         <label for="respon">Note</label>
-                                        <textarea name="respon" id="respon" rows="4" class="form-control"></textarea>
+                                        <textarea name="respon" id="respon" rows="4" class="form-control" required></textarea>
                                     </div>
                                 @else
                                     <div class="mb-3">
@@ -83,7 +88,8 @@
                                         <select name="statAjuan" class="form-control" required>
                                             <option disabled selected>-- Pilih Tindak Lanjut --</option>
                                             <option value="sudah diproses"
-                                                {{ $ajuan->statAjuan === 'sudah diproses' ? 'selected' : '' }}>Sudah Diproses
+                                                {{ $ajuan->statAjuan === 'sudah diproses' ? 'selected' : '' }}>Sudah
+                                                Diproses
                                             </option>
                                             <option value="ditolak"
                                                 {{ $ajuan->statAjuan === 'ditolak' ? 'selected' : '' }}>

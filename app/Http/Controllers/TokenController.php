@@ -44,7 +44,7 @@ class TokenController extends Controller
             'jenis' => $jenis,
             'nokk' => $ajuan->noKK,
             'nik' => $ajuan->nik,
-            'desa'=> $operatorDesa
+            'desa' => $operatorDesa
         ];
 
         // Buat PDF langsung dari view
@@ -68,11 +68,11 @@ class TokenController extends Controller
             $createdAt = $ajuan->created_at;
 
             $query = AjuanCapil::where('created_at', '<', $createdAt)
+                ->where('statAjuan', 'dalam antrian') // Tambahan di sini
                 ->whereHas('layanan', function ($q) use ($aksesVer) {
                     $q->where('aksesVer', $aksesVer);
                 });
 
-            // Jika akses verifikasi adalah kecamatan, tambahkan where kecamatan
             if ($aksesVer === 'kecamatan') {
                 $idKec = $ajuan->operatorDesa->desa->idKec ?? null;
                 if ($idKec) {
@@ -89,6 +89,7 @@ class TokenController extends Controller
             $createdAt = $ajuan->created_at;
 
             $query = AjuanDafduk::where('created_at', '<', $createdAt)
+                ->where('statAjuan', 'dalam antrian') // Tambahan di sini
                 ->whereHas('layanan', function ($q) use ($aksesVer) {
                     $q->where('aksesVer', $aksesVer);
                 });
