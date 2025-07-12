@@ -3,10 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckRole
+class CheckRole extends Middleware
 {
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
