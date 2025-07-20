@@ -134,16 +134,30 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
 
-        $user = User::where('email', $request->email)
+        // Cek apakah OTP valid
+        $reset = Reset::where('email', $request->email)
             ->where('otp_code', $request->otp_code)
             ->where('otp_expires_at', '>', now())
             ->first();
 
-        if (!$user) return response()->json(['status' => false, 'message' => 'Kode OTP salah atau kadaluarsa']);
+        if (!$reset) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Kode OTP salah atau sudah kadaluarsa'
+            ]);
+        }
 
+        // Ambil user dan ubah passwordnya
+        $user = User::where('email', $request->email)->first();
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return response()->json(['status' => true, 'message' => 'Password berhasil direset, silakan login']);
+        // Hapus kode OTP setelah digunakan
+        $reset->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Password berhasil direset, silakan login'
+        ]);
     }
 }
